@@ -165,12 +165,3 @@ python data/get_range_eurorad.py --start 18806 --end 19164 --outdir eurorad_csvs
 # Get training cases
 python data/get_range_eurorad.py --csv data/eurorad_train_cases.csv --case-id-col "Case ID" --outdir eurorad_train_csvs --resume
 ```
-
----
-
-## 5. Finetuning
-
-```bash
-conda activate oss
-CUDA_VISIBLE_DEVICES=0,2 PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True python finetune/oss20b.py
-```
