@@ -1,6 +1,9 @@
 # On-Device Large Language Models
 Benchmarking OSS model performance on-device for medical tasks.
 
+## 0. Setup & Data
+Please download the data from the following link and place the csv files under `data/datasets`: https://drive.google.com/drive/folders/19C-Eey_yYKk1sIJc1MxFolIWwH_TBHfI?usp=sharing 
+
 ## 1. NMED Benchmarks (Diagnosis & Treatment)
 
 ### GPT-OSS (HuggingFace API)
