@@ -8,7 +8,7 @@ Run the `hf_bench.py` script for `gpt-oss-20b` or `120b` across different reason
 
 **Template Command:**
 ```bash
-python benchmarks/nmed-notes-score/hf_bench.py \
+python benchmarks/nmed-notes/hf_bench.py \
   data/datasets/nmed_diagnosis.csv \
   --model openai/gpt-oss-120b:fireworks-ai \
   --api chat \
@@ -29,7 +29,7 @@ python benchmarks/nmed-notes-score/hf_bench.py \
 ### Proprietary (OpenAI API)
 ```bash
 # GPT-5 / GPT-4o / o4-mini
-python3 benchmarks/nmed-notes-score/gpt.py \
+python3 benchmarks/nmed-notes/gpt.py \
   --model gpt-5-2025-08-07 \
   --dataset data/datasets/nmed_diagnosis.csv \
   --results-dir results \
@@ -40,7 +40,7 @@ python3 benchmarks/nmed-notes-score/gpt.py \
 
 ### OpenRouter (DeepSeek)
 ```bash
-python benchmarks/nmed-notes-score/openrouter.py \
+python benchmarks/nmed-notes/openrouter.py \
   data/datasets/nmed_treatment.csv \
   --endpoint deepseek/deepseek-r1-0528 \
   --results_dir results \
