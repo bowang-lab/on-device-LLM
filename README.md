@@ -99,6 +99,21 @@ python benchmarks/eurorad/openrouter.py \
   --output_csv eurorad_deepseek/deepseek-r1-0528_v3.csv
 ```
 
+### Fine-Tuned GPT-OSS-20B (LoRA)
+```bash
+python benchmarks/eurorad/oss20b_inference.py \
+  --base-model openai/gpt-oss-20b \
+  --lora-path /path/to/lora_adapter \
+  --test-csv data/datasets/eurorad_val.csv \
+  --model-name gptoss20b_finetuned \
+  --num-beam-groups 13 \
+  --diversity-penalty 0.5 \
+  --max-new-tokens 3000 \
+  --cuda-visible-devices 0
+```
+*   Uses diverse beam search with majority voting for diagnosis selection.
+*   Requires pre-trained LoRA adapter from fine-tuning step.
+
 ---
 
 ## 3. Ophthalmology Benchmarks
