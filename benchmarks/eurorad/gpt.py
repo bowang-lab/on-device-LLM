@@ -20,6 +20,7 @@ from pathlib import Path
 from typing import Dict, List, Tuple, Optional
 from openai import OpenAI
 from tqdm import tqdm
+import re
 
 # ---- Defaults ----
 DEFAULT_DATASET = Path("/home/bowang/Documents/alif/oss-benchmark/data/datasets/eurorad_test.csv")
@@ -38,7 +39,8 @@ SYS_PROMPT = (
 )
 
 def build_options_list(s: str) -> List[str]:
-    opts = [o.strip() for o in (s or "").split(",") if o.strip()]
+    # opts = [o.strip() for o in (s or "").split(",") if o.strip()]
+    opts = [o.strip() for o in re.split(r',\s*(?![^()]*\))', s or "") if o.strip()]
     seen, out = set(), []
     for o in opts:
         if o not in seen:
