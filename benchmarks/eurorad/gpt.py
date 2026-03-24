@@ -38,15 +38,31 @@ SYS_PROMPT = (
     "2) Output ONLY the diagnosis text. No explanation. No punctuation. No quotes.\n"
 )
 
+OUTLIER_PATTERNS = [
+    r'^MAP kinase',
+]
+
+def is_outlier(part: str) -> bool:
+    if re.match(r'^[a-z]', part):  # lowercase starting example
+        return True
+    if any(re.match(p, part) for p in OUTLIER_PATTERNS):
+        return True
+    return False
+
 def build_options_list(s: str) -> List[str]:
-    # opts = [o.strip() for o in (s or "").split(",") if o.strip()]
-    opts = [o.strip() for o in re.split(r',\s*(?![^()]*\))', s or "") if o.strip()]
+    parts = re.split(r',\s*(?![^()\[\]]*[\)\]])', s or "")
     seen, out = set(), []
-    for o in opts:
-        if o not in seen:
-            seen.add(o)
-            out.append(o)
+    for part in parts:
+        part = part.strip()
+        if not part:
+            continue
+        if out and is_outlier(part):
+            out[-1] = out[-1] + ", " + part
+        elif part not in seen:
+            seen.add(part)
+            out.append(part)
     return out
+
 
 def norm_text(s: str) -> str:
     t = unicodedata.normalize("NFKC", s or "")
