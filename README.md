@@ -185,3 +185,84 @@ python data/get_range_eurorad.py --start 18806 --end 19164 --outdir eurorad_csvs
 # Get training cases
 python data/get_range_eurorad.py --csv data/eurorad_train_cases.csv --case-id-col "Case ID" --outdir eurorad_train_csvs --resume
 ```
+
+---
+
+## 5. Diverse Beam Search Evaluation (Local Inference)
+
+Self-consistency via diverse beam search with majority voting. Used for gpt-oss-120b and fine-tuned models.
+
+### Eurorad
+```bash
+# gpt-oss-120b with 13-beam diverse beam search
+CUDA_VISIBLE_DEVICES=0 python benchmarks/eurorad/eurorad_beams_hf.py \
+  --input_csv data/datasets/eurorad_test.csv \
+  --output_csv results/eurorad_oss120b_13beams_v1.csv \
+  --model openai/gpt-oss-120b \
+  --num_beams 13 --num_beam_groups 13
+
+# Chain-of-thought beams with external rescoring
+python benchmarks/eurorad/cot_beams_score_hf.py \
+  --input_csv data/datasets/eurorad_test.csv \
+  --output_csv results/eurorad_cot_beams.csv \
+  --model openai/gpt-oss-120b
+
+# Evaluate fine-tuned LoRA checkpoint
+python benchmarks/eurorad/eval_finetune.py \
+  --base_model openai/gpt-oss-120b \
+  --lora_path finetune/outputs/checkpoint-30 \
+  --test_csv data/datasets/eurorad_test.csv
+```
+
+### NMED (Diagnosis & Treatment)
+```bash
+# Diagnosis scoring with beam search
+python benchmarks/nmed-notes/beams_diagnosis_hf.py \
+  --val-csv data/datasets/nmed_diagnosis.csv \
+  --out-csv results/nmed_diagnosis_oss120b_5beams_v1.csv \
+  --num-beams 5 --max-new-tokens 3000
+
+# Treatment scoring with beam search
+python benchmarks/nmed-notes/beams_treatment_hf.py \
+  --val-csv data/datasets/nmed_treatment.csv \
+  --out-csv results/nmed_treatment_oss120b_5beams_v1.csv \
+  --num-beams 5 --max-new-tokens 3000
+```
+
+---
+
+## 6. Fine-Tuning (LoRA)
+
+### Primary: gpt-oss-120b SFT with LoRA on 8 GPUs
+```bash
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 python finetune/omar_ft_hf.py \
+  MODEL_ID=openai/gpt-oss-120b \
+  MAX_SEQ_LEN=2816 \
+  LORA_R=4 LORA_ALPHA=8 LORA_DROPOUT=0.0 \
+  EXPERT_LAYERS=33 EXPERT_TOKENS=gate_up_proj \
+  BATCH_PER_DEVICE=1 GRAD_ACCUM=16 NUM_EPOCHS=3 \
+  LR=6e-5 WD=0.01 WARMUP_RATIO=0.1
+```
+
+Training data is in `finetune/` (JSONL and CSV files). See notebooks for exploratory fine-tuning:
+- `finetune/oss-eurorad-sft.ipynb` — Eurorad SFT
+- `finetune/V7Finetuning_Gptoss120Reasonthinking_Final_Omar.ipynb` — MoE expert fine-tuning
+- `finetune/Finetuning_MoELinear_oss120ReasData_detPrompt.ipynb` — MoE Linear with reasoning data
+
+---
+
+## 7. GEPA Prompt Optimization
+
+DSPy-based prompt optimization for Eurorad diagnosis:
+```bash
+python gepa/gepa_eurorad.py
+```
+
+---
+
+## 8. Figure Generation
+
+Scripts for paper figures in `figures/`:
+- `figures/plot_radar.py` — Radar chart (multi-metric model comparison)
+- `figures/kendall_tau_violin_plot.py` — Kendall's tau violin plot (input: `figures/fig2-c-box-plot/kendall.xlsx`)
+- `figures/visualization_barplot.py` — Grouped bar plot for hyperparameter tuning
