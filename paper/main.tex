@@ -157,87 +157,49 @@ To ensure rigorous zero-shot evaluation and prevent data leakage, all three benc
 \textbf{a,} Results of LLM-as-a-generalist: diagnosis accuracy on a wide range of radiological cases (N=207). L, M, and H denote low, medium, and high reasoning efforts, respectively. 
 \textbf{b,} Results of LLM-as-a-specialist: accuracy on ophthalmology cases (N=130) with diagnosis and management multiple-choice questions. 
 \textbf{c,} Results of LLM-as-a-clinical-judge: violin plots comparing the relative error for disease diagnosis and treatment open-ended question assessment (N=1315). 
-\textbf{d,} Fine-tuned gpt-oss-20b (M) model outperforms proprietary (o4-mini) and open-source LLMs (DeepSeek-R1) on the disease differential diagnosis task. 
+\textbf{d,} Fine-tuned gpt-oss-20b (M) model outperforms proprietary (GPT-5-mini) and open-source LLMs (DeepSeek-R1) on the disease differential diagnosis task. 
 \textbf{e,} Model performance across 10 radiological sub-specialties. 
 }\label{fig:2}
 \end{figure}
 
-\subsection*{On-device LLMs show competitive zero-shot performance} 
-Fig.~\ref{fig:2}a compares the diagnostic accuracy of the evaluated models for general disease diagnosis across radiological case reports (Table~\ref{tab:generalist_results}). While the proprietary frontier model GPT-5 achieved the highest overall average performance with an accuracy of 88.9\% (95\% CI: 83.9--92.5\%), the on-device models demonstrated strong competitiveness relative to the established baselines. Specifically, the gpt-oss-120b (L) model achieved an average accuracy of 84.1\% (95\% CI: 78.5--88.4\%), effectively matching the efficient proprietary model o4-mini (84.1\%; 95\% CI: 78.5--86.3\%; $p>0.05$) and surpassing the leading open-source model DeepSeek-R1 (81.6\%; 95\% CI: 75.8--86.3\%; $p<0.01$). Furthermore, the highly efficient gpt-oss-20b (H) model secured an accuracy of 80.7\% (95\% CI: 74.8--85.5\%), approaching the performance of the significantly larger DeepSeek-R1 ($p>0.05$).
+\subsection*{On-device LLMs show competitive zero-shot performance}
+Fig.~\ref{fig:2}a compares the diagnostic accuracy of the evaluated models for general disease diagnosis across radiological case reports (Table~\ref{tab:generalist_results}). Among the proprietary frontier models, Gemini 3.1 Pro achieved the highest overall accuracy of 91.8\% (95\% CI: 87.2--94.8\%), followed closely by GPT-5.2 at 90.8\% (95\% CI: 86.1--94.0\%; $p>0.05$). The on-device models demonstrated strong competitiveness relative to these baselines. Specifically, the gpt-oss-120b (L) model achieved an average accuracy of 84.1\% (95\% CI: 78.5--88.4\%), effectively matching the efficient proprietary model GPT-5-mini (84.5\%; 95\% CI: 79.0--88.8\%; $p>0.05$) and surpassing the leading open-source model DeepSeek-R1 (81.6\%; 95\% CI: 75.8--86.3\%). Furthermore, the highly efficient gpt-oss-20b (H) model secured an accuracy of 80.7\% (95\% CI: 74.8--85.5\%), matching the performance of the significantly larger DeepSeek-R1 ($p>0.05$). Among the Qwen3.5 on-device models, the 27B variant achieved the highest accuracy at 71.5\% (95\% CI: 65.0--77.2\%), statistically comparable to gpt-oss-20b (L) (74.4\%; $p>0.05$).
 
 \begin{table}[!htbp]
 \centering
 \scriptsize
-\setlength{\tabcolsep}{3.5pt}
+\setlength{\tabcolsep}{3pt}
 \caption{\textbf{LLM-as-a-Generalist Task: Comparative diagnostic accuracy (\%) across radiological anatomical subgroups.}
 Performance is evaluated using self-consistency majority voting. The best result per row is \textbf{bolded}. Full 95\% CIs are provided in Supplementary Table~1.}
 \label{tab:generalist_results}
-\begin{tabular}{l cc @{\hskip 6pt} c @{\hskip 6pt} ccc @{\hskip 6pt} ccc}
+\begin{tabular}{l ccc @{\hskip 6pt} c @{\hskip 6pt} ccc @{\hskip 6pt} ccc @{\hskip 6pt} ccc}
 \toprule
-& \multicolumn{2}{c}{\textbf{Proprietary}} & \textbf{Open} & \multicolumn{3}{c}{\textbf{gpt-oss-20b}} & \multicolumn{3}{c}{\textbf{gpt-oss-120b}} \\
-\cmidrule(lr){2-3} \cmidrule(lr){4-4} \cmidrule(lr){5-7} \cmidrule(lr){8-10}
+& \multicolumn{3}{c}{\textbf{Proprietary}} & \textbf{Open} & \multicolumn{3}{c}{\textbf{gpt-oss-20b}} & \multicolumn{3}{c}{\textbf{gpt-oss-120b}} & \multicolumn{3}{c}{\textbf{Qwen3.5}} \\
+\cmidrule(lr){2-4} \cmidrule(lr){5-5} \cmidrule(lr){6-8} \cmidrule(lr){9-11} \cmidrule(lr){12-14}
 \textbf{Category} &
-\textbf{GPT-5} & \textbf{o4-mini} & \textbf{DS-R1} &
+\textbf{GPT-5.2} & \textbf{GPT-5-mini} & \textbf{Gemini-3.1} & \textbf{DS-R1} &
 \textbf{L} & \textbf{M} & \textbf{H} &
-\textbf{L} & \textbf{M} & \textbf{H} \\
+\textbf{L} & \textbf{M} & \textbf{H} &
+\textbf{35B} & \textbf{27B} & \textbf{9B} \\
 \midrule
-Musculoskeletal   & \acc{87.2} & \acc{85.1} & \acc{87.2} & \acc{80.9} & \acc{85.1} & \acc{87.2} & \best{\acc{89.4}} & \acc{83.0} & \acc{85.1} \\
-Cardiovascular    & \best{\acc{83.3}} & \best{\acc{83.3}} & \acc{66.7} & \acc{50.0} & \acc{50.0} & \acc{50.0} & \acc{66.7} & \acc{66.7} & \acc{66.7} \\
-Abdominal         & \best{\acc{94.4}} & \acc{83.3} & \acc{75.0} & \acc{63.9} & \acc{66.7} & \acc{80.6} & \acc{86.1} & \acc{83.3} & \acc{83.3} \\
-Uroradiology      & \best{\acc{100.0}} & \acc{86.1} & \best{\acc{100.0}} & \acc{80.0} & \acc{90.0} & \best{\acc{100.0}} & \acc{90.0} & \best{\acc{100.0}} & \acc{90.0} \\
-Neuroradiology    & \best{\acc{85.4}} & \acc{82.9} & \best{\acc{85.4}} & \acc{82.9} & \acc{82.9} & \best{\acc{85.4}} & \acc{82.9} & \acc{80.5} & \best{\acc{85.4}} \\
-Paediatric        & \best{\acc{83.3}} & \acc{76.7} & \acc{73.3} & \acc{73.3} & \acc{76.7} & \acc{70.0} & \acc{76.7} & \acc{73.3} & \acc{80.0} \\
-Head \& neck      & \best{\acc{100.0}} & \best{\acc{100.0}} & \acc{84.6} & \acc{84.6} & \acc{84.6} & \acc{92.3} & \best{\acc{100.0}} & \acc{76.9} & \acc{92.3} \\
-Breast            & \best{\acc{100.0}} & \acc{80.0} & \acc{80.0} & \acc{40.0} & \acc{40.0} & \acc{40.0} & \acc{60.0} & \acc{60.0} & \acc{60.0} \\
-Chest             & \best{\acc{90.9}} & \acc{81.8} & \acc{81.8} & \acc{72.7} & \acc{81.8} & \acc{81.8} & \acc{81.8} & \acc{81.8} & \acc{81.8} \\
-Others            & \best{\acc{75.0}} & \best{\acc{75.0}} & \best{\acc{75.0}} & \acc{62.5} & \acc{62.5} & \acc{62.5} & \best{\acc{75.0}} & \best{\acc{75.0}} & \acc{62.5} \\
+Musculoskeletal   & \acc{87.2} & \acc{83.0} & \acc{87.2} & \acc{87.2} & \acc{80.9} & \acc{85.1} & \acc{87.2} & \best{\acc{89.4}} & \acc{83.0} & \acc{85.1} & \acc{72.3} & \acc{74.5} & \acc{76.6} \\
+Cardiovascular    & \best{\acc{100.0}} & \acc{83.3} & \acc{83.3} & \acc{66.7} & \acc{50.0} & \acc{50.0} & \acc{50.0} & \acc{66.7} & \acc{66.7} & \acc{66.7} & \acc{50.0} & \acc{50.0} & \acc{66.7} \\
+Abdominal         & \acc{94.4} & \acc{88.9} & \best{\acc{97.2}} & \acc{75.0} & \acc{63.9} & \acc{66.7} & \acc{80.6} & \acc{86.1} & \acc{83.3} & \acc{83.3} & \acc{72.2} & \acc{80.6} & \acc{69.4} \\
+Uroradiology      & \best{\acc{100.0}} & \acc{90.0} & \best{\acc{100.0}} & \best{\acc{100.0}} & \acc{80.0} & \acc{90.0} & \best{\acc{100.0}} & \acc{90.0} & \best{\acc{100.0}} & \acc{90.0} & \acc{80.0} & \acc{80.0} & \acc{90.0} \\
+Neuroradiology    & \best{\acc{87.8}} & \acc{82.9} & \best{\acc{87.8}} & \acc{85.4} & \acc{82.9} & \acc{82.9} & \acc{85.4} & \acc{82.9} & \acc{80.5} & \acc{85.4} & \acc{56.1} & \acc{61.0} & \acc{53.7} \\
+Paediatric        & \acc{90.0} & \acc{80.0} & \best{\acc{93.3}} & \acc{73.3} & \acc{73.3} & \acc{76.7} & \acc{70.0} & \acc{76.7} & \acc{73.3} & \acc{80.0} & \acc{50.0} & \acc{70.0} & \acc{63.3} \\
+Head \& neck      & \best{\acc{100.0}} & \best{\acc{100.0}} & \best{\acc{100.0}} & \acc{84.6} & \acc{84.6} & \acc{84.6} & \acc{92.3} & \best{\acc{100.0}} & \acc{76.9} & \acc{92.3} & \acc{84.6} & \acc{84.6} & \acc{76.9} \\
+Breast            & \best{\acc{100.0}} & \acc{80.0} & \best{\acc{100.0}} & \acc{80.0} & \acc{40.0} & \acc{40.0} & \acc{40.0} & \acc{60.0} & \acc{60.0} & \acc{60.0} & \acc{60.0} & \acc{80.0} & \acc{60.0} \\
+Chest             & \acc{90.9} & \acc{81.8} & \best{\acc{100.0}} & \acc{81.8} & \acc{72.7} & \acc{81.8} & \acc{81.8} & \acc{81.8} & \acc{81.8} & \acc{81.8} & \acc{63.6} & \acc{63.6} & \acc{63.6} \\
+Others            & \best{\acc{75.0}} & \best{\acc{75.0}} & \best{\acc{75.0}} & \best{\acc{75.0}} & \acc{62.5} & \acc{62.5} & \acc{62.5} & \best{\acc{75.0}} & \best{\acc{75.0}} & \acc{62.5} & \acc{50.0} & \acc{62.5} & \acc{62.5} \\
 \midrule
-\textbf{Average}  & \best{\acc{88.9}} & \acc{84.1} & \acc{81.6} & \acc{74.4} & \acc{77.3} & \acc{80.7} & \acc{84.1} & \acc{80.2} & \acc{82.6} \\
+\textbf{Average}  & \acc{90.8} & \acc{84.5} & \best{\acc{91.8}} & \acc{81.6} & \acc{74.4} & \acc{77.3} & \acc{80.7} & \acc{84.1} & \acc{80.2} & \acc{82.6} & \acc{64.7} & \acc{71.5} & \acc{67.6} \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 
-Fig.~\ref{fig:2}b presents the model performance of the LLM-as-a-specialist task on the ophthalmology QA dataset (Table~\ref{tab:ophthalmology_results}). The open-source model DeepSeek-R1 achieved the highest overall accuracy of 79.2\% (95\% CI: 71.5--85.3\%), demonstrating particularly strong capabilities in diagnosis (92.3\%; 95\% CI: 79.7--97.3\%) and management (73.6\%; 95\% CI: 63.7--81.6\%). Remarkably, the on-device gpt-oss-120b (M) model secured the second-highest rank with an overall accuracy of 77.7\% (95\% CI: 69.8--84.0\%), surpassing both the proprietary GPT-5 (73.8\%; 95\% CI: 65.7--80.6\%) and o4-mini (71.5\%; 95\% CI: 63.3--78.6\%) baselines ($p<0.01$). This performance underscores the capacity of locally deployed large models to rival state-of-the-art proprietary systems in specialty-specific medical reasoning. While the smaller gpt-oss-20b variants showed a performance gap, with the best-performing gpt-oss-20b (H) achieving 66.2\% (95\% CI: 57.7--73.7\%), they remained competitive in specific subtasks (e.g., Refractive Disorders or Strabismus). Across all evaluated architectures, models consistently demonstrated higher performance in diagnosis compared to patient management, reflecting the increased complexity of treatment planning in specialty care.
-
-\begin{table}[!htbp]
-\centering
-\scriptsize
-\setlength{\tabcolsep}{3.5pt}
-\caption{\textbf{LLM-as-a-Specialist Task: Comparative accuracy (\%) on ophthalmology diagnosis and management tasks.} The best result per row is \textbf{bolded}. Full 95\% CIs are provided in Supplementary Table~2.}
-\label{tab:ophthalmology_results}
-\begin{tabular}{ll cc @{\hskip 6pt} c @{\hskip 6pt} ccc @{\hskip 6pt} ccc}
-\toprule
-& & \multicolumn{2}{c}{\textbf{Proprietary}} & \textbf{Open} & \multicolumn{3}{c}{\textbf{gpt-oss-20b}} & \multicolumn{3}{c}{\textbf{gpt-oss-120b}} \\
-\cmidrule(lr){3-4} \cmidrule(lr){5-5} \cmidrule(lr){6-8} \cmidrule(lr){9-11}
-\textbf{Type} & \textbf{Topic} & \textbf{GPT-5} & \textbf{o4-mini} & \textbf{DS-R1} &
-\textbf{L} & \textbf{M} & \textbf{H} &
-\textbf{L} & \textbf{M} & \textbf{H} \\
-\midrule
-\multirow{6}{*}{\rotatebox{90}{\textbf{Diagnosis}}}
-& Glaucoma           & \best{\acc{100.0}} & \acc{85.7} & \best{\acc{100.0}} & \acc{71.4} & \acc{85.7} & \acc{85.7} & \acc{85.7} & \acc{85.7} & \acc{85.7} \\
-& Ext.\ Eye/Orbital  & \acc{80.0} & \acc{80.0} & \best{\acc{90.0}} & \acc{70.0} & \acc{70.0} & \acc{80.0} & \acc{70.0} & \acc{80.0} & \acc{80.0} \\
-& Retinal            & \best{\acc{100.0}} & \best{\acc{100.0}} & \best{\acc{100.0}} & \acc{66.7} & \acc{66.7} & \acc{66.7} & \best{\acc{100.0}} & \acc{66.7} & \acc{66.7} \\
-& Anterior Segment   & \acc{62.5} & \best{\acc{75.0}} & \best{\acc{75.0}} & \acc{62.5} & \acc{62.5} & \acc{62.5} & \best{\acc{75.0}} & \best{\acc{75.0}} & \best{\acc{75.0}} \\
-& Ocular Trauma      & \best{\acc{100.0}} & \acc{83.3} & \best{\acc{100.0}} & \acc{83.3} & \acc{66.7} & \acc{83.3} & \acc{83.3} & \best{\acc{100.0}} & \acc{83.3} \\
-& Refract./Strabismus & \best{\acc{100.0}} & \best{\acc{100.0}} & \best{\acc{100.0}} & \best{\acc{100.0}} & \best{\acc{100.0}} & \best{\acc{100.0}} & \best{\acc{100.0}} & \best{\acc{100.0}} & \best{\acc{100.0}} \\
-\cmidrule{2-11}
-& \textit{Average}   & \textit{\acc{87.2}} & \textit{\acc{84.6}} & \textit{\best{\acc{92.3}}} & \textit{\acc{74.4}} & \textit{\acc{74.4}} & \textit{\acc{79.5}} & \textit{\acc{82.1}} & \textit{\acc{84.6}} & \textit{\acc{82.1}} \\
-\midrule
-\multirow{6}{*}{\rotatebox{90}{\textbf{Mgmt}}}
-& Glaucoma           & \best{\acc{78.6}} & \acc{64.3} & \acc{71.4} & \acc{50.0} & \acc{64.3} & \acc{50.0} & \acc{71.4} & \best{\acc{78.6}} & \acc{64.3} \\
-& Ext.\ Eye/Orbital  & \best{\acc{78.6}} & \acc{64.3} & \best{\acc{78.6}} & \acc{57.1} & \acc{71.4} & \acc{64.3} & \acc{71.4} & \acc{71.4} & \acc{71.4} \\
-& Retinal            & \acc{37.5} & \acc{37.5} & \acc{37.5} & \acc{12.5} & \acc{25.0} & \acc{37.5} & \best{\acc{50.0}} & \acc{37.5} & \acc{37.5} \\
-& Anterior Segment   & \acc{70.6} & \acc{64.7} & \acc{70.6} & \best{\acc{76.5}} & \acc{64.7} & \best{\acc{76.5}} & \acc{70.6} & \best{\acc{76.5}} & \acc{70.6} \\
-& Ocular Trauma      & \acc{57.7} & \acc{69.2} & \best{\acc{76.9}} & \acc{42.3} & \acc{57.7} & \acc{50.0} & \acc{65.4} & \best{\acc{76.9}} & \acc{57.7} \\
-& Refract./Strabismus & \acc{83.3} & \acc{83.3} & \best{\acc{91.7}} & \acc{66.7} & \acc{58.3} & \acc{83.3} & \acc{83.3} & \best{\acc{91.7}} & \acc{83.3} \\
-\cmidrule{2-11}
-& \textit{Average}   & \textit{\acc{68.1}} & \textit{\acc{65.9}} & \textit{\best{\acc{73.6}}} & \textit{\acc{52.7}} & \textit{\acc{59.3}} & \textit{\acc{60.4}} & \textit{\acc{69.2}} & \textit{\acc{74.7}} & \textit{\acc{64.8}} \\
-\midrule
-\multicolumn{2}{l}{\textbf{Overall}} & \acc{73.8} & \acc{71.5} & \best{\acc{79.2}} & \acc{59.2} & \acc{63.8} & \acc{66.2} & \acc{73.1} & \acc{77.7} & \acc{70.0} \\
-\bottomrule
-\end{tabular}
-\end{table}
+Fig.~\ref{fig:2}b presents the model performance of the LLM-as-a-specialist task on the ophthalmology QA dataset (Table~\ref{tab:ophthalmology_results}). The open-source model DeepSeek-R1 achieved the highest overall accuracy of 79.2\% (95\% CI: 71.5--85.3\%), demonstrating particularly strong capabilities in diagnosis (92.3\%; 95\% CI: 79.7--97.3\%) and management (73.6\%; 95\% CI: 63.7--81.6\%). Remarkably, the on-device gpt-oss-120b (M) model secured the second-highest rank with an overall accuracy of 77.7\% (95\% CI: 69.8--84.0\%), surpassing the proprietary GPT-5.1 (76.9\%) and GPT-5-mini (67.7\%) baselines. This performance underscores the capacity of locally deployed large models to rival state-of-the-art proprietary systems in specialty-specific medical reasoning. While the smaller gpt-oss-20b variants showed a performance gap, with the best-performing gpt-oss-20b (H) achieving 66.2\% (95\% CI: 57.7--73.7\%), they remained competitive in specific subtasks (e.g., Refractive Disorders or Strabismus). Across all evaluated architectures, models consistently demonstrated higher performance in diagnosis compared to patient management, reflecting the increased complexity of treatment planning in specialty care.
 
 
 Fig.~\ref{fig:2}c shows the evaluation results of models acting as clinical judges (Table~\ref{tab:specialty_results_with_total}), measured by the median relative error (interquartile range) between the model's score and human expert consensus. The proprietary GPT-5 achieved the lowest median error for treatment-related judgments (0.00, IQR: -0.33–0.50), demonstrating high alignment with human experts across specialties such as Internal Medicine and Pediatrics. However, for diagnostic assessment, GPT-5 exhibited a tendency to underestimate performance (median error: -0.50, IQR: -1.00–0.00). In contrast, the on-device gpt-oss-120b variants demonstrated high stability, achieving a median error of 0.00 (IQR: -0.50–0.25) across all diagnostic tasks, significantly outperforming o4-mini ($p<0.01$), which showed a larger deviation (-1.00, IQR: -1.83–0.17). Among the open-source models, DeepSeek-R1 and the gpt-oss-20b series generally aligned well with human scores but displayed slightly higher variability in treatment evaluations compared to the larger 120b models. When stratified by disease frequency, the gpt-oss-120b models maintained consistent accuracy across ``Rare'', ``Less Frequent'', and ``Frequent'' conditions, suggesting that larger on-device models can offer robust, human-aligned evaluation capabilities.
@@ -324,7 +286,7 @@ Together, these results support the use of consensus-based aggregation to mitiga
 
 
 \subsection*{Fine-tuning substantially improves the diagnostic capability of on-device LLMs}
-To assess the adaptability of on-device LLMs for clinical decision support, we fine-tuned the gpt-oss-20b (M) model on the general disease diagnosis dataset (Methods). As shown in Fig.~\ref{fig:2}d (Supplementary Fig. 1--3), the fine-tuned model produced a marked improvement in diagnostic accuracy, increasing from 77.3\% (95\% CI: 71.1-82.5\%)  in the base model to 86.5\% (95\% CI: 81.1-90.5\%) after adaptation. This performance not only exceeded the accuracy of DeepSeek-R1 (81.6\%, 95\% CI: 75.8-86.3\%) and o4-mini (84.1\%, 95\% CI: 78.5-88.4\%) but also approached that of the state-of-the-art proprietary GPT-5 model (88.9\%, 95\% CI: 83.9-92.5\%).
+To assess the adaptability of on-device LLMs for clinical decision support, we fine-tuned the gpt-oss-20b (M) model on the general disease diagnosis dataset (Methods). As shown in Fig.~\ref{fig:2}d (Supplementary Fig. 1--3), the fine-tuned model produced a marked improvement in diagnostic accuracy, increasing from 77.3\% (95\% CI: 71.1--82.5\%) in the base model to 86.5\% (95\% CI: 81.1--90.5\%) after adaptation. This performance not only exceeded the accuracy of DeepSeek-R1 (81.6\%, 95\% CI: 75.8--86.3\%) and GPT-5-mini (84.5\%, 95\% CI: 79.0--88.8\%) but also approached that of the state-of-the-art proprietary GPT-5.2 model (90.8\%, 95\% CI: 86.1--94.0\%).
 
 To illustrate the impact of fine-tuning on both diagnostic accuracy and reasoning quality, we present three case studies (Supplementary Cases 1--3). Case 1 (Von Hippel-Lindau syndrome) shows fine-tuning enhances reasoning quality even when base models reach correct diagnoses: the base model provided superficial comparisons with uncertain statements, while the fine-tuned model employed systematic multi-system integration with detailed syndrome comparison and definitive synthesis. Cases 2--3 demonstrate error correction through recognition of critical clinical features. 
 Furthermore, the sub-speciality-wise analysis (Fig.~\ref{fig:2}e, Fig.~\ref{fig:3}) reveals that fine-tuning effectively mitigates domain-specific weaknesses observed in base models, particularly in specialized areas such as cardiovascular and breast imaging.
