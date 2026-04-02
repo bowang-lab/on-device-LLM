@@ -225,8 +225,8 @@
 % Supplementary Table 1: Full CIs for Generalist task
 \begin{sidewaystable}[p]
 \centering
-\scriptsize
-\setlength{\tabcolsep}{2.5pt}
+\tiny
+\setlength{\tabcolsep}{2pt}
 \caption{\textbf{LLM-as-a-Generalist Task: Diagnostic accuracy with 95\% confidence intervals across radiological anatomical subgroups.}
 Performance is evaluated using self-consistency majority voting accuracy (\%, 95\% Wilson CI).}
 \label{tab:generalist_full_ci}
@@ -272,41 +272,42 @@ Others                        & 75.0 (40.9--92.9) & 75.0 (40.9--92.9) & 75.0 (40
 \end{tabular}
 \end{sidewaystable}
 
-% Supplementary Table 2: Full CIs for Specialist task
+
+% Supplementary Table 2: Full CIs for all models
 \begin{sidewaystable}[p]
 \centering
-\scriptsize
-\setlength{\tabcolsep}{3pt}
-\caption{\textbf{LLM-as-a-Specialist Task: Ophthalmology accuracy with 95\% confidence intervals.}
-Performance is evaluated across distinct clinical subspecialties and question types (Diagnosis vs.\ Management).}
+\tiny
+\setlength{\tabcolsep}{2pt}
+\caption{\textbf{Supplementary Table 2: Complete ophthalmology accuracy with 95\% confidence intervals.} 
+Performance across all models including temperature variants (L=Low, M=Medium, H=High) for gpt-oss models.}
 \label{tab:ophthalmology_full_ci}
-\begin{tabular}{ll *{9}{c}}
+\begin{tabular}{ll ccc c ccc ccc ccc}
 \toprule
-\textbf{Type} & \textbf{Topic} & \textbf{GPT-5} & \textbf{o4-mini} & \textbf{DeepSeek-R1} &
-\textbf{gpt-oss-20b (L)} & \textbf{gpt-oss-20b (M)} & \textbf{gpt-oss-20b (H)} &
-\textbf{gpt-oss-120b (L)} & \textbf{gpt-oss-120b (M)} & \textbf{gpt-oss-120b (H)} \\
+& & \multicolumn{3}{c}{\textbf{Proprietary}} & \textbf{Open} & \multicolumn{3}{c}{\textbf{gpt-oss-20b}} & \multicolumn{3}{c}{\textbf{gpt-oss-120b}} & \multicolumn{3}{c}{\textbf{Qwen3.5}} \\
+\cmidrule(lr){3-5} \cmidrule(lr){6-6} \cmidrule(lr){7-9} \cmidrule(lr){10-12} \cmidrule(lr){13-15}
+\textbf{Type} & \textbf{Topic} & \textbf{GPT-5.1} & \textbf{5-mini} & \textbf{Gem-3.1} & \textbf{DS-R1} & \textbf{L} & \textbf{M} & \textbf{H} & \textbf{L} & \textbf{M} & \textbf{H} & \textbf{9B} & \textbf{27B} & \textbf{35B} \\
 \midrule
-\multirow{6}{*}{\rotatebox{90}{\textbf{Diagnosis}}}
-& Glaucoma & 100.0 (64.6--100.0) & 85.7 (48.7--97.4) & 100.0 (64.6--100.0) & 71.4 (35.9--91.8) & 85.7 (48.7--97.4) & 85.7 (48.7--97.4) & 85.7 (48.7--97.4) & 85.7 (48.7--97.4) & 85.7 (48.7--97.4) \\
-& External Eye/Orbital Diseases & 80.0 (49.0--94.3) & 80.0 (49.0--94.3) & 90.0 (59.6--98.2) & 70.0 (39.7--89.2) & 70.0 (39.7--89.2) & 80.0 (49.0--94.3) & 70.0 (39.7--89.2) & 80.0 (49.0--94.3) & 80.0 (49.0--94.3) \\
-& Retinal Diseases & 100.0 (43.8--100.0) & 100.0 (43.8--100.0) & 100.0 (43.8--100.0) & 66.7 (20.8--93.9) & 66.7 (20.8--93.9) & 66.7 (20.8--93.9) & 100.0 (43.8--100.0) & 66.7 (20.8--93.9) & 66.7 (20.8--93.9) \\
-& Anterior Segment Diseases & 62.5 (30.6--86.3) & 75.0 (40.9--92.9) & 75.0 (40.9--92.9) & 62.5 (30.6--86.3) & 62.5 (30.6--86.3) & 62.5 (30.6--86.3) & 75.0 (40.9--92.9) & 75.0 (40.9--92.9) & 75.0 (40.9--92.9) \\
-& Ocular Trauma & 100.0 (61.0--100.0) & 83.3 (43.6--97.0) & 100.0 (61.0--100.0) & 83.3 (43.6--97.0) & 66.7 (30.0--90.3) & 83.3 (43.6--97.0) & 83.3 (43.6--97.0) & 100.0 (61.0--100.0) & 83.3 (43.6--97.0) \\
-& Refractive Disorders/Strabismus & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) \\
-\cmidrule{2-11}
-& \textit{Average} & \textit{87.2 (73.3--94.4)} & \textit{84.6 (70.3--92.8)} & \textit{92.3 (79.7--97.3)} & \textit{74.4 (58.9--85.4)} & \textit{74.4 (58.9--85.4)} & \textit{79.5 (64.5--89.2)} & \textit{82.1 (67.3--91.0)} & \textit{84.6 (70.3--92.8)} & \textit{82.1 (67.3--91.0)} \\
+\multirow{6}{*}{\rotatebox{90}{\textbf{Diag}}}
+& Glaucoma & 100.0 (64.6--100.0) & 100.0 (64.6--100.0) & 100.0 (64.6--100.0) & 100.0 (64.6--100.0) & 71.4 (35.9--91.8) & 85.7 (48.7--97.4) & 85.7 (48.7--97.4) & 85.7 (48.7--97.4) & 85.7 (48.7--97.4) & 85.7 (48.7--97.4) & 100.0 (64.6--100.0) & 100.0 (64.6--100.0) & 100.0 (64.6--100.0) \\
+& Ext.\ Eye/Orb & 90.0 (59.6--98.2) & 80.0 (49.0--94.3) & 90.0 (59.6--98.2) & 90.0 (59.6--98.2) & 70.0 (39.7--89.2) & 70.0 (39.7--89.2) & 80.0 (49.0--94.3) & 70.0 (39.7--89.2) & 80.0 (49.0--94.3) & 80.0 (49.0--94.3) & 70.0 (39.7--89.2) & 70.0 (39.7--89.2) & 70.0 (39.7--89.2) \\
+& Retinal & 100.0 (43.8--100.0) & 100.0 (43.8--100.0) & 100.0 (43.8--100.0) & 100.0 (43.8--100.0) & 66.7 (20.8--93.9) & 66.7 (20.8--93.9) & 66.7 (20.8--93.9) & 100.0 (43.8--100.0) & 66.7 (20.8--93.9) & 66.7 (20.8--93.9) & 66.7 (20.8--93.9) & 100.0 (43.8--100.0) & 100.0 (43.8--100.0) \\
+& Ant.\ Segment & 50.0 (21.5--78.5) & 75.0 (40.9--92.9) & 75.0 (40.9--92.9) & 75.0 (40.9--92.9) & 62.5 (30.6--86.3) & 62.5 (30.6--86.3) & 62.5 (30.6--86.3) & 75.0 (40.9--92.9) & 75.0 (40.9--92.9) & 75.0 (40.9--92.9) & 75.0 (40.9--92.9) & 87.5 (52.9--97.8) & 75.0 (40.9--92.9) \\
+& Ocular Trauma & 100.0 (61.0--100.0) & 83.3 (43.6--97.0) & 100.0 (61.0--100.0) & 100.0 (61.0--100.0) & 83.3 (43.6--97.0) & 66.7 (30.0--90.3) & 83.3 (43.6--97.0) & 83.3 (43.6--97.0) & 100.0 (61.0--100.0) & 83.3 (43.6--97.0) & 83.3 (43.6--97.0) & 100.0 (61.0--100.0) & 100.0 (61.0--100.0) \\
+& Refract./Strab & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) \\
+\cmidrule{2-15}
+& \textit{Avg} & \textit{87.2 (73.3--94.4)} & \textit{87.2 (73.3--94.4)} & \textit{92.3 (79.7--97.3)} & \textit{92.3 (79.7--97.3)} & \textit{74.4 (58.9--85.4)} & \textit{74.4 (58.9--85.4)} & \textit{79.5 (64.5--89.2)} & \textit{82.1 (67.3--91.0)} & \textit{84.6 (70.3--92.8)} & \textit{82.1 (67.3--91.0)} & \textit{82.1 (67.3--91.0)} & \textit{89.7 (76.4--95.9)} & \textit{87.2 (73.3--94.4)} \\
 \midrule
-\multirow{6}{*}{\rotatebox{90}{\textbf{Management}}}
-& Glaucoma & 78.6 (52.4--92.4) & 64.3 (38.8--83.7) & 71.4 (45.4--88.3) & 50.0 (26.8--73.2) & 64.3 (38.8--83.7) & 50.0 (26.8--73.2) & 71.4 (45.4--88.3) & 78.6 (52.4--92.4) & 64.3 (38.8--83.7) \\
-& External Eye/Orbital Diseases & 78.6 (52.4--92.4) & 64.3 (38.8--83.7) & 78.6 (52.4--92.4) & 57.1 (32.6--78.6) & 71.4 (45.4--88.3) & 64.3 (38.8--83.7) & 71.4 (45.4--88.3) & 71.4 (45.4--88.3) & 71.4 (45.4--88.3) \\
-& Retinal Diseases & 37.5 (13.7--69.4) & 37.5 (13.7--69.4) & 37.5 (13.7--69.4) & 12.5 (2.2--47.1) & 25.0 (7.1--59.1) & 37.5 (13.7--69.4) & 50.0 (21.5--78.5) & 37.5 (13.7--69.4) & 37.5 (13.7--69.4) \\
-& Anterior Segment Diseases & 70.6 (46.9--86.7) & 64.7 (41.3--82.7) & 70.6 (46.9--86.7) & 76.5 (52.7--90.4) & 64.7 (41.3--82.7) & 76.5 (52.7--90.4) & 70.6 (46.9--86.7) & 76.5 (52.7--90.4) & 70.6 (46.9--86.7) \\
-& Ocular Trauma & 57.7 (38.9--74.5) & 69.2 (50.0--83.5) & 76.9 (57.9--89.0) & 42.3 (25.5--61.1) & 57.7 (38.9--74.5) & 50.0 (32.1--67.9) & 65.4 (46.2--80.6) & 76.9 (57.9--89.0) & 57.7 (38.9--74.5) \\
-& Refractive Disorders/Strabismus & 83.3 (55.2--95.3) & 83.3 (55.2--95.3) & 91.7 (64.6--98.5) & 66.7 (39.1--86.2) & 58.3 (32.0--80.7) & 83.3 (55.2--95.3) & 83.3 (55.2--95.3) & 91.7 (64.6--98.5) & 83.3 (55.2--95.3) \\
-\cmidrule{2-11}
-& \textit{Average} & \textit{68.1 (58.0--76.8)} & \textit{65.9 (55.7--74.8)} & \textit{73.6 (63.7--81.6)} & \textit{52.7 (42.6--62.7)} & \textit{59.3 (49.1--68.9)} & \textit{60.4 (50.2--69.9)} & \textit{69.2 (59.1--77.8)} & \textit{74.7 (64.9--82.5)} & \textit{64.8 (54.6--73.9)} \\
+\multirow{6}{*}{\rotatebox{90}{\textbf{Mgmt}}}
+& Glaucoma & 85.7 (60.1--96.0) & 64.3 (38.8--83.7) & 85.7 (60.1--96.0) & 71.4 (45.4--88.3) & 50.0 (26.8--73.2) & 64.3 (38.8--83.7) & 50.0 (26.8--73.2) & 71.4 (45.4--88.3) & 78.6 (52.4--92.4) & 64.3 (38.8--83.7) & 64.3 (38.8--83.7) & 85.7 (60.1--96.0) & 85.7 (60.1--96.0) \\
+& Ext.\ Eye/Orb & 71.4 (45.4--88.3) & 57.1 (32.6--78.6) & 64.3 (38.8--83.7) & 78.6 (52.4--92.4) & 57.1 (32.6--78.6) & 71.4 (45.4--88.3) & 64.3 (38.8--83.7) & 71.4 (45.4--88.3) & 71.4 (45.4--88.3) & 71.4 (45.4--88.3) & 78.6 (52.4--92.4) & 71.4 (45.4--88.3) & 92.9 (68.5--98.7) \\
+& Retinal & 37.5 (13.7--69.4) & 25.0 (7.1--59.1) & 37.5 (13.7--69.4) & 37.5 (13.7--69.4) & 12.5 (2.2--47.1) & 25.0 (7.1--59.1) & 37.5 (13.7--69.4) & 50.0 (21.5--78.5) & 37.5 (13.7--69.4) & 37.5 (13.7--69.4) & 37.5 (13.7--69.4) & 25.0 (7.1--59.1) & 37.5 (13.7--69.4) \\
+& Ant.\ Segment & 82.4 (59.0--93.8) & 64.7 (41.3--82.7) & 82.4 (59.0--93.8) & 70.6 (46.9--86.7) & 76.5 (52.7--90.4) & 64.7 (41.3--82.7) & 76.5 (52.7--90.4) & 70.6 (46.9--86.7) & 76.5 (52.7--90.4) & 70.6 (46.9--86.7) & 58.8 (36.0--78.4) & 64.7 (41.3--82.7) & 64.7 (41.3--82.7) \\
+& Ocular Trauma & 65.4 (46.2--80.6) & 57.7 (38.9--74.5) & 65.4 (46.2--80.6) & 76.9 (57.9--89.0) & 42.3 (25.5--61.1) & 57.7 (38.9--74.5) & 50.0 (32.1--67.9) & 65.4 (46.2--80.6) & 76.9 (57.9--89.0) & 57.7 (38.9--74.5) & 57.7 (38.9--74.5) & 61.5 (42.5--77.6) & 57.7 (38.9--74.5) \\
+& Refract./Strab & 83.3 (55.2--95.3) & 75.0 (46.8--91.1) & 91.7 (64.6--98.5) & 91.7 (64.6--98.5) & 66.7 (39.1--86.2) & 58.3 (32.0--80.7) & 83.3 (55.2--95.3) & 83.3 (55.2--95.3) & 91.7 (64.6--98.5) & 83.3 (55.2--95.3) & 91.7 (64.6--98.5) & 91.7 (64.6--98.5) & 83.3 (55.2--95.3) \\
+\cmidrule{2-15}
+& \textit{Avg} & \textit{72.5 (62.6--80.6)} & \textit{59.3 (49.1--68.9)} & \textit{72.5 (62.6--80.6)} & \textit{73.6 (63.7--81.6)} & \textit{52.7 (42.6--62.7)} & \textit{59.3 (49.1--68.9)} & \textit{60.4 (50.2--69.9)} & \textit{69.2 (59.1--77.8)} & \textit{74.7 (64.9--82.5)} & \textit{64.8 (54.6--73.9)} & \textit{64.8 (54.6--73.9)} & \textit{68.1 (58.0--76.8)} & \textit{70.3 (60.3--78.7)} \\
 \midrule
-\multicolumn{2}{l}{\textbf{Overall}} & \textbf{73.8 (65.7--80.6)} & \textbf{71.5 (63.3--78.6)} & \textbf{79.2 (71.5--85.3)} & \textbf{59.2 (50.6--67.3)} & \textbf{63.8 (55.3--71.6)} & \textbf{66.2 (57.7--73.7)} & \textbf{73.1 (64.9--80.0)} & \textbf{77.7 (69.8--84.0)} & \textbf{70.0 (61.6--77.2)} \\
+\multicolumn{2}{l}{\textbf{Overall}} & \textbf{76.9 (69.0--83.3)} & \textbf{67.7 (59.2--75.1)} & \textbf{78.5 (70.6--84.7)} & \textbf{79.2 (71.5--85.3)} & \textbf{59.2 (50.6--67.3)} & \textbf{63.8 (55.3--71.6)} & \textbf{66.2 (57.7--73.7)} & \textbf{73.1 (64.9--80.0)} & \textbf{77.7 (69.8--84.0)} & \textbf{70.0 (61.6--77.2)} & \textbf{70.0 (61.6--77.2)} & \textbf{74.6 (66.5--81.3)} & \textbf{75.4 (67.3--82.0)} \\
 \bottomrule
 \end{tabular}
 \end{sidewaystable}
@@ -314,12 +315,11 @@ Performance is evaluated across distinct clinical subspecialties and question ty
 
 
 
-
 % Supplementary Table 3: Full IQR for Clinical Judge task
 \begin{sidewaystable}[p]
 \centering
-\scriptsize
-\setlength{\tabcolsep}{3pt}
+\tiny
+\setlength{\tabcolsep}{2pt}
 \caption{\textbf{LLM-as-a-Clinical-Judge Task: Median error with interquartile ranges across five specialties.} Scores are presented as the median error (25\%--75\% IQR) relative to human expert scores. A value of 0 indicates perfect alignment; negative values indicate underestimation.}
 \label{tab:specialty_full_iqr}
 \begin{tabular}{ll *{13}{c}}
@@ -353,29 +353,29 @@ Performance is evaluated across distinct clinical subspecialties and question ty
 
 \begin{sidewaystable}[p]
 \centering
-\scriptsize
-\setlength{\tabcolsep}{3pt}
-\caption{\textbf{LLM-as-a-Clinical-Judge Task: Impact of disease prevalence on clinical judgment accuracy.} Model alignment with human expert scoring is stratified by disease frequency (Rare, Less Frequent, Frequent). Scores are presented as the median error (25\%-75\% interquartile range, IQR) relative to human expert scores.}
+\tiny
+\setlength{\tabcolsep}{2pt}
+\caption{\textbf{LLM-as-a-Clinical-Judge Task: Impact of disease prevalence on clinical judgment accuracy.} Model alignment with human expert scoring is stratified by disease frequency (Rare, Less Frequent, Frequent). Scores are presented as the median error (25\%--75\% interquartile range, IQR) relative to human expert scores.}
 \label{tab:frequency_results_with_total}
-\begin{tabular}{ll *{9}{c}}
+\begin{tabular}{ll ccc c ccc ccc ccc}
 \toprule
-\textbf{Type} & \textbf{Frequency} & \textbf{GPT-5} & \textbf{o4-mini} & \textbf{DeepSeek-R1} & 
-\shortstack{\textbf{gpt-oss-20b (L)}} & \shortstack{\textbf{gpt-oss-20b (M)}} & \shortstack{\textbf{gpt-oss-20b (H)}} & 
-\shortstack{\textbf{gpt-oss-120b (L)}} & \shortstack{\textbf{gpt-oss-120b (M)}} & \shortstack{\textbf{gpt-oss-120b (H)}} \\
+& & \multicolumn{3}{c}{\textbf{Proprietary}} & \textbf{Open} & \multicolumn{3}{c}{\textbf{gpt-oss-20b}} & \multicolumn{3}{c}{\textbf{gpt-oss-120b}} & \multicolumn{3}{c}{\textbf{qwen3.5}} \\
+\cmidrule(lr){3-5} \cmidrule(lr){6-6} \cmidrule(lr){7-9} \cmidrule(lr){10-12} \cmidrule(lr){13-15}
+\textbf{Type} & \textbf{Frequency} & \textbf{GPT-5.1} & \textbf{Gemini} & \textbf{5.1-mini} & \textbf{DS-R1} & \textbf{L} & \textbf{M} & \textbf{H} & \textbf{L} & \textbf{M} & \textbf{H} & \textbf{9B} & \textbf{27B} & \textbf{35B} \\
 \midrule
 \multirow{4}{*}{\rotatebox{90}{\textbf{Treatment}}}
-& Rare & 0.00 (0.00--0.50) & 0.25 (0.00--0.50) & 0.25 (0.00--0.67) & 0.00 (-0.17--0.50) & 0.08 (-0.17--0.50) & 0.00 (-0.33--0.50) & 0.17 (0.00--0.50) & 0.00 (-0.17--0.50) & 0.00 (-0.17--0.50) \\
-& Less Frequent & 0.00 (-0.33--0.50) & 0.29 (0.00--0.75) & 0.42 (0.00--0.50) & 0.17 (-0.17--0.50) & 0.17 (-0.17--0.50) & 0.17 (-0.31--0.50) & 0.17 (0.00--0.50) & 0.25 (0.00--0.63) & 0.25 (0.00--0.65) \\
-& Frequent & 0.00 (-0.50--0.50) & 0.17 (0.00--0.50) & 0.17 (0.00--0.71) & 0.00 (-0.27--0.50) & 0.00 (-0.17--0.67) & 0.17 (-0.17--0.50) & 0.17 (-0.17--0.50) & 0.17 (-0.17--0.58) & 0.17 (-0.17--0.50) \\
-\cmidrule{2-11}
-& \textit{Overall} & \textit{0.00 (-0.33--0.50)} & \textit{0.25 (0.00--0.63)} & \textit{0.29 (0.00--0.67)} & \textit{0.08 (-0.17--0.50)} & \textit{0.17 (-0.17--0.50)} & \textit{0.17 (-0.29--0.50)} & \textit{0.17 (-0.17--0.50)} & \textit{0.17 (-0.17--0.58)} & \textit{0.17 (-0.17--0.50)} \\
+& Rare & 0.33 (0.00--0.50) & 0.50 (0.00--1.00) & 0.25 (0.00--0.50) & 0.25 (0.00--0.67) & 0.00 (-0.17--0.50) & 0.08 (-0.17--0.50) & 0.00 (-0.33--0.50) & 0.17 (0.00--0.50) & 0.00 (-0.17--0.50) & 0.00 (-0.17--0.50) & 0.33 (0.00--0.75) & 0.50 (0.00--1.00) & 0.50 (0.00--0.83) \\
+& Less Frequent & 0.50 (0.00--0.75) & 0.50 (0.00--1.00) & 0.50 (0.00--0.75) & 0.42 (0.00--0.50) & 0.17 (-0.17--0.50) & 0.17 (-0.17--0.50) & 0.17 (-0.31--0.50) & 0.17 (0.00--0.50) & 0.25 (0.00--0.63) & 0.25 (0.00--0.65) & 0.50 (0.00--0.81) & 0.50 (0.00--0.75) & 0.50 (0.00--0.83) \\
+& Frequent & 0.25 (0.00--0.52) & 0.50 (0.00--1.00) & 0.25 (0.00--0.54) & 0.17 (0.00--0.71) & 0.00 (-0.27--0.50) & 0.00 (-0.17--0.67) & 0.17 (-0.17--0.50) & 0.17 (-0.17--0.50) & 0.17 (-0.17--0.58) & 0.17 (-0.17--0.50) & 0.50 (0.00--1.00) & 0.50 (0.00--0.83) & 0.50 (0.00--1.00) \\
+\cmidrule{2-15}
+& \textit{Overall} & \textit{0.33 (0.00--0.67)} & \textit{0.50 (0.00--1.00)} & \textit{0.25 (0.00--0.67)} & \textit{0.29 (0.00--0.67)} & \textit{0.08 (-0.17--0.50)} & \textit{0.17 (-0.17--0.50)} & \textit{0.17 (-0.29--0.50)} & \textit{0.17 (-0.17--0.50)} & \textit{0.17 (-0.17--0.58)} & \textit{0.17 (-0.17--0.50)} & \textit{0.50 (0.00--0.83)} & \textit{0.50 (0.00--0.83)} & \textit{0.50 (0.00--1.00)} \\
 \midrule
 \multirow{4}{*}{\rotatebox{90}{\textbf{Diagnosis}}}
-& Rare & -0.67 (-1.25--0.00) & -1.25 (-2.00--0.50) & -0.33 (-0.92--0.08) & -0.33 (-1.17--0.00) & -0.33 (-1.08--0.08) & -0.33 (-1.17--0.13) & 0.00 (-1.29--0.42) & 0.00 (-1.38--0.33) & 0.00 (-1.25--0.33) \\
-& Less Frequent & -0.33 (-1.08--0.00) & -1.00 (-1.83--0.33) & -0.29 (-0.67--0.00) & -0.33 (-0.83--0.00) & -0.33 (-0.67--0.00) & -0.33 (-0.67--0.00) & 0.00 (-0.67--0.17) & 0.00 (-0.67--0.23) & 0.00 (-0.67--0.25) \\
-& Frequent & -0.33 (-0.83--0.00) & -0.63 (-1.50--0.00) & -0.25 (-0.50--0.00) & 0.00 (-0.33--0.00) & 0.00 (-0.50--0.00) & -0.04 (-0.50--0.00) & 0.00 (-0.33--0.17) & 0.00 (-0.23--0.25) & 0.00 (-0.33--0.25) \\
-\cmidrule{2-11}
-& \textbf{Overall} & \textbf{-0.50 (-1.00--0.00)} & \textbf{-1.00 (-1.83--0.17)} & \textbf{-0.33 (-0.67--0.00)} & \textbf{-0.33 (-0.67--0.00)} & \textbf{-0.25 (-0.67--0.00)} & \textbf{-0.25 (-0.67--0.00)} & \textbf{0.00 (-0.50--0.25)} & \textbf{0.00 (-0.50--0.25)} & \textbf{0.00 (-0.50--0.25)} \\
+& Rare & 0.00 (-0.67--0.17) & 0.00 (-0.67--0.50) & -0.83 (-1.50--0.00) & -0.33 (-0.92--0.08) & -0.33 (-1.17--0.00) & -0.33 (-1.08--0.08) & -0.33 (-1.17--0.13) & 0.00 (-1.29--0.42) & 0.00 (-1.38--0.33) & 0.00 (-1.25--0.33) & 0.00 (-0.08--0.50) & 0.00 (0.00--0.50) & 0.00 (-0.33--0.50) \\
+& Less Frequent & 0.00 (-0.50--0.06) & 0.00 (0.00--0.50) & -0.50 (-1.06--0.00) & -0.29 (-0.67--0.00) & -0.33 (-0.83--0.00) & -0.33 (-0.67--0.00) & -0.33 (-0.67--0.00) & 0.00 (-0.67--0.17) & 0.00 (-0.67--0.23) & 0.00 (-0.67--0.25) & 0.00 (0.00--0.50) & 0.00 (0.00--0.50) & 0.00 (0.00--0.50) \\
+& Frequent & 0.00 (-0.33--0.06) & 0.00 (0.00--0.50) & -0.50 (-1.00--0.00) & -0.25 (-0.50--0.00) & 0.00 (-0.33--0.00) & 0.00 (-0.50--0.00) & -0.04 (-0.50--0.00) & 0.00 (-0.33--0.17) & 0.00 (-0.23--0.25) & 0.00 (-0.33--0.25) & 0.00 (0.00--0.50) & 0.00 (0.00--0.50) & 0.00 (0.00--0.50) \\
+\cmidrule{2-15}
+& \textbf{Overall} & \textbf{0.00 (-0.50--0.08)} & \textbf{0.00 (0.00--0.50)} & \textbf{-0.50 (-1.13--0.00)} & \textbf{-0.33 (-0.67--0.00)} & \textbf{-0.33 (-0.67--0.00)} & \textbf{-0.25 (-0.67--0.00)} & \textbf{-0.25 (-0.67--0.00)} & \textbf{0.00 (-0.50--0.25)} & \textbf{0.00 (-0.50--0.25)} & \textbf{0.00 (-0.50--0.25)} & \textbf{0.00 (0.00--0.50)} & \textbf{0.00 (0.00--0.50)} & \textbf{0.00 (-0.08--0.50)} \\
 \bottomrule
 \end{tabular}
 \end{sidewaystable}
@@ -896,11 +896,137 @@ The following case studies illustrate the chain-of-thought reasoning capabilitie
         \item \textbf{Systematic framework:} Transformed rambling analysis into structured 4-step approach with clear MRI pattern description and differential table
     \end{itemize}
 \end{casebox}
-%Omare end of case studies 
+%Omar end of case studies 
 
 
 
 
+% Omar cases using Qwen 3.5 35b tuned model 
+
+
+% --- Case 1: Von Hippel-Lindau Syndrome (Qwen3.5 35B Fine-Tuned) ---
+\begin{casebox}
+    \textbf{Case Study 1: Von Hippel-Lindau Syndrome}
+
+    \vspace{1em}
+    \textbf{Case Presentation}
+    
+    \textbf{Clinical History:} A 41-year-old male presents with a history of microscopic haematuria, a palpable right flank mass, and recurrent headaches. A CT scan was performed, followed by a brain MRI to rule out tumoural pathology. The patient had no significant medical history.
+    
+    \vspace{1em}
+    \textbf{Imaging Findings:} In the abdominal CT scan, multiple bilateral renal cystic lesions with septum formation were observed. The right kidney had multiple, irregular, heterogeneous lesions with significant enhancement post-contrast, and hypodense central areas related to necrosis, the biggest located in the superior pole. Similar characteristics were noted in the left kidney lesions. Also, multiple simple pancreatic cysts and splenic vein dilation were observed, along with pancreaticosplenic collaterals. There is a lesion in the splenic hilum that enhances and follows contrast in different phases, suggestive of a splenic hamartoma. The brain MRI revealed multiple heterogeneous lesions with a cystic and a solid component in the posterior fossa, showing avid and homogeneous enhancement of the solid portion, and causing vasogenic oedema and mass effect on the pons.
+    
+    \vspace{1em}
+    \textbf{Differential diagnoses to consider:} Von Hippel-Lindau syndrome (VHL), Sporadic haemangioblastomas, Multiple endocrine neoplasia type 1 (MEN-1), Tuberous sclerosis complex (TSC), Polycystic kidney disease (PKD), Hereditary leiomyomatosis and renal cell cancer (HLRCC)
+    
+    \vspace{1em}
+    \textbf{Ground Truth:} Von Hippel-Lindau syndrome (VHL)
+    
+    \vspace{1em}
+    \hrule
+    \vspace{1em}
+
+    \textbf{Qwen3.5 35B Fine-Tuned Model Response}
+
+    \vspace{1em}
+    The diagnostic process begins by correlating the clinical triad of microscopic haematuria, a palpable flank mass, and recurrent headaches with the imaging findings. The abdominal CT demonstrates bilateral renal cysts with enhancing solid components, characteristic of complex cysts rather than simple ones. Crucially, the presence of pancreatic cysts and a splenic hamartoma suggests a systemic syndrome affecting multiple organs. The brain MRI reveals posterior fossa lesions with solid enhancing components, highly suggestive of hemangioblastomas.
+
+    \vspace{0.5em}
+    I systematically evaluate the differential diagnoses against this constellation of findings. \colorbox{yellow!30}{Polycystic Kidney Disease (PKD)} is unlikely because the renal cysts contain solid, enhancing nodules, whereas PKD typically presents with simple cysts. \colorbox{yellow!30}{Tuberous Sclerosis Complex (TSC)} is excluded due to the absence of cortical tubers, subependymal nodules, or other TSC-specific manifestations. \colorbox{yellow!30}{Multiple Endocrine Neoplasia type 1 (MEN 1)} is ruled out as there is no evidence of pancreatic neuroendocrine tumors (the cysts are simple) or parathyroid pathology. \colorbox{yellow!30}{Hereditary Leiomyomatosis and Renal Cell Cancer (HLRCC)} is considered but less likely; while HLRCC causes renal cysts, it typically presents with aggressive papillary RCC and cutaneous leiomyomas, which are absent here.
+
+    \vspace{0.5em}
+    The logical path converges on \colorbox{green!30}{\textbf{Von Hippel-Lindau (VHL) syndrome}}. This diagnosis is supported by the classic triad of findings: bilateral renal cysts with solid enhancing components (likely clear cell RCC), pancreatic cysts, and cerebellar hemangioblastomas. The splenic hamartoma further supports the multisystem nature of \colorbox{green!30}{\textbf{Von Hippel-Lindau (VHL) syndrome}}. The enhancing solid components in the kidneys represent early neoplastic transformation, explaining the haematuria and mass. The posterior fossa lesions explain the headaches. Therefore, the imaging pattern of renal cysts with solid nodules, pancreatic cysts, and CNS hemangioblastomas definitively points to \colorbox{green!30}{\textbf{Von Hippel-Lindau (VHL) syndrome}}, necessitating genetic counseling and surveillance for associated malignancies.
+
+    \vspace{1em}
+    \noindent\textbf{Qwen3.5 35B Final Answer:} \colorbox{green!30}{\textbf{Von Hippel-Lindau (VHL) syndrome}}
+
+\end{casebox}
+
+% --- Case 2: Primary Cardiac Lymphoma (Qwen3.5 35B Fine-Tuned) ---
+\begin{casebox}
+    \textbf{Case Study 2: Primary Cardiac Lymphoma}
+
+    \vspace{1em}
+    \textbf{Case Presentation}
+    
+    \textbf{Clinical History:} An 81-year-old male with a history of paroxysmal atrial fibrillation presents to the emergency department with a one-week onset of orthopnoea and exertional dyspnoea. Laboratory tests demonstrate elevated troponins, the electrocardiogram reveals a third-degree atrioventricular block, and the echocardiogram shows right ventricular thickening and pericardial effusion.
+    
+    \vspace{1em}
+    \textbf{Imaging Findings:} A PET-CT scan was carried out revealing a large hypermetabolic myocardial tissue. It extended through the right chambers and around the large vessels, sparing the left ventricle. Additionally, a hypermetabolic nodular image was identified at the left lung base. Therefore, a contrast-enhanced chest CT scan was performed. It confirmed the presence of an infiltrative hypodense mass in the myocardium. It involved the right atrium, right ventricle, interatrial septum, and atrioventricular groove. The mass caused mural thickening of the right cavities. A cuff encircled the right coronary artery along its course. A moderate pericardial effusion was also observed. Finally, the CT scan confirmed the solid nodule in the posterior segment of the left lower lobe. A CT-guided percutaneous biopsy of the lung nodule was made for histological examination.
+    
+    \vspace{1em}
+    \textbf{Differential diagnoses to consider:} Angiosarcoma, IgG4-related disease, Primary cardiac lymphoma, Erdheim-Chester disease, Undifferentiated pleomorphic sarcoma
+    
+    \vspace{1em}
+    \textbf{Ground Truth:} Primary cardiac lymphoma
+    
+    \vspace{1em}
+    \hrule
+    \vspace{1em}
+
+    \textbf{Qwen3.5 35B Fine-Tuned Model Response}
+
+    \vspace{1em}
+    The patient presents with heart failure and third-degree AV block, which immediately signals right ventricular infiltration or conduction system involvement. The imaging is the key discriminator. We observe a hypermetabolic mass involving the right atrium, right ventricle, and interatrial septum, while notably sparing the left ventricle. This right-sided dominance is highly characteristic of \colorbox{green!30}{\textbf{Primary Cardiac Lymphoma (PCL)}}, as the right chambers are the most common site of involvement.
+
+    \vspace{0.5em}
+    We must now map these findings to the differential diagnoses. \colorbox{yellow!30}{Angiosarcoma} is the most common primary cardiac malignancy, but it typically arises from the right atrium and invades the pericardium, often with hemorrhage. While this mass is right-sided, the specific involvement of the interatrial septum and the "cuff" around the right coronary artery without pericardial hemorrhage favors lymphoma. Furthermore, the lung nodule supports a systemic hematologic process rather than a primary sarcoma.
+
+    \vspace{0.5em}
+    \colorbox{yellow!30}{Erdheim-Chester disease (ECD)} is a strong consideration given the "raccoon eyes" and cardiac infiltration, but ECD typically presents with bone pain and bilateral perinephric fibrosis ("hairy kidney"), neither of which is present here. Additionally, ECD is a histiocytosis, whereas the lung biopsy confirmed non-Hodgkin lymphoma. \colorbox{yellow!30}{IgG4-related disease} causes infiltration but is usually atheromatous or fibrotic, not hypermetabolic and nodular. \colorbox{yellow!30}{Undifferentiated pleomorphic sarcoma} is a diagnosis of exclusion; the specific right-sided distribution and systemic lung involvement make \colorbox{green!30}{\textbf{PCL}} more likely.
+
+    \vspace{0.5em}
+    Finally, the PET-CT shows hypermetabolism, confirming malignancy. The CT-guided biopsy of the lung nodule provided the histological confirmation of non-Hodgkin lymphoma. The convergence of right-sided cardiac dominance, hypermetabolic activity, and systemic lung involvement leads to the diagnosis of \colorbox{green!30}{\textbf{Primary Cardiac Lymphoma}}. This case highlights that while \colorbox{green!30}{\textbf{PCL}} is rare, its specific imaging signature---right chamber infiltration sparing the left ventricle---should prompt early consideration to avoid misdiagnosis as ischemic cardiomyopathy.
+
+    \vspace{1em}
+    \noindent\textbf{Qwen3.5 35B Final Answer:} \colorbox{green!30}{\textbf{Primary Cardiac Lymphoma}}
+
+\end{casebox}
+
+
+% --- Case 3: Non-Ischemic Cerebral Enhancing (NICE) Lesions (Qwen3.5 35B Fine-Tuned) ---
+\begin{casebox}
+    \textbf{Case Study 3: Non-Ischemic Cerebral Enhancing (NICE) Lesions}
+
+    \vspace{1em}
+    \textbf{Case Presentation}
+    
+    \textbf{Clinical History:} Five days after an uncomplicated embolisation of an asymptomatic, growing right middle cerebral artery (MCA) aneurysm, a 56-year-old woman comes to the ER due to headache, a seizure and fluctuant left upper extremity weakness and left campimetric defects. A Todd's paralysis is suspected, and the patient is admitted for a workup.
+    
+    \vspace{1em}
+    \textbf{Imaging Findings:} Initially, a brain CT is performed, which shows no significant abnormalities apart from the embolisation material. Then a brain MRI is performed, including the following sequences: DWI, SWI, T2, FLAIR, 3D TOF and pre and post-gadolinium T1. The MRI discloses multiple round lesions varying in size in the right hemisphere. The lesions are spontaneously T1 hypointense and T2 hyperintense, the largest ones showing a small, central T2 hypointensity. Post-gadolinium enhancement is demonstrated in all the lesions. No restricted diffusion or susceptibility artefacts are present. Follow-up imaging after 6 months shows overall improvement with resolution of the enhancing foci. However, T2 hyperintensity is still present, and central punctate susceptibility artefacts have appeared, interpreted as microhaemorrhagic foci.
+    
+    \vspace{1em}
+    \textbf{Differential diagnoses to consider:} Non-ischemic cerebral enhancing (NICE) lesions, Subacute cerebral infarcts, Cerebral microabscesses, Brain metastases
+    
+    \vspace{1em}
+    \textbf{Ground Truth:} Non-ischemic cerebral enhancing (NICE) lesions
+    
+    \vspace{1em}
+    \hrule
+    \vspace{1em}
+
+    \textbf{Qwen3.5 35B Fine-Tuned Model Response}
+
+    \vspace{1em}
+    The patient presents with acute neurological deficits (seizure, hemiparesis) following aneurysm embolization, initially suggesting a post-procedural ischemic event. However, the MRI findings fundamentally contradict this hypothesis.
+
+    \vspace{0.5em}
+    First, I assess for ischemia. The lesions are T1 hypointense and T2 hyperintense with central punctate susceptibility, but critically, there is **no restricted diffusion on DWI**. \colorbox{yellow!30}{Subacute cerebral infarcts} (2-5 days) typically demonstrate restricted diffusion. The absence of this finding effectively rules out ischemic stroke.
+
+    \vspace{0.5em}
+    Next, I evaluate the lesion morphology. The lesions are multiple, round, and show homogeneous enhancement. While \colorbox{yellow!30}{Brain metastases} fit the enhancement pattern, they typically present with mass effect and edema disproportionate to lesion size. Here, the lesions are small, and the clinical course is subacute with follow-up showing resolution of enhancement. This makes metastatic disease unlikely. \colorbox{yellow!30}{Cerebral microabscesses} are also unlikely; they typically present with ring enhancement and significant surrounding edema, often with clinical signs of infection, none of which are present.
+
+    \vspace{0.5em}
+    This leaves \colorbox{green!30}{\textbf{Non-ischemic Cerebral Enhancing (NICE) lesions}}. The history of endovascular intervention is the key risk factor. The pathophysiology involves microembolization of thrombus or coil fragments, leading to small vessel inflammation and blood-brain barrier disruption. The timeline fits: symptoms appeared 5 days post-procedure. The imaging signature---multiple enhancing, T2-hyperintense lesions without DWI restriction---is classic for \colorbox{green!30}{\textbf{NICE lesions}}. The follow-up evolution confirms this: enhancing foci resolved, while central susceptibility (microhemorrhage) persisted, consistent with the inflammatory and microvascular nature of the injury.
+
+    \vspace{0.5em}
+    Therefore, despite the initial seizure and weakness, the absence of restricted diffusion and the specific post-embolization context converge to diagnose \colorbox{green!30}{\textbf{NICE lesions}}.
+
+    \vspace{1em}
+    \noindent\textbf{Qwen3.5 35B Final Answer:} \colorbox{green!30}{\textbf{Non-ischemic Cerebral Enhancing (NICE) lesions}}
+
+\end{casebox}
 
 % \newpage
 % \bibliographystyle{IEEEtran}

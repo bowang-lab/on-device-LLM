@@ -66,7 +66,7 @@
 %
 
 
-\author{Alif Munim$^*$, Jun Ma$^*$, Omar Ibrahim$^*$, Alhusain Abdalla$^*$, Shuolin Yin, Leo Chen, and Bo Wang % <-this % stops a space
+\author{Alif Munim$^*$, Omar Ibrahim$^*$, Alhusain Abdalla$^*$, Jun Ma$^*$, Meng Wei, Shuolin Yin, Leo Chen, and Bo Wang % <-this % stops a space
 
 
 \IEEEcompsocitemizethanks{
@@ -85,7 +85,7 @@ E-mail: bowang@vectorinstitute.ai}% <-this % stops an unwanted space
 
 \IEEEtitleabstractindextext{%
 \begin{abstract}
-Large language models (LLMs) have rapidly advanced in clinical decision-making, yet the deployment of proprietary systems is hindered by privacy concerns and reliance on cloud-based infrastructure. Open-source alternatives allow local inference but often require large model sizes that limit their use in resource-constrained clinical settings. Here, we benchmark two on-device LLMs, gpt-oss-20b and gpt-oss-120b, across three representative clinical tasks: general disease diagnosis, specialty-specific (ophthalmology) diagnosis and management, and simulation of human expert grading and evaluation. We compare their performance with state-of-the-art proprietary models (GPT-5 and o4-mini) and a leading open-source model (DeepSeek-R1), and we further evaluate the adaptability of on-device systems by fine-tuning gpt-oss-20b on general diagnostic data. Across tasks, gpt-oss models achieve performance comparable to or exceeding DeepSeek-R1 and o4-mini despite being substantially smaller. In addition, fine-tuning remarkably improves the diagnostic accuracy of gpt-oss-20b, enabling it to approach the performance of GPT-5. These findings highlight the potential of on-device LLMs to deliver accurate, adaptable, and privacy-preserving clinical decision support, offering a practical pathway for broader integration of LLMs into routine clinical practice.
+Large language models (LLMs) have rapidly advanced in clinical decision-making, yet the deployment of proprietary systems is hindered by privacy concerns and reliance on cloud-based infrastructure. Open-source alternatives allow local inference but often require large model sizes that limit their use in resource-constrained clinical settings. Here, we benchmark on-device LLMs from the gpt-oss (20B, 120B) and Qwen3.5 (9B, 27B, 35B) families across three representative clinical tasks: general disease diagnosis, specialty-specific (ophthalmology) diagnosis and management, and simulation of human expert grading and evaluation. We compare their performance with state-of-the-art proprietary models (GPT-5.1, GPT-5-mini, and Gemini 3.1 Pro) and a leading open-source model (DeepSeek-R1), and we further evaluate the adaptability of on-device systems by fine-tuning gpt-oss-20b and Qwen3.5-35B on general diagnostic data. Across tasks, the on-device models achieve performance comparable to or exceeding DeepSeek-R1 and GPT-5-mini despite being substantially smaller. In addition, fine-tuning remarkably improves diagnostic accuracy, enabling these lightweight models to approach the performance of frontier systems like GPT-5.1. These findings highlight the potential of on-device LLMs to deliver accurate, adaptable, and privacy-preserving clinical decision support, offering a practical pathway for broader integration of LLMs into routine clinical practice.
 \end{abstract}
 
 %%
@@ -117,10 +117,9 @@ The open-source community has developed increasingly capable models that approac
 However, the adoption of DeepSeek-R1 in clinical environments is constrained because of the large model size of 671 billion parameters, which requires substantial computational costs. The models of this scale not only hinder deployment in clinics with limited access to computing resources, but also make fine-tuning for adaptation in evolving clinical domains prohibitively expensive. 
 These limitations underscore the need for smaller, efficient models that retain clinical reasoning ability while remaining feasible for on-premise use~\cite{garg2025rise, builtjes2025leveraging}.
 
-
 % our contributions 
-The recent advancements in on-device LLMs offer a promising solution to the challenges posed by both large proprietary and open-source models~\cite{zhu2025empowering, evangelista2026graphrag}. In particular, the gpt-oss family~\cite{gpt-oss} represents this new generation of efficient and privacy-preserving architectures. The gpt-oss-20b model and its larger counterpart, gpt-oss-120b, are designed and optimized for deployment on a single consumer GPU with 16GB and 80GB memory, respectively. 
-This study aims to determine whether on-device LLMs can be practically used for clinical decision support. We systematically benchmark gpt-oss-20b and gpt-oss-120b models across three representative tasks: general disease diagnosis, (ophthalmology) specialty-specific disease diagnosis and management, and simulation of human clinician judgement and evaluation (Fig.~\ref{fig:1}). To establish a clear performance landscape, we compare these on-device models against leading proprietary models (GPT-5 and o4-mini) and a strong open-source model (DeepSeek-R1). 
+The recent advancements in on-device LLMs offer a promising solution to the challenges posed by both large proprietary and open-source models~\cite{zhu2025empowering, evangelista2026graphrag}. In particular, the gpt-oss family~\cite{gpt-oss} and the Qwen3.5 family~\cite{XXX} represent this new generation of efficient and privacy-preserving architectures. The gpt-oss models (20B and 120B) and the Qwen3.5 models (9B, 27B, and 35B) are designed and optimized for deployment on consumer-grade GPUs with limited memory. 
+This study aims to determine whether on-device LLMs can be practically used for clinical decision support. We systematically benchmark the gpt-oss and Qwen3.5 models across three representative tasks: general disease diagnosis, (ophthalmology) specialty-specific disease diagnosis and management, and simulation of human clinician judgement and evaluation (Fig.~\ref{fig:1}). To establish a clear performance landscape, we compare these on-device models against leading proprietary models (GPT-5.1, GPT-5-mini, and Gemini 3.1 Pro)~\cite{XXX} and a strong open-source model (DeepSeek-R1).
 
 
 \begin{figure}[htbp]
@@ -204,7 +203,6 @@ Fig.~\ref{fig:2}b presents the model performance of the LLM-as-a-specialist task
 
 Fig.~\ref{fig:2}c shows the evaluation results of models acting as clinical judges (Table~\ref{tab:specialty_results_with_total}), measured by the median relative error (interquartile range) between the model's score and human expert consensus. The proprietary GPT-5 achieved the lowest median error for treatment-related judgments (0.00, IQR: -0.33–0.50), demonstrating high alignment with human experts across specialties such as Internal Medicine and Pediatrics. However, for diagnostic assessment, GPT-5 exhibited a tendency to underestimate performance (median error: -0.50, IQR: -1.00–0.00). In contrast, the on-device gpt-oss-120b variants demonstrated high stability, achieving a median error of 0.00 (IQR: -0.50–0.25) across all diagnostic tasks, significantly outperforming o4-mini ($p<0.01$), which showed a larger deviation (-1.00, IQR: -1.83–0.17). Among the open-source models, DeepSeek-R1 and the gpt-oss-20b series generally aligned well with human scores but displayed slightly higher variability in treatment evaluations compared to the larger 120b models. When stratified by disease frequency, the gpt-oss-120b models maintained consistent accuracy across ``Rare'', ``Less Frequent'', and ``Frequent'' conditions, suggesting that larger on-device models can offer robust, human-aligned evaluation capabilities.
 
-
 \begin{table}[!htbp]
 \centering
 \scriptsize
@@ -215,34 +213,32 @@ Fig.~\ref{fig:2}c shows the evaluation results of models acting as clinical judg
 \toprule
 & & \multicolumn{3}{c}{\textbf{Proprietary}} & \textbf{Open} & \multicolumn{3}{c}{\textbf{gpt-oss-20b}} & \multicolumn{3}{c}{\textbf{gpt-oss-120b}} & \multicolumn{3}{c}{\textbf{Qwen3.5}} \\
 \cmidrule(lr){3-5} \cmidrule(lr){6-6} \cmidrule(lr){7-9} \cmidrule(lr){10-12} \cmidrule(lr){13-15}
-\textbf{Type} & \textbf{Topic} & \textbf{GPT-5.1} & \textbf{GPT-5-mini} & \textbf{Gemini-3.1} & \textbf{DS-R1} & \textbf{L} & \textbf{M} & \textbf{H} & \textbf{L} & \textbf{M} & \textbf{H} & \textbf{35B} & \textbf{27B} & \textbf{9B} \\
+\textbf{Type} & \textbf{Topic} & \textbf{GPT-5.1} & \textbf{GPT-5.1-mini} & \textbf{Gemini-3.1-pro} & \textbf{DS-R1} & \textbf{L} & \textbf{M} & \textbf{H} & \textbf{L} & \textbf{M} & \textbf{H} & \textbf{9B} & \textbf{27B} & \textbf{35B} \\
 \midrule
 \multirow{6}{*}{\rotatebox{90}{\textbf{Diagnosis}}}
 & Glaucoma           & \best{\acc{100.0}} & \best{\acc{100.0}} & \best{\acc{100.0}} & \best{\acc{100.0}} & \acc{71.4} & \acc{85.7} & \acc{85.7} & \acc{85.7} & \acc{85.7} & \acc{85.7} & \best{\acc{100.0}} & \best{\acc{100.0}} & \best{\acc{100.0}} \\
 & Ext.\ Eye/Orbital  & \best{\acc{90.0}} & \acc{80.0} & \best{\acc{90.0}} & \best{\acc{90.0}} & \acc{70.0} & \acc{70.0} & \acc{80.0} & \acc{70.0} & \acc{80.0} & \acc{80.0} & \acc{70.0} & \acc{70.0} & \acc{70.0} \\
-& Retinal            & \best{\acc{100.0}} & \best{\acc{100.0}} & \best{\acc{100.0}} & \best{\acc{100.0}} & \acc{66.7} & \acc{66.7} & \acc{66.7} & \best{\acc{100.0}} & \acc{66.7} & \acc{66.7} & \best{\acc{100.0}} & \best{\acc{100.0}} & \acc{66.7} \\
+& Retinal            & \best{\acc{100.0}} & \best{\acc{100.0}} & \best{\acc{100.0}} & \best{\acc{100.0}} & \acc{66.7} & \acc{66.7} & \acc{66.7} & \best{\acc{100.0}} & \acc{66.7} & \acc{66.7} & \acc{66.7} & \best{\acc{100.0}} & \best{\acc{100.0}} \\
 & Anterior Segment   & \acc{50.0} & \best{\acc{75.0}} & \best{\acc{75.0}} & \best{\acc{75.0}} & \acc{62.5} & \acc{62.5} & \acc{62.5} & \best{\acc{75.0}} & \best{\acc{75.0}} & \best{\acc{75.0}} & \best{\acc{75.0}} & \best{\acc{87.5}} & \best{\acc{75.0}} \\
-& Ocular Trauma      & \best{\acc{100.0}} & \acc{83.3} & \best{\acc{100.0}} & \best{\acc{100.0}} & \acc{83.3} & \acc{66.7} & \acc{83.3} & \acc{83.3} & \best{\acc{100.0}} & \acc{83.3} & \best{\acc{100.0}} & \best{\acc{100.0}} & \acc{83.3} \\
+& Ocular Trauma      & \best{\acc{100.0}} & \acc{83.3} & \best{\acc{100.0}} & \best{\acc{100.0}} & \acc{83.3} & \acc{66.7} & \acc{83.3} & \acc{83.3} & \best{\acc{100.0}} & \acc{83.3} & \acc{83.3} & \best{\acc{100.0}} & \best{\acc{100.0}} \\
 & Refract./Strabismus & \best{\acc{100.0}} & \best{\acc{100.0}} & \best{\acc{100.0}} & \best{\acc{100.0}} & \best{\acc{100.0}} & \best{\acc{100.0}} & \best{\acc{100.0}} & \best{\acc{100.0}} & \best{\acc{100.0}} & \best{\acc{100.0}} & \best{\acc{100.0}} & \best{\acc{100.0}} & \best{\acc{100.0}} \\
 \cmidrule{2-15}
-& \textit{Average}   & \textit{\acc{87.2}} & \textit{\acc{87.2}} & \textit{\best{\acc{92.3}}} & \textit{\best{\acc{92.3}}} & \textit{\acc{74.4}} & \textit{\acc{74.4}} & \textit{\acc{79.5}} & \textit{\acc{82.1}} & \textit{\acc{84.6}} & \textit{\acc{82.1}} & \textit{\acc{87.2}} & \textit{\best{\acc{89.7}}} & \textit{\acc{82.1}} \\
+& \textit{Average}   & \textit{\acc{87.2}} & \textit{\acc{87.2}} & \textit{\best{\acc{92.3}}} & \textit{\best{\acc{92.3}}} & \textit{\acc{74.4}} & \textit{\acc{74.4}} & \textit{\acc{79.5}} & \textit{\acc{82.1}} & \textit{\acc{84.6}} & \textit{\acc{82.1}} & \textit{\acc{82.1}} & \textit{\best{\acc{89.7}}} & \textit{\acc{87.2}} \\
 \midrule
 \multirow{6}{*}{\rotatebox{90}{\textbf{Mgmt}}}
-& Glaucoma           & \best{\acc{85.7}} & \acc{64.3} & \best{\acc{85.7}} & \acc{71.4} & \acc{50.0} & \acc{64.3} & \acc{50.0} & \acc{71.4} & \acc{78.6} & \acc{64.3} & \best{\acc{85.7}} & \best{\acc{85.7}} & \acc{64.3} \\
-& Ext.\ Eye/Orbital  & \acc{71.4} & \acc{57.1} & \acc{64.3} & \acc{78.6} & \acc{57.1} & \acc{71.4} & \acc{64.3} & \acc{71.4} & \acc{71.4} & \acc{71.4} & \best{\acc{92.9}} & \acc{71.4} & \acc{78.6} \\
+& Glaucoma           & \best{\acc{85.7}} & \acc{64.3} & \best{\acc{85.7}} & \acc{71.4} & \acc{50.0} & \acc{64.3} & \acc{50.0} & \acc{71.4} & \acc{78.6} & \acc{64.3} & \acc{64.3} & \best{\acc{85.7}} & \best{\acc{85.7}} \\
+& Ext.\ Eye/Orbital  & \acc{71.4} & \acc{57.1} & \acc{64.3} & \acc{78.6} & \acc{57.1} & \acc{71.4} & \acc{64.3} & \acc{71.4} & \acc{71.4} & \acc{71.4} & \acc{78.6} & \acc{71.4} & \best{\acc{92.9}} \\
 & Retinal            & \acc{37.5} & \acc{25.0} & \acc{37.5} & \acc{37.5} & \acc{12.5} & \acc{25.0} & \acc{37.5} & \best{\acc{50.0}} & \acc{37.5} & \acc{37.5} & \acc{37.5} & \acc{25.0} & \acc{37.5} \\
-& Anterior Segment   & \best{\acc{82.4}} & \acc{64.7} & \best{\acc{82.4}} & \acc{70.6} & \acc{76.5} & \acc{64.7} & \acc{76.5} & \acc{70.6} & \acc{76.5} & \acc{70.6} & \acc{64.7} & \acc{64.7} & \acc{58.8} \\
+& Anterior Segment   & \best{\acc{82.4}} & \acc{64.7} & \best{\acc{82.4}} & \acc{70.6} & \acc{76.5} & \acc{64.7} & \acc{76.5} & \acc{70.6} & \acc{76.5} & \acc{70.6} & \acc{58.8} & \acc{64.7} & \acc{64.7} \\
 & Ocular Trauma      & \acc{65.4} & \acc{57.7} & \acc{65.4} & \best{\acc{76.9}} & \acc{42.3} & \acc{57.7} & \acc{50.0} & \acc{65.4} & \best{\acc{76.9}} & \acc{57.7} & \acc{57.7} & \acc{61.5} & \acc{57.7} \\
-& Refract./Strabismus & \acc{83.3} & \acc{75.0} & \best{\acc{91.7}} & \best{\acc{91.7}} & \acc{66.7} & \acc{58.3} & \acc{83.3} & \acc{83.3} & \best{\acc{91.7}} & \acc{83.3} & \acc{83.3} & \best{\acc{91.7}} & \best{\acc{91.7}} \\
+& Refract./Strabismus & \acc{83.3} & \acc{75.0} & \best{\acc{91.7}} & \best{\acc{91.7}} & \acc{66.7} & \acc{58.3} & \acc{83.3} & \acc{83.3} & \best{\acc{91.7}} & \acc{83.3} & \best{\acc{91.7}} & \best{\acc{91.7}} & \acc{83.3} \\
 \cmidrule{2-15}
-& \textit{Average}   & \textit{\acc{72.5}} & \textit{\acc{59.3}} & \textit{\acc{72.5}} & \textit{\best{\acc{73.6}}} & \textit{\acc{52.7}} & \textit{\acc{59.3}} & \textit{\acc{60.4}} & \textit{\acc{69.2}} & \textit{\best{\acc{74.7}}} & \textit{\acc{64.8}} & \textit{\acc{70.3}} & \textit{\acc{68.1}} & \textit{\acc{64.8}} \\
+& \textit{Average}   & \textit{\acc{72.5}} & \textit{\acc{59.3}} & \textit{\acc{72.5}} & \textit{\best{\acc{73.6}}} & \textit{\acc{52.7}} & \textit{\acc{59.3}} & \textit{\acc{60.4}} & \textit{\acc{69.2}} & \textit{\best{\acc{74.7}}} & \textit{\acc{64.8}} & \textit{\acc{64.8}} & \textit{\acc{68.1}} & \textit{\acc{70.3}} \\
 \midrule
-\multicolumn{2}{l}{\textbf{Overall}} & \acc{76.9} & \acc{67.7} & \acc{78.5} & \best{\acc{79.2}} & \acc{59.2} & \acc{63.8} & \acc{66.2} & \acc{73.1} & \acc{77.7} & \acc{70.0} & \acc{75.4} & \acc{74.6} & \acc{70.0} \\
+\multicolumn{2}{l}{\textbf{Overall}} & \acc{76.9} & \acc{67.7} & \acc{78.5} & \best{\acc{79.2}} & \acc{59.2} & \acc{63.8} & \acc{66.2} & \acc{73.1} & \acc{77.7} & \acc{70.0} & \acc{70.0} & \acc{74.6} & \acc{75.4} \\
 \bottomrule
 \end{tabular}
 \end{table}
-
-Fig.~\ref{fig:2}c shows the evaluation results of models acting as clinical judges (Table~\ref{tab:specialty_results_with_total}), measured by the median relative error (interquartile range) between the model's score and human expert consensus. The proprietary GPT-5.1 achieved the lowest median error for treatment-related judgments (0.00, IQR: -0.33--0.50), demonstrating high alignment with human experts across specialties such as Internal Medicine and Pediatrics. However, for diagnostic assessment, GPT-5.1 exhibited a tendency to underestimate performance (median error: -0.50, IQR: -1.00--0.00). In contrast, the on-device gpt-oss-120b variants demonstrated high stability, achieving a median error of 0.00 (IQR: -0.50--0.25) across all diagnostic tasks, significantly outperforming o4-mini ($p<0.01$), which showed a larger deviation (-1.00, IQR: -1.83--0.17). Among the open-source models, DeepSeek-R1 and the gpt-oss-20b series generally aligned well with human scores but displayed slightly higher variability in treatment evaluations compared to the larger 120b models. When stratified by disease frequency, the gpt-oss-120b models maintained consistent accuracy across ``Rare'', ``Less Frequent'', and ``Frequent'' conditions, suggesting that larger on-device models can offer robust, human-aligned evaluation capabilities.
 
 
 
