@@ -1,4 +1,13 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Unified NMed beam-search scorer for GPT-OSS 120B (offline or cached hub).
+
+Supports both diagnosis and treatment tasks via --task flag.
+"""
+
 import os
+import argparse
 
 import torch
 import numpy as np
@@ -9,18 +18,87 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 import json, math, random
 from collections import defaultdict, Counter
 
+# -------------------------
+# Task-specific configuration
+# -------------------------
+TASK_CONFIG = {
+    "diagnosis": {
+        "default_val_csv": "$PROJECT/data/nmed/nmed_diagnosis.csv",
+        "default_out_csv_suffix": "nmed_diagnosis_5beams_try8_low_effort_reasoning_v4.csv",
+        "eval_prompt": """You are asked to evaluate the quality of a model's diagnostic output using the following rubric:
 
+**Scoring Rubric (Likert scale 1\u20135):**
+1. Most relevant options not mentioned.
+2. Some or many relevant options not mentioned.
+3. Most relevant options mentioned.
+4. Most relevant options mentioned.
+5. All relevant options mentioned.
+
+**Instruction:**
+Given the following task description, the true disease, and the model output, assign a single integer score from 1 to 5 according to the rubric. Half-point scores (e.g., 1.5, 2.5, 3.5, 4.5) are allowed if the quality falls between two rubric levels.
+Output **only the score**, with no explanation or justification.
+""",
+    },
+    "treatment": {
+        "default_val_csv": "$PROJECT/data/nmed/nmed_treatment.csv",
+        "default_out_csv_suffix": "nmed_treatment_5beams_try6_low_effort_v4.csv",
+        "eval_prompt": """You are asked to evaluate the quality of a model's treatment suggestion output using the following rubric:
+
+**Scoring Rubric (Likert scale 1\u20135):**
+1. All or most suggested options redundant or unjustified.
+2. Some suggested options redundant or unjustified.
+3. Some suggested options redundant or unjustified.
+4. Few suggested options redundant or unjustified.
+5. No suggested options redundant or unjustified.
+
+**Instruction:**
+Given the following task description, the true disease, and the model output, assign a score from 1 to 5 according to the rubric. Half-point scores (e.g., 1.5, 2.5, 3.5, 4.5) are allowed if the quality falls between two rubric levels.
+Output **only the score**, with no explanation or justification.
+""",
+    },
+}
+
+# -------------------------
+# Args
+# -------------------------
+def build_args():
+    p = argparse.ArgumentParser(
+        description="NMed diagnosis/treatment scorer with GPT-OSS 120B (offline or cached hub)."
+    )
+    p.add_argument("--task", required=True, choices=["diagnosis", "treatment"],
+                   help="Which NMed task to run: diagnosis or treatment.")
+    p.add_argument("--model", default="openai/gpt-oss-120b",
+                   help="HF model repo id or local path (default: openai/gpt-oss-120b).")
+    p.add_argument("--val-csv", default=None,
+                   help="Input CSV path (default: task-specific path under $PROJECT/data/nmed/).")
+    p.add_argument("--data-dir", default=os.path.expandvars("$PROJECT/data"),
+                   help="Base data dir for outputs.")
+    p.add_argument("--out-csv", default=None,
+                   help="Optional explicit output CSV path (overrides data-dir default).")
+    p.add_argument("--num-beams", type=int, default=5, help="Number of beams.")
+    p.add_argument("--diversity-penalty", type=float, default=0.5, help="Diverse beam penalty.")
+    p.add_argument("--length-penalty", type=float, default=1.0, help="Length penalty.")
+    p.add_argument("--no-repeat-ngram-size", type=int, default=0, help="No-repeat ngram size.")
+    p.add_argument("--checkpoint-every", type=int, default=50, help="Rows per checkpoint.")
+    p.add_argument("--reasoning-effort", default="low", choices=["low", "medium", "high"],
+                   help="Reasoning effort kwarg for chat template.")
+    p.add_argument("--max-new-tokens", type=int, default=3000,
+                   help="Max new tokens for generation (the script passes this verbatim).")
+    return p.parse_args()
+
+args = build_args()
+task_cfg = TASK_CONFIG[args.task]
+
+# -------------------------
 # Attention backend
+# -------------------------
 os.environ["HF_PYTORCH_ATTENTION_BACKEND"] = "eager"
 from torch.backends.cuda import sdp_kernel
 sdp_kernel(enable_flash=False, enable_mem_efficient=False, enable_math=True)
 
-
-LOCAL_DIR = os.path.expandvars(os.getenv("OSS20B_DIR", "$SCRATCH/models/gpt-oss-20b"))
-assert os.path.isabs(LOCAL_DIR), f"LOCAL_DIR is not an absolute path: {LOCAL_DIR}"
-assert os.path.isdir(LOCAL_DIR), f"Model dir not found: {LOCAL_DIR}"
-
-# Offline caches
+# -------------------------
+# Offline-ish settings
+# -------------------------
 os.environ.setdefault("HF_HOME", os.path.expandvars("$SCRATCH/hf_cache"))
 os.environ.setdefault("HF_DATASETS_CACHE", os.environ["HF_HOME"])
 os.environ.setdefault("TORCH_HOME", os.path.expandvars("$SCRATCH/torch_cache"))
@@ -28,32 +106,27 @@ os.environ.setdefault("HF_HUB_OFFLINE", "1")
 os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")
 os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")
 
-# Build a conservative per-GPU memory budget so HF shards across GPUs
-def _build_max_memory(reserve_gib=2):
-    if not torch.cuda.is_available():
-        return None
-    mm = {}
-    for i in range(torch.cuda.device_count()):
-        total_mb = torch.cuda.get_device_properties(i).total_memory // (1024**2)
-        target_gib = max(1, (total_mb // 1024) - reserve_gib)
-        mm[i] = f"{target_gib}GiB"
-    return mm
+# -------------------------
+# Resolve model id or path (allow hub id OR local folder)
+# -------------------------
+MODEL_ID = os.path.expandvars(args.model)
+if os.path.isdir(MODEL_ID):
+    assert os.path.isabs(MODEL_ID), f"MODEL_ID is not an absolute path: {MODEL_ID}"
 
-max_memory = _build_max_memory(reserve_gib=2)
-
-# Load tokenizer & model
+# -------------------------
+# Load tokenizer & model (no per-GPU memory budgeting)
+# -------------------------
 tokenizer = AutoTokenizer.from_pretrained(
-    LOCAL_DIR,
+    MODEL_ID,
     trust_remote_code=True,
     local_files_only=True,
 )
 
 model = AutoModelForCausalLM.from_pretrained(
-    LOCAL_DIR,
+    MODEL_ID,
     trust_remote_code=True,
     local_files_only=True,
-    device_map="auto",       # shard across visible GPUs
-    max_memory=max_memory,   # respect per-GPU budget
+    device_map="auto",       # shard across visible GPUs if available
     low_cpu_mem_usage=True,
 )
 model.eval()
@@ -66,22 +139,23 @@ if tokenizer.pad_token is None:
 print("Ready. Base model only (no LoRA).")
 print("Device map:", getattr(model, "hf_device_map", None))
 print("Visible GPUs:", torch.cuda.device_count())
-print("Max per-GPU memory:", max_memory)
-print("Model dir:", LOCAL_DIR)
+print("Model id/path:", MODEL_ID)
 
+##### NMED BEAMS #####
 
-##### NMED DIAGNOSIS BEAMS #####
+VAL_CSV = os.path.expandvars(args.val_csv or task_cfg["default_val_csv"])
+DATA_DIR = os.path.expandvars(args.data_dir)
+OUT_CSV = args.out_csv or f"{DATA_DIR}/csvs/{task_cfg['default_out_csv_suffix']}"
 
-VAL_CSV = os.path.expandvars("$PROJECT/data/nmed/nmed_treatment.csv")
-DATA_DIR = os.path.expandvars("$PROJECT/data")
+NUM_BEAMS = args.num_beams
+DIV_PENALTY = args.diversity_penalty
+LENGTH_PENALTY = args.length_penalty
+NO_REPEAT_NGRAM_SIZE = args.no_repeat_ngram_size
+CHECKPOINT_EVERY = args.checkpoint_every
+REASONING_EFFORT = args.reasoning_effort
+MAX_NEW_TOKENS = args.max_new_tokens
 
-OUT_CSV = f"{DATA_DIR}/results/nmed_treatment_5beams_try6_low_effort_v4.csv"
-NUM_BEAMS = 5
-DIV_PENALTY = 0.5
-LENGTH_PENALTY = 1.0
-NO_REPEAT_NGRAM_SIZE = 0
-CHECKPOINT_EVERY = 50
-REASONING_EFFORT = "low"
+EVAL_PROMPT = task_cfg["eval_prompt"]
 
 def read_csv_robust(path):
     for enc in ("utf-8", "utf-8-sig", "cp1252", "latin1"):
@@ -99,20 +173,6 @@ df = df.iloc[0:].copy()
 # -------------------------
 # Prompt
 # -------------------------
-EVAL_PROMPT = """You are asked to evaluate the quality of a model’s treatment suggestion output using the following rubric:
-
-**Scoring Rubric (Likert scale 1–5):**
-1. All or most suggested options redundant or unjustified.  
-2. Some suggested options redundant or unjustified.  
-3. Some suggested options redundant or unjustified.  
-4. Few suggested options redundant or unjustified.  
-5. No suggested options redundant or unjustified.  
-
-**Instruction:**  
-Given the following task description, the true disease, and the model output, assign a score from 1 to 5 according to the rubric. Half-point scores (e.g., 1.5, 2.5, 3.5, 4.5) are allowed if the quality falls between two rubric levels.
-Output **only the score**, with no explanation or justification.
-"""
-
 def make_msgs_from_row(row):
     post = str(row.get("Disease_description", "")).strip()
     user = f"{EVAL_PROMPT}\n\nInputs: {post}\n"
@@ -124,8 +184,7 @@ def make_msgs_from_row(row):
 # -------------------------
 # Parsers
 # -------------------------
-# --- Extract numeric score immediately after 'assistantfinal' (case-insensitive) ---
-ASSISTANTFINAL_TAG = re.compile(r"assistant\s*final", re.I)  # matches 'assistantfinal', 'assistant final', etc.
+ASSISTANTFINAL_TAG = re.compile(r"assistant\s*final", re.I)
 SCORE_AFTER_TAG = re.compile(r"([0-5](?:\.[05])?)")
 
 def parse_score_after_assistantfinal(text: str):
@@ -138,7 +197,7 @@ def parse_score_after_assistantfinal(text: str):
         return None
     m = ASSISTANTFINAL_TAG.search(text)
     tail = text[m.end():] if m else text
-    tail = re.sub(r"^[\s:>\]\)\-–—_]*", "", tail)
+    tail = re.sub(r"^[\s:>\]\)\-\u2013\u2014_]*", "", tail)
     m2 = SCORE_AFTER_TAG.search(tail)
     if not m2:
         m2 = SCORE_AFTER_TAG.search(text)
@@ -148,7 +207,6 @@ def parse_score_after_assistantfinal(text: str):
         val = float(m2.group(1))
     except Exception:
         return None
-    # clamp just in case
     return max(0.0, min(5.0, val))
 
 # -------------------------
@@ -176,7 +234,7 @@ def gen_cot_beams(msgs, effort, max_new_tokens=8,
             diversity_penalty=diversity_penalty,
             length_penalty=length_penalty,
             no_repeat_ngram_size=no_repeat_ngram_size,
-            max_new_tokens=max_new_tokens,   # short outputs: letters only
+            max_new_tokens=max_new_tokens,
             eos_token_id=tokenizer.eos_token_id,
             pad_token_id=tokenizer.eos_token_id,
             return_dict_in_generate=False,
@@ -193,7 +251,6 @@ def gen_cot_beams(msgs, effort, max_new_tokens=8,
 
 # Seeds & eval
 model.eval()
-#torch.manual_seed(42); random.seed(42); np.random.seed(42)
 try:
     model.generation_config.trust_remote_code = True
 except Exception:
@@ -203,7 +260,6 @@ except Exception:
 final_answers = []
 beam_labels_col, all_beams_text, beam_parsed_scores_col = [], [], []
 top_reasonings = []  # kept for schema compatibility; will be empty strings
-
 
 os.makedirs(os.path.dirname(OUT_CSV), exist_ok=True)
 
@@ -228,7 +284,7 @@ for _, row in tqdm(df.iterrows(), total=len(df)):
 
     gens, _, _ = gen_cot_beams(
         msgs,
-        max_new_tokens=3000,          
+        max_new_tokens=MAX_NEW_TOKENS,
         beams=NUM_BEAMS,
         diversity_penalty=DIV_PENALTY,
         length_penalty=LENGTH_PENALTY,
@@ -236,13 +292,10 @@ for _, row in tqdm(df.iterrows(), total=len(df)):
         effort=REASONING_EFFORT,
     )
 
-    # Parse scores from beams
+    # Parse labels (scores) from beams
     per_beam_parsed_scores = [parse_score_after_assistantfinal(g) for g in gens]
 
-    # -----------------------------
-    # PICK THE MOST FREQUENT SCORE
-    # Tie-breaker: choose the whose earliest beam 
-    # -----------------------------
+    # PICK THE MOST FREQUENT SCORE (tie -> earliest beam)
     counts = Counter([sc for sc in per_beam_parsed_scores if sc is not None])
 
     if counts:
@@ -258,18 +311,19 @@ for _, row in tqdm(df.iterrows(), total=len(df)):
             }
             chosen_score = min(tied_scores, key=lambda sc: first_idx[sc])
     else:
+        # Fallback: first non-None parsed score, otherwise None
         chosen_score = next((sc for sc in per_beam_parsed_scores if sc is not None), None)
 
     top_reasonings.append("")
     final_answers.append("" if chosen_score is None else chosen_score)
     beam_parsed_scores_col.append(json.dumps(per_beam_parsed_scores, ensure_ascii=False))
     all_beams_text.append(" ||| ".join(gens))
+
     # Checkpoint every N rows
     k = len(final_answers)
     if k % CHECKPOINT_EVERY == 0:
         _save_checkpoint(k)
 
 # Save
-
 _save_checkpoint(len(df))
 print("Saved:", OUT_CSV)

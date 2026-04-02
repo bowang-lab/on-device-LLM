@@ -1,4 +1,9 @@
 #!/usr/bin/env python
+"""
+Unified NMed scoring with GPT-OSS-20B using diverse beam search.
+
+Supports both diagnosis and treatment tasks via --task flag.
+"""
 import os
 import re
 import json
@@ -17,6 +22,47 @@ import argparse
 
 
 # --------------------------------------------------------------------------------------
+# Task-specific configuration
+# --------------------------------------------------------------------------------------
+TASK_CONFIG = {
+    "diagnosis": {
+        "default_val_csv_suffix": "nmed/nmed_diagnosis.csv",
+        "default_out_csv_suffix": "csvs/nmed_diagnosis_5beams_try8_low_effort_reasoning_v4.csv",
+        "eval_prompt": """You are asked to evaluate the quality of a model's diagnostic output using the following rubric:
+
+**Scoring Rubric (Likert scale 1\u20135):**
+1. Most relevant options not mentioned.
+2. Some or many relevant options not mentioned.
+3. Most relevant options mentioned.
+4. Most relevant options mentioned.
+5. All relevant options mentioned.
+
+**Instruction:**
+Given the following task description, the true disease, and the model output, assign a single integer score from 1 to 5 according to the rubric. Half-point scores (e.g., 1.5, 2.5, 3.5, 4.5) are allowed if the quality falls between two rubric levels.
+Output **only the score**, with no explanation or justification.
+""",
+    },
+    "treatment": {
+        "default_val_csv_suffix": "nmed/nmed_treatment.csv",
+        "default_out_csv_suffix": "csvs/nmed_treatment_5beams_try6_low_effort_v4.csv",
+        "eval_prompt": """You are asked to evaluate the quality of a model's treatment suggestion output using the following rubric:
+
+**Scoring Rubric (Likert scale 1\u20135):**
+1. All or most suggested options redundant or unjustified.
+2. Some suggested options redundant or unjustified.
+3. Some suggested options redundant or unjustified.
+4. Few suggested options redundant or unjustified.
+5. No suggested options redundant or unjustified.
+
+**Instruction:**
+Given the following task description, the true disease, and the model output, assign a score from 1 to 5 according to the rubric. Half-point scores (e.g., 1.5, 2.5, 3.5, 4.5) are allowed if the quality falls between two rubric levels.
+Output **only the score**, with no explanation or justification.
+""",
+    },
+}
+
+
+# --------------------------------------------------------------------------------------
 # Defaults
 # --------------------------------------------------------------------------------------
 DEFAULT_MODEL_DIR = os.path.expandvars(
@@ -24,11 +70,6 @@ DEFAULT_MODEL_DIR = os.path.expandvars(
 )
 
 DEFAULT_DATA_DIR = os.path.expandvars("$PROJECT/data")
-DEFAULT_VAL_CSV = os.path.join(DEFAULT_DATA_DIR, "nmed/nmed_diagnosis.csv")
-DEFAULT_OUT_CSV = os.path.join(
-    DEFAULT_DATA_DIR,
-    "results/nmed_diagnosis_5beams_try8_low_effort_reasoning_v4.csv",
-)
 
 DEFAULT_NUM_BEAMS = 5
 DEFAULT_DIV_PENALTY = 0.5
@@ -40,25 +81,13 @@ DEFAULT_MAX_NEW_TOKENS = 3000
 
 DEFAULT_ATTENTION_BACKEND = "eager"
 
-EVAL_PROMPT = """You are asked to evaluate the quality of a model’s diagnostic output using the following rubric:
-
-**Scoring Rubric (Likert scale 1–5):**
-1. Most relevant options not mentioned.
-2. Some or many relevant options not mentioned.
-3. Most relevant options mentioned.
-4. Most relevant options mentioned.
-5. All relevant options mentioned.
-
-**Instruction:**  
-Given the following task description, the true disease, and the model output, assign a single integer score from 1 to 5 according to the rubric. Half-point scores (e.g., 1.5, 2.5, 3.5, 4.5) are allowed if the quality falls between two rubric levels.
-Output **only the score**, with no explanation or justification.
-"""
-
 ASSISTANTFINAL_TAG = re.compile(r"assistant\s*final", re.I)
 SCORE_AFTER_TAG = re.compile(r"([0-5](?:\.[05])?)")
 
 # Global so it matches original behavior inside gen_cot_beams
 REASONING_EFFORT = DEFAULT_REASONING_EFFORT
+# Will be set from task config at runtime
+EVAL_PROMPT = ""
 
 
 # --------------------------------------------------------------------------------------
@@ -77,11 +106,14 @@ def setup_environment(attention_backend: str) -> None:
 
 
 def _build_max_memory(reserve_gib: int = 2):
-    assert torch.cuda.is_available(), "CUDA not available."
-    n = torch.cuda.device_count()
-    assert n >= 3, f"Need ≥3 GPUs visible; found {n}"
+    """
+    Build a per-GPU memory budget so HF can shard across all visible GPUs.
+    Returns None if CUDA is not available.
+    """
+    if not torch.cuda.is_available():
+        return None
     max_mem = {}
-    for i in range(n):
+    for i in range(torch.cuda.device_count()):
         total_mb = torch.cuda.get_device_properties(i).total_memory // (1024**2)
         target_gib = max(1, (total_mb // 1024) - reserve_gib)
         max_mem[i] = f"{target_gib}GiB"
@@ -155,14 +187,21 @@ def make_msgs_from_row(row: pd.Series):
 # Parsers
 # --------------------------------------------------------------------------------------
 def parse_score_after_assistantfinal(text: str):
+    """
+    Return the first numeric score in [0,5] (allowing .0 or .5) that appears
+    immediately after 'assistantfinal'. If not found, fallback to first such
+    number anywhere in the text. Returns a float or None.
+    """
     if not text:
         return None
     m = ASSISTANTFINAL_TAG.search(text)
     tail = text[m.end():] if m else text
-    tail = re.sub(r"^[\s:>\]\)\-–—_]*", "", tail)
+    tail = re.sub(r"^[\s:>\]\)\-\u2013\u2014_]*", "", tail)
     m2 = SCORE_AFTER_TAG.search(tail)
     if not m2:
-        return None
+        m2 = SCORE_AFTER_TAG.search(text)
+        if not m2:
+            return None
     try:
         val = float(m2.group(1))
     except Exception:
@@ -222,7 +261,7 @@ def gen_cot_beams(
 # --------------------------------------------------------------------------------------
 # Main inference loop
 # --------------------------------------------------------------------------------------
-def run_nmed_diagnosis_inference(
+def run_nmed_inference(
     model,
     tokenizer,
     val_csv: Path,
@@ -326,7 +365,13 @@ def run_nmed_diagnosis_inference(
 # --------------------------------------------------------------------------------------
 def main():
     parser = argparse.ArgumentParser(
-        description="NMED diagnosis scoring with GPT-OSS-20B using diverse beam search."
+        description="NMED diagnosis/treatment scoring with GPT-OSS-20B using diverse beam search."
+    )
+    parser.add_argument(
+        "--task",
+        required=True,
+        choices=["diagnosis", "treatment"],
+        help="Which NMed task to run: diagnosis or treatment.",
     )
     parser.add_argument(
         "--model-dir",
@@ -336,14 +381,14 @@ def main():
     parser.add_argument(
         "--val-csv",
         type=Path,
-        default=Path(DEFAULT_VAL_CSV),
-        help="Path to NMED diagnosis CSV.",
+        default=None,
+        help="Path to NMED CSV (default: task-specific path under $PROJECT/data/).",
     )
     parser.add_argument(
         "--out-csv",
         type=Path,
-        default=Path(DEFAULT_OUT_CSV),
-        help="Path to output CSV.",
+        default=None,
+        help="Path to output CSV (default: task-specific path under $PROJECT/data/csvs/).",
     )
     parser.add_argument(
         "--num-beams",
@@ -396,14 +441,27 @@ def main():
 
     args = parser.parse_args()
 
+    # Select task config and resolve defaults
+    task_cfg = TASK_CONFIG[args.task]
+
+    global EVAL_PROMPT
+    EVAL_PROMPT = task_cfg["eval_prompt"]
+
+    val_csv = args.val_csv or Path(
+        os.path.join(DEFAULT_DATA_DIR, task_cfg["default_val_csv_suffix"])
+    )
+    out_csv = args.out_csv or Path(
+        os.path.join(DEFAULT_DATA_DIR, task_cfg["default_out_csv_suffix"])
+    )
+
     setup_environment(args.attention_backend)
     model, tokenizer = load_model(args.model_dir)
 
-    run_nmed_diagnosis_inference(
+    run_nmed_inference(
         model=model,
         tokenizer=tokenizer,
-        val_csv=args.val_csv,
-        out_csv=args.out_csv,
+        val_csv=val_csv,
+        out_csv=out_csv,
         num_beams=args.num_beams,
         diversity_penalty=args.diversity_penalty,
         length_penalty=args.length_penalty,

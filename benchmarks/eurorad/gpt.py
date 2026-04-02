@@ -23,8 +23,8 @@ from tqdm import tqdm
 
 # ---- Defaults ----
 DEFAULT_DATASET = Path("/home/bowang/Documents/alif/oss-benchmark/data/datasets/eurorad_test.csv")
-DEFAULT_RESULTS = Path("/home/bowang/Documents/alif/oss-benchmark/results")
-DEFAULT_MODEL = "gpt-5-2025-08-07"   # reasoning-capable
+DEFAULT_RESULTS = Path("/home/bowang/Documents/alif/oss-benchmark/csvs")
+DEFAULT_MODEL = "gpt-5.1-2025-11-13"   # reasoning-capable
 DEFAULT_EFFORT = "medium"            # low | medium | high
 
 # ---- Prompt ----
@@ -47,8 +47,14 @@ def build_options_list(s: str) -> List[str]:
     return out
 
 def norm_text(s: str) -> str:
-    t = unicodedata.normalize("NFKC", s or "")
+    t = s or ""
+    try:
+        t = t.encode("cp1252").decode("utf-8")
+    except (UnicodeDecodeError, UnicodeEncodeError):
+        pass
+    t = unicodedata.normalize("NFKC", t)
     t = t.replace("–", "-").replace("—", "-")
+    t = re.sub(r"[^\w\s-]", "", t)
     t = " ".join(t.strip().split())
     return t.lower()
 
@@ -243,7 +249,7 @@ def run_responses_mode(dataset_csv: Path, results_dir: Path, model: str, effort:
 # -------------------------
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--model", default=DEFAULT_MODEL, help="Reasoning-capable model (e.g., gpt-5-2025-08-07).")
+    ap.add_argument("--model", default=DEFAULT_MODEL, help="Reasoning-capable model (e.g., gpt-5.1-2025-11-13).")
     ap.add_argument("--effort", choices=["low", "medium", "high"], default=DEFAULT_EFFORT,
                     help="Reasoning effort (default: medium).")
     ap.add_argument("--dataset", type=Path, default=DEFAULT_DATASET, help="Path to dataset CSV.")

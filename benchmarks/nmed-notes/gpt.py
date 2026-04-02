@@ -21,8 +21,8 @@ import sys
 
 # ---- Defaults ----
 DEFAULT_DATASET = Path("/home/bowang/Documents/alif/oss-benchmark/data/datasets/diagnosis_task.csv")
-DEFAULT_RESULTS = Path("/home/bowang/Documents/alif/oss-benchmark/results")
-DEFAULT_MODEL = "gpt-5-2025-08-07"  # reasoning-capable; accepts reasoning={"effort": ...}
+DEFAULT_RESULTS = Path("/home/bowang/Documents/alif/oss-benchmark/csvs")
+DEFAULT_MODEL = "gpt-5.1-2025-11-13"  # reasoning-capable; accepts reasoning={"effort": ...}
 DEFAULT_TEXT_COLUMN = "Disease_description"
 
 # ---- Prompts ----
@@ -203,7 +203,7 @@ def run_responses(dataset_csv: Path, results_dir: Path, text_column: str, model:
 # -------------------------
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--model", default=DEFAULT_MODEL, help="Reasoning-capable model (e.g., gpt-5-2025-08-07).")
+    ap.add_argument("--model", default=DEFAULT_MODEL, help="Reasoning-capable model (e.g., gpt-5.1-2025-11-13).")
     ap.add_argument("--effort", choices=["low", "medium", "high"], default="medium",
                     help="Reasoning effort (default: medium).")
     ap.add_argument("--dataset", type=Path, default=DEFAULT_DATASET, help="Path to dataset CSV.")

@@ -1,3 +1,10 @@
+"""
+Unified NMed beam-search scorer for GPT-OSS 20B (local model, no argparse).
+
+Supports both diagnosis and treatment tasks via the NMED_TASK environment
+variable (default: "diagnosis").  Set NMED_TASK=treatment to run treatment.
+"""
+
 import os
 
 import torch
@@ -9,6 +16,55 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 import json, math, random
 from collections import defaultdict, Counter
 
+# -------------------------
+# Task selection (env var)
+# -------------------------
+NMED_TASK = os.environ.get("NMED_TASK", "diagnosis").lower()
+assert NMED_TASK in ("diagnosis", "treatment"), (
+    f"NMED_TASK must be 'diagnosis' or 'treatment', got '{NMED_TASK}'"
+)
+
+# -------------------------
+# Task-specific configuration
+# -------------------------
+TASK_CONFIG = {
+    "diagnosis": {
+        "val_csv": "$PROJECT/data/nmed/nmed_diagnosis.csv",
+        "out_csv_suffix": "nmed_diagnosis_5beams_try8_low_effort_reasoning_v4.csv",
+        "eval_prompt": """You are asked to evaluate the quality of a model's diagnostic output using the following rubric:
+
+**Scoring Rubric (Likert scale 1\u20135):**
+1. Most relevant options not mentioned.
+2. Some or many relevant options not mentioned.
+3. Most relevant options mentioned.
+4. Most relevant options mentioned.
+5. All relevant options mentioned.
+
+**Instruction:**
+Given the following task description, the true disease, and the model output, assign a single integer score from 1 to 5 according to the rubric. Half-point scores (e.g., 1.5, 2.5, 3.5, 4.5) are allowed if the quality falls between two rubric levels.
+Output **only the score**, with no explanation or justification.
+""",
+    },
+    "treatment": {
+        "val_csv": "$PROJECT/data/nmed/nmed_treatment.csv",
+        "out_csv_suffix": "nmed_treatment_5beams_try6_low_effort_v4.csv",
+        "eval_prompt": """You are asked to evaluate the quality of a model's treatment suggestion output using the following rubric:
+
+**Scoring Rubric (Likert scale 1\u20135):**
+1. All or most suggested options redundant or unjustified.
+2. Some suggested options redundant or unjustified.
+3. Some suggested options redundant or unjustified.
+4. Few suggested options redundant or unjustified.
+5. No suggested options redundant or unjustified.
+
+**Instruction:**
+Given the following task description, the true disease, and the model output, assign a score from 1 to 5 according to the rubric. Half-point scores (e.g., 1.5, 2.5, 3.5, 4.5) are allowed if the quality falls between two rubric levels.
+Output **only the score**, with no explanation or justification.
+""",
+    },
+}
+
+task_cfg = TASK_CONFIG[NMED_TASK]
 
 # Attention backend
 os.environ["HF_PYTORCH_ATTENTION_BACKEND"] = "eager"
@@ -28,11 +84,11 @@ os.environ.setdefault("HF_HUB_OFFLINE", "1")
 os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")
 os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")
 
-## Build a per-GPU memory budget so HF shards across all visible GPUs (3× A100-40GB)
+# Build a per-GPU memory budget so HF shards across all visible GPUs
 def _build_max_memory(reserve_gib=2):
-    assert torch.cuda.is_available(), "CUDA not available."
+    if not torch.cuda.is_available():
+        return None
     n = torch.cuda.device_count()
-    assert n >= 3, f"Need ≥3 GPUs visible; found {n}"
     mm = {}
     for i in range(n):
         total_mb = torch.cuda.get_device_properties(i).total_memory // (1024**2)
@@ -71,19 +127,20 @@ print("Max per-GPU memory:", max_memory)
 print("Model dir:", LOCAL_DIR)
 
 
-##### NMED DIAGNOSIS BEAMS #####
+##### NMED BEAMS #####
 
-VAL_CSV = os.path.expandvars("$PROJECT/data/nmed/nmed_diagnosis.csv")
+VAL_CSV = os.path.expandvars(task_cfg["val_csv"])
 DATA_DIR = os.path.expandvars("$PROJECT/data")
 
-
-OUT_CSV = f"{DATA_DIR}/results/nmed_diagnosis_5beams_try8_low_effort_reasoning_v4.csv"
+OUT_CSV = f"{DATA_DIR}/csvs/{task_cfg['out_csv_suffix']}"
 NUM_BEAMS = 5
 DIV_PENALTY = 0.5
 LENGTH_PENALTY = 1.0
 NO_REPEAT_NGRAM_SIZE = 0
 CHECKPOINT_EVERY = 50
 REASONING_EFFORT = "low"
+
+EVAL_PROMPT = task_cfg["eval_prompt"]
 
 def read_csv_robust(path):
     for enc in ("utf-8", "utf-8-sig", "cp1252", "latin1"):
@@ -101,20 +158,6 @@ df = df.iloc[0:].copy()
 # -------------------------
 # Prompt
 # -------------------------
-EVAL_PROMPT = """You are asked to evaluate the quality of a model’s diagnostic output using the following rubric:
-
-**Scoring Rubric (Likert scale 1–5):**
-1. Most relevant options not mentioned.
-2. Some or many relevant options not mentioned.
-3. Most relevant options mentioned.
-4. Most relevant options mentioned.
-5. All relevant options mentioned.
-
-**Instruction:**  
-Given the following task description, the true disease, and the model output, assign a single integer score from 1 to 5 according to the rubric. Half-point scores (e.g., 1.5, 2.5, 3.5, 4.5) are allowed if the quality falls between two rubric levels.
-Output **only the score**, with no explanation or justification.
-"""
-
 def make_msgs_from_row(row):
     post = str(row.get("Disease_description", "")).strip()
     user = f"{EVAL_PROMPT}\n\nInputs: {post}\n"
@@ -126,24 +169,29 @@ def make_msgs_from_row(row):
 # -------------------------
 # Parsers
 # -------------------------
-# --- Extract letters immediately after 'assistantfinal' (case-insensitive) ---
-ASSISTANTFINAL_TAG = re.compile(r"assistant\s*final", re.I)  # matches 'assistantfinal', 'assistant final', etc.
+ASSISTANTFINAL_TAG = re.compile(r"assistant\s*final", re.I)
 SCORE_AFTER_TAG = re.compile(r"([0-5](?:\.[05])?)")
 
 def parse_score_after_assistantfinal(text: str):
+    """
+    Return the first numeric score in [0,5] (allowing .0 or .5) that appears
+    immediately after 'assistantfinal'. If not found, fallback to first such
+    number anywhere in the text. Returns a float or None.
+    """
     if not text:
         return None
     m = ASSISTANTFINAL_TAG.search(text)
     tail = text[m.end():] if m else text
-    tail = re.sub(r"^[\s:>\]\)\-–—_]*", "", tail)
+    tail = re.sub(r"^[\s:>\]\)\-\u2013\u2014_]*", "", tail)
     m2 = SCORE_AFTER_TAG.search(tail)
     if not m2:
-        return None
+        m2 = SCORE_AFTER_TAG.search(text)
+        if not m2:
+            return None
     try:
         val = float(m2.group(1))
     except Exception:
         return None
-    # clamp just in case
     return max(0.0, min(5.0, val))
 
 # -------------------------
@@ -171,7 +219,7 @@ def gen_cot_beams(msgs, effort, max_new_tokens=8,
             diversity_penalty=diversity_penalty,
             length_penalty=length_penalty,
             no_repeat_ngram_size=no_repeat_ngram_size,
-            max_new_tokens=max_new_tokens,   # potentially long outputs
+            max_new_tokens=max_new_tokens,
             eos_token_id=tokenizer.eos_token_id,
             pad_token_id=tokenizer.eos_token_id,
             return_dict_in_generate=False,
@@ -188,7 +236,6 @@ def gen_cot_beams(msgs, effort, max_new_tokens=8,
 
 # Seeds & eval
 model.eval()
-#torch.manual_seed(75); random.seed(75); np.random.seed(75)
 try:
     model.generation_config.trust_remote_code = True
 except Exception:
@@ -231,13 +278,10 @@ for _, row in tqdm(df.iterrows(), total=len(df)):
         effort=REASONING_EFFORT,
     )
 
-    # Parse labels (scores) from beams
+    # Parse scores from beams
     per_beam_parsed_scores = [parse_score_after_assistantfinal(g) for g in gens]
 
-    # -----------------------------
-    # PICK THE MOST FREQUENT SCORE
-    # Tie-breaker: choose the earliest beam
-    # -----------------------------
+    # PICK THE MOST FREQUENT SCORE (tie -> earliest beam)
     counts = Counter([sc for sc in per_beam_parsed_scores if sc is not None])
 
     if counts:
@@ -267,6 +311,5 @@ for _, row in tqdm(df.iterrows(), total=len(df)):
         _save_checkpoint(k)
 
 # Save
-
 _save_checkpoint(len(df))
 print("Saved:", OUT_CSV)

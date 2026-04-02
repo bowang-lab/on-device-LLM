@@ -1,5 +1,5 @@
 csvs/archive/
 csvs/finetune-eval/
 figures/*.png
-figures/__pycache__/
-figures/.ipynb_checkpoints/
+__pycache__/
+.ipynb_checkpoints/

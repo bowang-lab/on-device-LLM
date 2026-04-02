@@ -16,7 +16,7 @@
 # Usage example:
 #   python benchmarks/ophthalmology_responses.py \
 #     --dataset-csv /path/to/ophthalmology.csv \
-#     --results-dir /path/to/results \
+#     --results-dir /path/to/csvs \
 #     --output-csv ophthal_gpt5_medium.csv \
 #     --resume
 
@@ -30,8 +30,8 @@ from tqdm import tqdm
 
 # ---- Defaults ----
 DEFAULT_DATASET = Path("/home/bowang/Documents/alif/oss-benchmark/data/datasets/ophthalmology.csv")
-DEFAULT_RESULTS_DIR = Path("/home/bowang/Documents/alif/oss-benchmark/results")
-DEFAULT_MODEL = "gpt-5-2025-08-07"   # reasoning-capable
+DEFAULT_RESULTS_DIR = Path("/home/bowang/Documents/alif/oss-benchmark/csvs")
+DEFAULT_MODEL = "gpt-5.1-2025-11-13"   # reasoning-capable
 DEFAULT_EFFORT = "medium"            # low | medium | high
 
 ROW_ID_COL = "RowID"
@@ -198,7 +198,7 @@ def run_responses_mode(
 # -------------------------
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--model", default=DEFAULT_MODEL, help="Reasoning-capable model (e.g., gpt-5-2025-08-07 or gpt-5).")
+    ap.add_argument("--model", default=DEFAULT_MODEL, help="Reasoning-capable model (e.g., gpt-5.1-2025-11-13 or gpt-5).")
     ap.add_argument("--effort", choices=["low", "medium", "high"], default=DEFAULT_EFFORT,
                     help="Reasoning effort (default: medium).")
     ap.add_argument("--dataset-csv", type=Path, default=DEFAULT_DATASET, help="Path to the input dataset CSV.")
