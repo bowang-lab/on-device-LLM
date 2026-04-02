@@ -1,239 +1,116 @@
-# On-Device Large Language Models
-Benchmarking OSS model performance on-device for medical tasks.
+# On-Device Large Language Models for Clinical Decision Support
 
-## 0. Setup & Data
-Please download the data from the following link and place the csv files under `data/datasets`: https://drive.google.com/drive/folders/19C-Eey_yYKk1sIJc1MxFolIWwH_TBHfI?usp=sharing 
+Benchmarking and fine-tuning on-device LLMs (gpt-oss and Qwen3.5 families) across three medical benchmarks: general radiology diagnosis, ophthalmology specialty QA, and clinical judgment simulation.
 
----
+## Setup
 
-## 1. NMED Benchmarks (Diagnosis & Treatment)
-
-### GPT-OSS (HuggingFace API)
-Run the `hf_bench.py` script for `gpt-oss-20b` or `120b` across different reasoning efforts (`low`, `medium`, `high`).
-
-**Template Command:**
 ```bash
-python benchmarks/nmed-notes/hf_bench.py \
-  data/datasets/nmed_diagnosis.csv \
+conda activate oss
+pip install openai pandas tqdm transformers peft torch scipy scikit-learn matplotlib
+```
+
+Download datasets and place under `data/datasets/`:
+https://drive.google.com/drive/folders/19C-Eey_yYKk1sIJc1MxFolIWwH_TBHfI?usp=sharing
+
+## Directory Structure
+
+```
+on-device-LLM/
+├── benchmarks/              # Evaluation scripts
+│   ├── eurorad/             # Radiology diagnosis (8 scripts)
+│   ├── nmed-notes/          # Diagnosis & treatment Likert scoring (6 scripts)
+│   └── ophthalmology/       # Eye disease MCQ classification (5 scripts)
+├── csvs/                    # Results (raw prediction data)
+│   ├── Eurorad.csv          # 207 test cases, 10 models x 3 runs
+│   ├── Ophthalmology.csv    # 130 questions
+│   ├── NMED_Diagnosis.csv   # 720 cases
+│   └── NMED_Treatment.csv   # 595 cases
+├── statistics/              # Statistical analysis pipeline
+│   ├── eurorad_stats.py     # Accuracy, McNemar, Fleiss/Cohen kappa
+│   ├── nmed_stats.py        # Wilcoxon, ICC, weighted kappa
+│   ├── export_csv.py        # Consolidated CSV export
+│   └── all_statistics.csv   # All computed statistics (400 rows)
+├── figures/                 # Visualization scripts
+│   ├── palette.py           # Shared color palette
+│   ├── combined_figure.py   # Multi-panel paper figure
+│   └── (5 individual plot scripts)
+├── finetune/                # LoRA fine-tuning
+│   ├── omar_ft_hf.py        # gpt-oss-120b (8-GPU MoE)
+│   ├── qwen35b_finetune.py  # Qwen 3.5-35B
+│   └── *.csv                # Training data
+├── paper/                   # LaTeX manuscript (Overleaf sync)
+├── data/                    # Dataset collection
+└── gepa/                    # DSPy prompt optimization
+```
+
+## Model Lineup
+
+| Category | Models |
+|----------|--------|
+| **Proprietary** | GPT-5.1, GPT-5-mini, Gemini 3.1 Pro |
+| **Open-source** | DeepSeek-R1 |
+| **On-device gpt-oss** | gpt-oss-20b (H), gpt-oss-120b (H) |
+| **On-device Qwen3.5** | 9B, 27B, 35B, 35B (fine-tuned) |
+
+## Running Benchmarks
+
+All benchmark scripts support `--resume` to skip already-completed rows.
+
+### HuggingFace Inference Providers (gpt-oss, Qwen)
+
+```bash
+# Eurorad
+python benchmarks/eurorad/hf_bench.py data/datasets/eurorad_test.csv \
   --model openai/gpt-oss-120b:fireworks-ai \
-  --api chat \
-  --reasoning_effort high \
-  --max_output_tokens 8192 \
-  --workers 1 \
-  --results results \
-  --resume \
-  --output_csv nmed-diagnosis-oss-120b-high-v1.csv
+  --api chat --reasoning_effort high --max_output_tokens 8192 --resume
+
+# NMED (swap diagnosis/treatment CSV; add --eval_mode treatment for treatment)
+python benchmarks/nmed-notes/hf_bench.py data/datasets/nmed_diagnosis.csv \
+  --model openai/gpt-oss-120b:fireworks-ai \
+  --eval_mode diagnosis --reasoning_effort high --max_output_tokens 8192 --resume
+
+# Ophthalmology
+python benchmarks/ophthalmology/hf_bench.py data/datasets/ophthalmology.csv \
+  --model openai/gpt-oss-120b:fireworks-ai \
+  --api chat --reasoning_effort high --max_output_tokens 8192 --resume
 ```
 
-**Configurations:**
-*   **Dataset:** Swap `nmed_diagnosis.csv` with `nmed_treatment.csv`.
-*   **Model:** `openai/gpt-oss-120b:fireworks-ai` or `openai/gpt-oss-20b:fireworks-ai`.
-*   **Effort:** `--reasoning_effort` can be `low`, `medium`, or `high`.
-*   **Task Mode:** For treatment datasets, add flag `--eval_mode treatment`.
+### OpenAI API (GPT-5.1)
 
-### Proprietary (OpenAI API)
 ```bash
-# GPT-5 / GPT-4o / o4-mini
-python3 benchmarks/nmed-notes/gpt.py \
-  --model gpt-5-2025-08-07 \
-  --dataset data/datasets/nmed_diagnosis.csv \
-  --results-dir results \
-  --resume \
-  --output-csv nmed-diagnosis-gpt-5-2025-08-07-v2.csv \
-  --eval-mode diagnosis
+python benchmarks/eurorad/gpt.py \
+  --model gpt-5.1-2025-11-13 --dataset data/datasets/eurorad_test.csv \
+  --results-dir csvs --resume
 ```
 
-### OpenRouter (DeepSeek)
+### OpenRouter (DeepSeek, Qwen, etc.)
+
 ```bash
-python benchmarks/nmed-notes/openrouter.py \
-  data/datasets/nmed_treatment.csv \
-  --endpoint deepseek/deepseek-r1-0528 \
-  --results_dir results \
-  --max_output_tokens 8192 \
-  --workers 1 \
-  --resume \
-  --output_csv nmed_deepseek/treatment-deepseek-r1-0528_v1.csv
+python benchmarks/eurorad/openrouter.py data/datasets/eurorad_test.csv \
+  --endpoint deepseek/deepseek-r1-0528 --results_dir csvs --resume
 ```
 
----
+### Local Inference (Diverse Beam Search)
 
-## 2. Eurorad Benchmarks
-
-### Proprietary (OpenAI API)
 ```bash
-# Standard Batch Mode
-python benchmarks/eurorad/gpt.py --mode batch --debug
-
-# Chat Mode (Specific Snapshot)
-python3 benchmarks/eurorad/gpt.py \
-  --model gpt-5-2025-08-07 \
-  --dataset data/datasets/eurorad_test.csv \
-  --results-dir results \
-  --resume \
-  --output-csv eurorad_gpt-5-2025-08-07_v4.csv
-```
-
-### GPT-OSS (HuggingFace API)
-```bash
-python benchmarks/eurorad/hf_bench.py \
-  data/datasets/eurorad_test.csv \
-  --model openai/gpt-oss-20b:fireworks-ai \
-  --api chat \
-  --reasoning_effort low \
-  --max_output_tokens 8192 \
-  --workers 1 \
-  --results results \
-  --resume \
-  --output_csv oss20b_low_v3.csv
-```
-
-### OpenRouter (DeepSeek)
-```bash
-python benchmarks/eurorad/openrouter.py \
-  data/datasets/eurorad_test.csv \
-  --endpoint deepseek/deepseek-r1-0528 \
-  --results_dir results \
-  --max_output_tokens 8192 \
-  --workers 1 \
-  --resume \
-  --output_csv eurorad_deepseek/deepseek-r1-0528_v3.csv
-```
-
-### Fine-Tuned GPT-OSS-20B (LoRA)
-```bash
-python benchmarks/eurorad/oss20b_inference.py \
-  --base-model openai/gpt-oss-20b \
-  --lora-path /path/to/lora_adapter \
-  --test-csv data/datasets/eurorad_val.csv \
-  --model-name gptoss20b_finetuned \
-  --num-beam-groups 13 \
-  --diversity-penalty 0.5 \
-  --max-new-tokens 3000 \
-  --cuda-visible-devices 0
-```
-*   Uses diverse beam search with majority voting for diagnosis selection.
-*   Requires pre-trained LoRA adapter from fine-tuning step.
-
----
-
-## 3. Ophthalmology Benchmarks
-
-### GPT-OSS (20b & 120b)
-**Template Command:**
-```bash
-python benchmarks/ophthalmology/hf_bench.py \
-  data/datasets/ophthalmology.csv \
-  --model openai/gpt-oss-20b:fireworks-ai \
-  --api chat \
-  --reasoning_effort low \
-  --max_output_tokens 8192 \
-  --workers 2 \
-  --results results \
-  --resume \
-  --output_csv results/ophthalmology_oss20b_low_v1.csv
-```
-*   **Variations:** Change `--model` to `120b`, `--reasoning_effort` to `medium`/`high`, and increment output filenames (`v1`, `v2`, `v3`).
-
-### Proprietary (OpenAI)
-```bash
-# Responses Mode (GPT-5 / o4-mini)
-python3 benchmarks/ophthalmology/gpt.py \
-  --model gpt-5-2025-08-07 \
-  --dataset data/datasets/ophthalmology.csv \
-  --results-dir results \
-  --resume \
-  --output-csv ophthalmology_responses_gpt-5-2025-08-07_v1.csv
-```
-
-### Other Providers (Novita / OpenRouter)
-```bash
-# Novita (Baichuan)
-python benchmarks/ophthalmology/novita.py data/datasets/ophthalmology.csv \
-  --endpoint baichuan/baichuan-m2-32b \
-  --sleep 1.2 --timeout 60 --verbose --resume
-
-# OpenRouter (Qwen / Llama)
-python benchmarks/ophthalmology/openrouter.py data/datasets/ophthalmology.csv \
-  --endpoint qwen/qwen3-235b-a22b-2507 \
-  --results_dir results \
-  --workers 1 \
-  --resume \
-  --output_csv results/qwen/qwen3-235b-a22b-2507-v2.csv
-```
-
----
-
-## 4. Data Processing Utilities
-
-**Eurorad Data Selection**
-```bash
-# Convert raw CSVs to JSON
-python data/csvs_to_json.py --indir eurorad_csvs --out eurorad_cases.json
-
-# Combine into wide format
-python data/combine_cases_csv.py --indir eurorad_csvs --out eurorad_cases_wide.csv
-```
-
-**Eurorad Scrapers**
-```bash
-# Get single case
-python data/get_case_eurorad.py https://www.eurorad.org/case/18706
-
-# Get 2025 range
-python data/get_range_eurorad.py --start 18806 --end 19164 --outdir eurorad_csvs
-
-# Get training cases
-python data/get_range_eurorad.py --csv data/eurorad_train_cases.csv --case-id-col "Case ID" --outdir eurorad_train_csvs --resume
-```
-
----
-
-## 5. Diverse Beam Search Evaluation (Local Inference)
-
-Self-consistency via diverse beam search with majority voting. Used for gpt-oss-120b and fine-tuned models.
-
-### Eurorad
-```bash
-# gpt-oss-120b with 13-beam diverse beam search
+# Eurorad (13 beams)
 CUDA_VISIBLE_DEVICES=0 python benchmarks/eurorad/eurorad_beams_hf.py \
   --input_csv data/datasets/eurorad_test.csv \
-  --output_csv results/eurorad_oss120b_13beams_v1.csv \
+  --output_csv csvs/eurorad_oss120b_13beams_v1.csv \
   --model openai/gpt-oss-120b \
   --num_beams 13 --num_beam_groups 13
 
-# Chain-of-thought beams with external rescoring
-python benchmarks/eurorad/cot_beams_score_hf.py \
-  --input_csv data/datasets/eurorad_test.csv \
-  --output_csv results/eurorad_cot_beams.csv \
-  --model openai/gpt-oss-120b
-
-# Evaluate fine-tuned LoRA checkpoint
-python benchmarks/eurorad/eval_finetune.py \
-  --base_model openai/gpt-oss-120b \
-  --lora_path finetune/outputs/checkpoint-30 \
-  --test_csv data/datasets/eurorad_test.csv
-```
-
-### NMED (Diagnosis & Treatment)
-```bash
-# Diagnosis scoring with beam search
-python benchmarks/nmed-notes/beams_diagnosis_hf.py \
+# NMED beam search (diagnosis or treatment)
+python benchmarks/nmed-notes/beams_hf.py \
+  --task diagnosis \
   --val-csv data/datasets/nmed_diagnosis.csv \
-  --out-csv results/nmed_diagnosis_oss120b_5beams_v1.csv \
-  --num-beams 5 --max-new-tokens 3000
-
-# Treatment scoring with beam search
-python benchmarks/nmed-notes/beams_treatment_hf.py \
-  --val-csv data/datasets/nmed_treatment.csv \
-  --out-csv results/nmed_treatment_oss120b_5beams_v1.csv \
-  --num-beams 5 --max-new-tokens 3000
+  --out-csv csvs/nmed_diagnosis_beams_v1.csv
 ```
 
----
+## Fine-Tuning
 
-## 6. Fine-Tuning (LoRA)
+### gpt-oss-120b (LoRA, 8 GPUs)
 
-### Primary: gpt-oss-120b SFT with LoRA on 8 GPUs
 ```bash
 CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 python finetune/omar_ft_hf.py \
   MODEL_ID=openai/gpt-oss-120b \
@@ -244,25 +121,34 @@ CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 python finetune/omar_ft_hf.py \
   LR=6e-5 WD=0.01 WARMUP_RATIO=0.1
 ```
 
-Training data is in `finetune/` (JSONL and CSV files). See notebooks for exploratory fine-tuning:
-- `finetune/oss-eurorad-sft.ipynb` — Eurorad SFT
-- `finetune/V7Finetuning_Gptoss120Reasonthinking_Final_Omar.ipynb` — MoE expert fine-tuning
-- `finetune/Finetuning_MoELinear_oss120ReasData_detPrompt.ipynb` — MoE Linear with reasoning data
+### Qwen 3.5-35B (LoRA)
 
----
-
-## 7. GEPA Prompt Optimization
-
-DSPy-based prompt optimization for Eurorad diagnosis:
 ```bash
-python gepa/gepa_eurorad.py
+python finetune/qwen35b_finetune.py
 ```
 
----
+## Statistical Analysis
 
-## 8. Figure Generation
+```bash
+# Run all analyses (Eurorad + NMED)
+PYTHONPATH=statistics python statistics/run_all.py
 
-Scripts for paper figures in `figures/`:
-- `figures/plot_radar.py` — Radar chart (multi-metric model comparison)
-- `figures/kendall_tau_violin_plot.py` — Kendall's tau violin plot (input: `figures/fig2-c-box-plot/kendall.xlsx`)
-- `figures/visualization_barplot.py` — Grouped bar plot for hyperparameter tuning
+# Export consolidated CSV
+PYTHONPATH=statistics python statistics/export_csv.py
+```
+
+Computes: Wilson CIs, McNemar + Holm-Bonferroni, Wilcoxon + Holm-Bonferroni, Fleiss/Cohen kappa with bootstrap CIs, ICC(3,k), weighted kappa, Fisher's exact per subspecialty.
+
+## Figure Generation
+
+```bash
+# Individual plots
+python figures/eurorad_accuracy_barplot.py -o figures/eurorad_accuracy.png
+python figures/eurorad_finetune_barplot.py -o figures/eurorad_finetune.png
+python figures/eurorad_radar_plot.py -o figures/eurorad_radar.png
+python figures/eurorad_heatmap.py -o figures/eurorad_heatmap.png
+python figures/nmed_violin_plot.py -o figures/nmed_violin.png
+
+# Combined paper figure (fig2)
+python figures/combined_figure.py -o figures/combined.png
+```
