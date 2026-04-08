@@ -66,7 +66,7 @@
 %
 
 
-\author{Alif Munim$^*$, Jun Ma$^*$, Omar Ibrahim$^*$, Alhusain Abdalla$^*$, Shuolin Yin, Leo Chen, and Bo Wang % <-this % stops a space
+\author{Alif Munim$^*$, Omar Ibrahim$^*$, Alhusain Abdalla$^*$, Jun Ma$^*$, Meng Wei, Shuolin Yin, Leo Chen, and Bo Wang % <-this % stops a space
 
 
 \IEEEcompsocitemizethanks{
@@ -74,9 +74,9 @@
 % \protect\\
 % note need leading \protect in front of \\ to get a newline within \thanks as
 % \\ is fragile and will error, could use \hfil\break instead.
-\IEEEcompsocthanksitem Jun Ma is with AI Collaborative Centre and Princess Margaret Cancer Centre, University Health Network, Toronto, Canada. ($*$ Equal Contribution)
 \IEEEcompsocthanksitem Omar Ibrahim is with AI Collaborative Centre, University Health Network, Toronto, Canada. ($*$ Equal Contribution)
 \IEEEcompsocthanksitem Alhusain Abdalla is with AI Collaborative Centre, University Health Network, Toronto, Canada. ($*$ Equal Contribution)
+\IEEEcompsocthanksitem Jun Ma is with AI Collaborative Centre and Princess Margaret Cancer Centre, University Health Network, Toronto, Canada. ($*$ Equal Contribution)
 \IEEEcompsocthanksitem Shuolin Yin is with Department of Electrical and Computer Engineering, University of Toronto, Toronto, Canada.
 \IEEEcompsocthanksitem Leo Chen is with Division of Urology, Department of Surgery, St. Michael’s Hospital, Unity Health Toronto and University of Toronto, Toronto, Canada
 \IEEEcompsocthanksitem Bo Wang (Corresponding Author) is with Peter Munk Cardiac Centre, University Health Network; Department of Laboratory Medicine and Pathobiology and Department of Computer Science, University of Toronto;  Vector Institute, Toronto, Canada. 
@@ -85,7 +85,7 @@ E-mail: bowang@vectorinstitute.ai}% <-this % stops an unwanted space
 
 \IEEEtitleabstractindextext{%
 \begin{abstract}
-Large language models (LLMs) have rapidly advanced in clinical decision-making, yet the deployment of proprietary systems is hindered by privacy concerns and reliance on cloud-based infrastructure. Open-source alternatives allow local inference but often require large model sizes that limit their use in resource-constrained clinical settings. Here, we benchmark on-device LLMs from the gpt-oss (20b, 120b) and Qwen3.5 (9B, 27B, 35B) families across three representative clinical tasks: general disease diagnosis, specialty-specific (ophthalmology) diagnosis and management, and simulation of human expert grading and evaluation. We compare their performance with state-of-the-art proprietary models (GPT-5.1, GPT-5-mini, and Gemini 3.1 Pro) and a leading open-source model (DeepSeek-R1), and we further evaluate the adaptability of on-device systems by fine-tuning gpt-oss-20b and Qwen3.5-35B on general diagnostic data. Across tasks, on-device models achieve performance comparable to or exceeding DeepSeek-R1 and GPT-5-mini despite being substantially smaller. In addition, fine-tuning remarkably improves diagnostic accuracy, with the fine-tuned Qwen3.5-35B reaching 88.4\% and approaching the proprietary GPT-5.1 (88.9\%). These findings highlight the potential of on-device LLMs to deliver accurate, adaptable, and privacy-preserving clinical decision support, offering a practical pathway for broader integration of LLMs into routine clinical practice.
+Large language models (LLMs) have rapidly advanced in clinical decision-making, yet the deployment of proprietary systems is hindered by privacy concerns and reliance on cloud-based infrastructure. Open-source alternatives allow local inference but often have large model sizes that limit their use in resource-constrained clinical settings. Here, we benchmark on-device LLMs from the gpt-oss (20b, 120b) and Qwen3.5 (9B, 27B, 35B) families across three representative clinical tasks: general disease diagnosis, specialty-specific (ophthalmology) diagnosis and management, and simulation of human expert grading and evaluation. We compare their performance with state-of-the-art proprietary models (GPT-5.1, GPT-5-mini, and Gemini 3.1 Pro) and a leading open-source model (DeepSeek-R1), and we further evaluate the adaptability of on-device systems by fine-tuning gpt-oss-20b and Qwen3.5-35B on general diagnostic data. Across tasks, on-device models achieve performance comparable to or exceeding DeepSeek-R1 and GPT-5-mini despite being substantially smaller. In addition, fine-tuning remarkably improves diagnostic accuracy, with the fine-tuned Qwen3.5-35B reaching 88.4\% and approaching the proprietary GPT-5.1 (88.9\%). These findings highlight the potential of on-device LLMs to deliver accurate, adaptable, and privacy-preserving clinical decision support, offering a practical pathway for broader integration of LLMs into routine clinical practice.
 \end{abstract}
 
 %%
@@ -125,9 +125,10 @@ This study aims to determine whether on-device LLMs can be practically used for 
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[scale=0.85]{main-imgs/fig1.png}
-\caption{\textbf{Overview of the benchmark framework.} This study compares the on-device LLMs with state-of-the-art open-source and proprietary LLMs across general disease diagnosis, specialty diagnosis and treatment recommendations on ophthalmology multiple-choice questions, and judgment for open-ended clinical decision questions.
-}\label{fig:1}
+% Changed scale to width to ensure it stays within the text margins
+\includegraphics[width=\textwidth]{main-imgs/fig1.png} 
+\caption{\textbf{Overview of the benchmark framework.} This study compares on-device LLMs (gpt-oss and Qwen3.5) with state-of-the-art open-source (DeepSeek-R1) and proprietary LLMs (GPT-5.1, GPT-5-mini, Gemini 3.1 Pro) across general disease diagnosis, specialty diagnosis and management (ophthalmology), and clinical judgment simulation.}
+\label{fig:1}
 \end{figure}
 
 
@@ -151,8 +152,6 @@ To ensure rigorous zero-shot evaluation and prevent data leakage, all three benc
 \centering
 \enlargethispage{2cm}
 \vspace*{-1.5cm}
-% \includegraphics[scale=0.25]{main-imgs/fig2.png}
-% \includegraphics[scale=0.128]{main-imgs/fig2.png}
 \includegraphics[width=\textwidth,height=0.92\textheight,keepaspectratio]{main-imgs/fig2_combined.png}
 \caption{\textbf{Zero-shot and fine-tuning performance of on-device LLMs.}
 \textbf{a,} Results of LLM-as-a-generalist: diagnosis accuracy on a wide range of radiological cases (N=207).
@@ -161,9 +160,6 @@ To ensure rigorous zero-shot evaluation and prevent data leakage, all three benc
 \textbf{d,} Model performance across 10 radiological sub-specialties.
 }\label{fig:2}
 \end{figure}
-
-\subsection*{On-device LLMs show competitive zero-shot performance}
-Fig.~\ref{fig:2}a compares the diagnostic accuracy of the evaluated models for general disease diagnosis across radiological case reports (Table~\ref{tab:generalist_results}). Among the proprietary frontier models, Gemini 3.1 Pro achieved the highest overall accuracy of 91.3\% (95\% CI: 86.7--94.4\%), followed by GPT-5.1 at 88.9\% (95\% CI: 83.9--92.5\%). The on-device models demonstrated strong competitiveness relative to these baselines. Specifically, the gpt-oss-120b (H) model achieved an accuracy of 83.1\% (95\% CI: 77.4--87.6\%), while the highly efficient gpt-oss-20b (H) model secured 80.7\% (95\% CI: 74.8--85.5\%), matching the performance of the significantly larger DeepSeek-R1 (81.6\%; 95\% CI: 75.8--86.3\%; $p>0.05$). Among the Qwen3.5 on-device models, the 35B variant achieved the highest base accuracy at 84.5\% (95\% CI: 79.0--88.8\%), matching GPT-5-mini (84.1\%; 95\% CI: 78.5--88.4\%; $p>0.05$) and exceeding DeepSeek-R1. The Qwen3.5 27B model achieved 80.2\% (95\% CI: 74.2--85.1\%), comparable to both gpt-oss-20b (H) and DeepSeek-R1 ($p>0.05$), while the smallest 9B variant reached 75.8\% (95\% CI: 69.6--81.2\%).
 
 \begin{table}[!htbp]
 \centering
@@ -198,10 +194,9 @@ Others            & \best{\acc{75.0}} & \best{\acc{75.0}} & \best{\acc{75.0}} & 
 \end{table}
 
 
-Table~\ref{tab:ophthalmology_results} presents the model performance of the LLM-as-a-specialist task on the ophthalmology QA dataset (Table~\ref{tab:ophthalmology_results}). The open-source model DeepSeek-R1 achieved the highest overall accuracy of 79.2\% (95\% CI: 71.5--85.3\%), demonstrating particularly strong capabilities in diagnosis (92.3\%; 95\% CI: 79.7--97.3\%) and management (73.6\%; 95\% CI: 63.7--81.6\%). Remarkably, the on-device gpt-oss-120b (M) model secured the second-highest rank with an overall accuracy of 77.7\% (95\% CI: 69.8--84.0\%), surpassing the proprietary GPT-5.1 (76.9\%) and GPT-5-mini (67.7\%) baselines. This performance underscores the capacity of locally deployed large models to rival state-of-the-art proprietary systems in specialty-specific medical reasoning. While the smaller gpt-oss-20b variants showed a performance gap, with the best-performing gpt-oss-20b (H) achieving 66.2\% (95\% CI: 57.7--73.7\%), they remained competitive in specific subtasks (e.g., Refractive Disorders or Strabismus). Across all evaluated architectures, models consistently demonstrated higher performance in diagnosis compared to patient management, reflecting the increased complexity of treatment planning in specialty care.
+\subsection*{On-device LLMs show competitive zero-shot performance}
+Fig.~\ref{fig:2}a and Table~\ref{tab:generalist_results} compare the diagnostic accuracy of the evaluated models for general disease diagnosis across radiological case reports. Among the proprietary frontier models, Gemini 3.1 Pro achieved the highest overall accuracy of 91.3\% (95\% CI: 86.7--94.4\%), followed by GPT-5.1 at 88.9\% (95\% CI: 83.9--92.5\%). The on-device models demonstrated strong competitiveness relative to these baselines. Specifically, the gpt-oss-120b (H) model achieved an accuracy of 83.1\% (95\% CI: 77.4--87.6\%), while the highly efficient gpt-oss-20b (H) model secured 80.7\% (95\% CI: 74.8--85.5\%), matching the performance of the significantly larger DeepSeek-R1 (81.6\%; 95\% CI: 75.8--86.3\%; $p>0.05$). Among the Qwen3.5 on-device models, the 35B variant achieved the highest base accuracy at 84.5\% (95\% CI: 79.0--88.8\%), matching GPT-5-mini (84.1\%; 95\% CI: 78.5--88.4\%; $p>0.05$) and exceeding DeepSeek-R1. The Qwen3.5 27B model achieved 80.2\% (95\% CI: 74.2--85.1\%), comparable to both gpt-oss-20b (H) and DeepSeek-R1 ($p>0.05$), while the smallest 9B variant reached 75.8\% (95\% CI: 69.6--81.2\%).
 
-
-Fig.~\ref{fig:2}b shows the evaluation results of models acting as clinical judges (Table~\ref{tab:specialty_results_with_total}), measured by the median relative error (interquartile range) between the model's consensus score and human expert consensus. For diagnostic assessment, GPT-5.1 and Gemini 3.1 achieved a median error of 0.00 (IQR: -0.50--0.10 and 0.00--0.50, respectively), while GPT-5-mini exhibited more pronounced systematic underestimation (median error: -0.50, IQR: -1.10--0.00). The on-device gpt-oss-120b (H) demonstrated comparable alignment, achieving a median diagnostic error of 0.00 (IQR: -0.50--0.27). Notably, all three Qwen3.5 models also achieved a median diagnostic error of 0.00, matching the best-performing proprietary models in alignment with human expert scores. For treatment-related judgments, the gpt-oss models showed the lowest median errors (gpt-oss-20b H: 0.17, IQR: -0.29--0.50; gpt-oss-120b H: 0.17, IQR: -0.17--0.50), while GPT-5-mini (0.25), DeepSeek-R1 (0.25), and GPT-5.1 (0.33) showed moderate overestimation. The Qwen3.5 and Gemini models showed higher treatment errors (median 0.50), reflecting the open-ended and subjective nature of treatment evaluation.
 
 
 \begin{table}[!htbp]
@@ -241,10 +236,9 @@ Fig.~\ref{fig:2}b shows the evaluation results of models acting as clinical judg
 \end{tabular}
 \end{table}
 
-Model reliability was further assessed using standard agreement and stability metrics.
-Inter-model agreement on clinical judgment tasks, measured using linear weighted Cohen’s $\kappa$, was moderate for diagnostic scoring ($\kappa_w \approx 0.29$--$0.74$) and lower for treatment evaluation ($\kappa_w \approx 0.11$--$0.45$), reflecting the open-ended and subjective nature of clinical management decisions.
-Intra-model stability across repeated inference runs was high. For diagnostic judgment tasks, the Intraclass Correlation Coefficient (ICC) indicated excellent reliability across all models (ICC $\approx 0.82$--$0.99$), while treatment scoring showed greater variability (ICC $\approx 0.70$--$0.99$), with proprietary models exhibiting higher stability than open and on-device models.
-Together, these results support the use of consensus-based aggregation to mitigate stochastic variability and produce reliable clinical outputs.
+
+Table~\ref{tab:ophthalmology_results} presents the model performance of the LLM-as-a-specialist task on the ophthalmology QA dataset (Table~\ref{tab:ophthalmology_results}). The open-source model DeepSeek-R1 achieved the highest overall accuracy of 79.2\% (95\% CI: 71.5--85.3\%), demonstrating particularly strong capabilities in diagnosis (92.3\%; 95\% CI: 79.7--97.3\%) and management (73.6\%; 95\% CI: 63.7--81.6\%). Remarkably, the on-device gpt-oss-120b (M) model acheived a rivaling performance with an overall accuracy of 77.7\% (95\% CI: 69.8--84.0\%), surpassing the proprietary GPT-5.1 (76.9\%) and GPT-5-mini (67.7\%) baselines. This performance underscores the capacity of locally deployed large models to rival state-of-the-art proprietary systems in specialty-specific medical reasoning. While the smaller gpt-oss-20b variants showed a performance gap, with the best-performing gpt-oss-20b (H) achieving 66.2\% (95\% CI: 57.7--73.7\%), they remained competitive in specific subtasks (e.g., Refractive Disorders or Strabismus). Across all evaluated architectures, models consistently demonstrated higher performance in diagnosis compared to patient management, reflecting the increased complexity of treatment planning in specialty care.
+
 
 \begin{table}[!htbp]
 \centering
@@ -279,13 +273,37 @@ Together, these results support the use of consensus-based aggregation to mitiga
 \end{tabular}
 \end{table}
 
+Fig.~\ref{fig:2}b and Table~\ref{tab:specialty_results_with_total} show the evaluation results of models acting as clinical judges, measured by the median relative error (interquartile range) between the model's consensus score and human expert consensus. For diagnostic assessment, GPT-5.1 and Gemini 3.1 achieved a median error of 0.00 (IQR: -0.50--0.10 and 0.00--0.50, respectively), while GPT-5-mini exhibited more pronounced systematic underestimation (median error: -0.50, IQR: -1.10--0.00). The on-device gpt-oss-120b (H) demonstrated comparable alignment, achieving a median diagnostic error of 0.00 (IQR: -0.50--0.27). Notably, all three Qwen3.5 models also achieved a median diagnostic error of 0.00, matching the best-performing proprietary models in alignment with human expert scores. For treatment-related judgments, the gpt-oss models showed the lowest median errors (gpt-oss-20b H: 0.17, IQR: -0.29--0.50; gpt-oss-120b H: 0.17, IQR: -0.17--0.50), while GPT-5-mini (0.25), DeepSeek-R1 (0.25), and GPT-5.1 (0.33) showed moderate overestimation. The Qwen3.5 and Gemini models showed higher treatment errors (median 0.50), reflecting the open-ended and subjective nature of treatment evaluation.
+
+
+
+Model reliability was further assessed using standard agreement and stability metrics.
+Inter-model agreement on clinical judgment tasks, measured using linear weighted Cohen’s $\kappa$, was moderate for diagnostic scoring ($\kappa_w \approx 0.29$--$0.74$) and lower for treatment evaluation ($\kappa_w \approx 0.11$--$0.45$), reflecting the open-ended and subjective nature of clinical management decisions.
+Intra-model stability across repeated inference runs was high. For diagnostic judgment tasks, the Intraclass Correlation Coefficient (ICC) indicated excellent reliability across all models (ICC $\approx 0.82$--$0.99$), while treatment scoring showed greater variability (ICC $\approx 0.70$--$0.99$), with proprietary models exhibiting higher stability than open and on-device models.
+Together, these results support the use of consensus-based aggregation to mitigate stochastic variability and produce reliable clinical outputs.
+
+
+
 
 \subsection*{Fine-tuning substantially improves the diagnostic capability of on-device LLMs}
-To assess the adaptability of on-device LLMs for clinical decision support, we fine-tuned the gpt-oss-20b (M) model on the general disease diagnosis dataset (Methods). As shown in Fig.~\ref{fig:2}c (Supplementary Fig. 1--3), the fine-tuned model produced a marked improvement in diagnostic accuracy, increasing from 77.3\% (95\% CI: 71.1--82.5\%) in the base model to 86.5\% (95\% CI: 81.1--90.5\%) after adaptation. This performance exceeded the accuracy of DeepSeek-R1 (81.6\%, 95\% CI: 75.8--86.3\%) and GPT-5-mini (84.1\%, 95\% CI: 78.5--88.4\%) and approached that of GPT-5.1 (88.9\%, 95\% CI: 83.9--92.5\%).
+To assess the adaptability of on-device LLMs for clinical decision support, we fine-tuned the gpt-oss-20b (M) model on the general disease diagnosis dataset (Methods). As shown in Fig.~\ref{fig:2}c (Supplementary Fig. 1--3), the fine-tuned model produced a marked improvement in diagnostic accuracy, increasing from 80.7\% (95\% CI: 74.8--85.5\%) in the base model to 86.5\% (95\% CI: 81.1--90.5\%) after adaptation. This performance exceeded the accuracy of DeepSeek-R1 (81.6\%, 95\% CI: 75.8--86.3\%) and GPT-5-mini (84.1\%, 95\% CI: 78.5--88.4\%) and approached that of GPT-5.1 (88.9\%, 95\% CI: 83.9--92.5\%).
 
 In parallel, fine-tuning the Qwen3.5-35B model using reasoning data curated by the larger Qwen3.5-122B yielded a substantial improvement from 84.5\% (95\% CI: 79.0--88.8\%) to 88.4\% (95\% CI: 83.3--92.1\%), a gain of 3.9 percentage points (Fig.~\ref{fig:2}c). This fine-tuned accuracy closely rivals GPT-5.1 (88.9\%; $p>0.05$) and surpasses both GPT-5-mini and DeepSeek-R1, demonstrating that the family-matched training data curation strategy generalizes across model architectures.
 
-To illustrate the impact of fine-tuning on both diagnostic accuracy and reasoning quality, we present three case studies (Supplementary Cases 1--3). Case 1 (Von Hippel-Lindau syndrome) shows fine-tuning enhances reasoning quality even when base models reach correct diagnoses: the base model provided superficial comparisons with uncertain statements, while the fine-tuned model employed systematic multi-system integration with detailed syndrome comparison and definitive synthesis. Cases 2--3 demonstrate error correction through recognition of critical clinical features. 
+To illustrate the impact of fine-tuning on both diagnostic accuracy and reasoning quality, we 
+present three case studies evaluated on both fine-tuned models (Supplementary Cases 1--6). 
+For gpt-oss-20b (Cases 1--3), Case 1 (Von Hippel-Lindau syndrome) shows that fine-tuning 
+enhances reasoning quality even when the base model reaches the correct diagnosis: the base 
+model provided superficial comparisons with uncertain statements, while the fine-tuned model 
+employed systematic multi-system integration with detailed syndrome comparison and definitive 
+synthesis. Cases 2--3 (Primary Cardiac Lymphoma and NICE lesions) demonstrate outright error 
+correction, where the base model selected incorrect diagnoses and the fine-tuned model 
+identified critical discriminating features that were missed. For Qwen3.5-35B (Cases 4--6), 
+the base model reached correct answers across all three cases but via verbose, unfocused 
+reasoning. Fine-tuning consistently transformed this into concise, structured diagnostic 
+reasoning, directly identifying key discriminating features and applying systematic elimination 
+rather than relying on memorised pattern-matching.
+
 Furthermore, the sub-speciality-wise analysis (Fig.~\ref{fig:2}d, Fig.~\ref{fig:3}) reveals that fine-tuning effectively mitigates domain-specific weaknesses observed in base models, particularly in specialized areas such as cardiovascular and breast imaging.
 
 \begin{figure}[ht]
@@ -335,7 +353,7 @@ The LLM-as-a-specialist task involved complex multiple-choice questions (MCQs) r
 \textbf{Clinical Judgment Simulation.}
 The LLM-as-a-clinical-judge task evaluated the models' ability to simulate expert clinical judgment. Models were presented with a clinical case adapted from ~\cite{eval-deepseek125Patients}, alongside a candidate diagnosis/treatment plan, and a reference standard. They were instructed to assign a quality score on a 5-point Likert scale (1 = Most relevant options missing, 5 = All relevant options mentioned) based on a strict scoring rubric. Half-point scores (e.g., 4.5) were permitted to capture granular distinctions in quality  (Supplementary Prompt 3).
 
-\subsection*{Inference Implementation}
+\subsection*{Inference Protocol for Zero-shot Experiments}
 
 We benchmarked three distinct categories of models to represent the current landscape of LLMs:
 
@@ -371,11 +389,14 @@ In parallel, fine-tuning of the Qwen3.5-35B-A3B model was conducted to evaluate 
 For both models, mixed-precision training with bfloat16 was utilized to accelerate computation while maintaining numerical stability, and all experiments were conducted with fixed random seeds to ensure reproducibility.
 
 
-\subsection*{Inference protocol of fine-tuned model}
+\subsection*{Inference protocol of fine-tuned models}
 
-To evaluate the fine-tuned gpt-oss-20b model on radiological diagnosis, we designed a controlled inference pipeline optimized for the exploration of deterministic and diverse hypotheses. All predictions were generated using group beam search, a decoding strategy that encourages exploration across diverse reasoning paths while also maintaining stability in high-stakes clinical settings. After systematic experimentation with different decoding settings, we found that a configuration of 13 beams, 13 beam groups, and a diversity penalty of 0.5 provided the strongest performance on the Eurorad validation set. This setup enforced full beam-group separation, ensuring that each beam starts its own reasoning trajectory and looks at the presented case from a different angle, which is particularly effective in reducing mode collapse and repetitive reasoning. Maximum generation length was set to 3,000 tokens to accommodate longer Chain-of-Thought outputs, and sampling was disabled to ensure reproducibility across runs.
+To evaluate the fine-tuned models on radiological diagnosis, we employed tailored inference strategies to account for the differing baseline capacities of the underlying architectures. For the smaller gpt-oss-20b model, we designed a controlled inference pipeline optimized for the exploration of deterministic and diverse hypotheses. Our goal was to demonstrate that advanced inference strategies can be leveraged to further boost the performance and reliability of highly constrained models. All predictions for this model were generated using group beam search, a decoding strategy that encourages exploration across diverse reasoning paths while maintaining stability in high-stakes clinical settings. After systematic experimentation with different decoding settings, we found that a configuration of 13 beams, 13 beam groups, and a diversity penalty of 0.5 provided the strongest performance on the Eurorad validation set. This setup enforced full beam-group separation, ensuring that each beam starts its own reasoning trajectory and looks at the presented case from a different angle, which is particularly effective in reducing mode collapse and repetitive reasoning. Maximum generation length was set to 3,000 tokens to accommodate longer Chain-of-Thought outputs, and sampling was disabled to ensure reproducibility across runs.
 
-For each case, the model produced 13 independent reasoning traces. Final predictions were obtained using a majority-vote aggregation over the extracted diagnostic answers, with ties resolved by selecting the earliest beam. All inputs were encoded with the gpt-oss chat template using left padding and a 4,096-token context window, and inference was executed using the Unsloth runtime with 4-bit quantized weights and attached LoRA adapters. This protocol allowed the model to balance the range of diagnostic reasoning with reliability, resulting in a stable exact-match performance while preserving a clinically interpretable diagnostic rationale.
+For each case, the gpt-oss-20b model produced 13 independent reasoning traces. Final predictions were obtained using a majority-vote aggregation over the extracted diagnostic answers, with ties resolved by selecting the earliest beam. All inputs were encoded with the gpt-oss chat template using left padding and a 4,096-token context window, and inference was executed using the Unsloth runtime with 4-bit quantized weights and attached LoRA adapters. This protocol allowed the model to balance the range of diagnostic reasoning with reliability, resulting in a stable exact-match performance while preserving a clinically interpretable diagnostic rationale.
+
+Conversely, the fine-tuned Qwen3.5-35B model demonstrated robust diagnostic reasoning without the need for additional decoding strategies. Inference was conducted using the Unsloth runtime with 4-bit quantization. Inputs were processed within a 2,048-token maximum sequence length. We employed standard autoregressive generation with a temperature of 0.7 and a maximum generation length of 4,000 tokens to safely accommodate its extensive, multi-phase chain-of-thought outputs. This contrast in inference protocols highlights that while advanced search strategies are valuable for extracting maximal performance from smaller models, other models can achieve state-of-the-art clinical accuracy using default inference configurations.
+
 
 
 
@@ -395,7 +416,7 @@ In the general disease diagnosis task, on-device models achieved strong zero-sho
 
 The ability of LLMs to act as "clinical judges" is critical for scalable quality assurance and automated evaluation~\cite{kocaman2025clever, croxford2025evaluating}. Our results indicate that on-device models can align closely with human expert consensus, often exhibiting greater stability than efficient proprietary alternatives like GPT-5-mini. All three Qwen3.5 models achieved median diagnostic errors of 0.00, matching the best-performing models and confirming that lightweight architectures can reliably simulate expert judgment. This suggests that compact models can support evaluative tasks that require not only factual knowledge but also sensitivity to clinical reasoning standards and rubric-based assessment criteria. This capability is essential for deploying LLMs as automated auditors or second-opinion systems in clinical workflows~\cite{humaneval2025llmjudge, genovese2026artificial}.
 
-Beyond zero-shot performance, the adaptability of on-device models represents a substantial advantage over closed-source systems. Fine-tuning the gpt-oss-20b and Qwen3.5-35B models on general diagnosis data substantially improved their performance, with the fine-tuned Qwen3.5-35B achieving an exact match accuracy of 88.4\% (95\% CI: 83.3--92.1\%), closely rivaling GPT-5.1 (88.9\%). Crucially, we observed that fine-tuning yielded the most robust improvements when models were trained on synthetic reasoning data generated by a larger, architecturally matched model from the same family (e.g., utilizing Qwen-122B for the Qwen3.5 series, and gpt-oss-120b for the gpt-oss series). Because different model families exhibit intrinsic variations in how they structure logic, this family-matched approach preserves the native reasoning style, preventing formatting clashes and optimizing the assimilation of systematic diagnostic patterns. This result suggests that domain-specific optimization—when aligned with a model's inherent reasoning architecture—can efficiently compensate for smaller model scale~\cite{davis2026medslice, guluzade2025elmtex, wind2025rar}. Fine-tuning also enhanced robustness across radiology subspecialties, yielding more uniform performance and mitigating weaknesses observed in the base models. These findings highlight that clinics can deploy efficient, low-cost, customized AI tools tailored to their specific patient demographics and disease prevalences without compromising data privacy.
+Beyond zero-shot performance, the adaptability of on-device models represents a substantial advantage over closed-source systems. Fine-tuning the gpt-oss-20b and Qwen3.5-35B models on general diagnosis data substantially improved their performance, with the fine-tuned Qwen3.5-35B achieving an exact match accuracy of 88.4\% (95\% CI: 83.3--92.1\%), closely rivaling GPT-5.1 (88.9\%). We observed that fine-tuning yielded the most robust improvements when models were trained on reasoning traces generated by a larger, architecturally matched model from the same family (e.g., utilizing Qwen-122B for the Qwen3.5 series, and gpt-oss-120b for the gpt-oss series). Because different model families exhibit intrinsic variations in how they structure logic, this family-matched approach preserves the native reasoning style, preventing formatting clashes and optimizing the assimilation of systematic diagnostic patterns. This result suggests that domain-specific optimization, when aligned with a model's inherent reasoning architecture, can efficiently compensate for smaller model scale~\cite{davis2026medslice, guluzade2025elmtex, wind2025rar}. Fine-tuning also enhanced robustness across radiology subspecialties, yielding more uniform performance and mitigating weaknesses observed in the base models. These findings highlight that clinics can deploy efficient, low-cost, customized AI tools tailored to their specific patient demographics and disease prevalences without compromising data privacy.
 
 Taken together, the experiments in this study highlight three key insights. First, compact on-device LLMs can provide strong general diagnostic reasoning and domain-specific performance. Second, on-device LLMs can approximate expert judgment with surprising fidelity, positioning them as valuable components of locally governed AI ecosystems that support both clinical decision-making and meta-evaluative tasks. Third, fine-tuning plays a critical role in achieving competitive accuracy across diverse subspecialties, allowing healthcare institutions to develop tailored high-performing models from relatively small architectures.
 
