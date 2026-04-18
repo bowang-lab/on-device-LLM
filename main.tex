@@ -327,8 +327,55 @@ Color intensity represents accuracy (Green=High, Red=Low). Base on-device models
 The substantial performance gains across both model families demonstrate that targeted domain adaptation can effectively compensate for the smaller scale of on-device models. The fine-tuned gpt-oss-20b and Qwen3.5-35B models exhibit diagnostic accuracy comparable to significantly larger proprietary systems while retaining the advantages of local deployability and privacy preservation. These findings highlight the strong potential of lightweight, fine-tuned on-device LLMs to provide high-quality clinical decision support in settings with limited computational resources.
 
 
+\subsection*{Error characterization across model families}
 
+To understand the nature of residual diagnostic errors, we classified all 358 incorrect majority-vote predictions across the 11 evaluated models into five categories using an independent LLM judge (Table~\ref{tab:error_taxonomy}; Methods). The dominant error mode was category~(c), plausible differential selection, accounting for 87.2\% of all errors (312/358). This proportion was consistent across model families: 97.2\% for proprietary models, 89.5\% for DeepSeek-R1, 83.6\% for base on-device models, and 87.0\% for fine-tuned on-device models. Category~(a) surface-form mismatches---cases where the model identified the correct diagnosis but used an alternative name or abbreviation---comprised only 5.0\% of errors (18/358), concentrated in four ground-truth labels with long multi-qualifier names. This indicates that exact-match scoring does not substantially underestimate diagnostic accuracy. Off-topic or hallucinated predictions (category~d) were restricted to the two smallest on-device models (Qwen3.5 9B and 27B), accounting for all 14 such errors; every model with $\geq$31B parameters, including gpt-oss-20b (3.6B active parameters in its mixture-of-experts architecture), produced zero off-topic errors.
 
+We further quantified the gap between observed majority-vote accuracy and the theoretical best-of-3 oracle---the accuracy achievable if the correct answer from any single run were always selected. Oracle accuracy exceeded majority-vote accuracy by 0--11 cases per model (Supplementary Table~4). The fine-tuned Qwen3.5-35B exhibited the largest oracle accuracy (93.2\%, 193/207), indicating substantial recoverable performance through improved sampling or aggregation strategies. By contrast, Gemma~4 31B produced identical predictions across all three runs for every case (oracle gap~=~0), reflecting fully deterministic generation under our inference protocol.
+
+To identify the boundary of current model capabilities, we defined \textit{hard-for-all} cases as those answered correctly by $\leq$36\% of models (bottom decile). This yielded 23 cases spanning all major subspecialties in rough proportion to section size, indicating that the shared knowledge frontier is distributed across the benchmark rather than concentrated in a single domain. These cases were characterized by rare histopathological subtypes (e.g., retroperitoneal ganglioneuroblastoma-intermixed, chondroblastic osteosarcoma, rosette-forming glioneuronal tumour), uncommon infections (e.g., \textit{Mycobacterium kansasii} tenosynovitis), and rare syndromes (e.g., chorea-acanthocytosis, MASA syndrome). One case (clear cell soft tissue sarcoma with melanocytic differentiation) contained three category~(a) surface-form predictions that would be scored correct under a relaxed matcher, which would remove it from the hard-for-all set; the remaining 22 cases are unambiguously hard. No single model family dominated the recoveries among these cases.
+
+Finally, we examined the mechanism by which fine-tuning improves accuracy. We identified 19 \textit{capability-gap} cases---those answered correctly by proprietary or fine-tuned models but missed by the majority of base on-device models. Of the 13 cases that the fine-tuned Qwen3.5-35B recovered relative to its base variant, 11 (84.6\%) fell within this capability-gap set. The two cases uniquely solved by the fine-tuned model (both rare musculoskeletal entities) had analogous cases in the fine-tuning corpus: the training set contained a prior chondroblastic osteosarcoma case and related mycobacterial tenosynovitis cases from the historical Eurorad archive. This suggests that fine-tuning recovers difficult cases primarily through exposure to similar rare entities in the curated training data rather than through emergent reasoning capabilities.
+
+\begin{table}[!htbp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\caption{\textbf{Error taxonomy of incorrect majority-vote predictions on the Eurorad benchmark (N=207 cases).}
+Each incorrect prediction was classified into one of five categories by an independent LLM judge (Methods). Values show the number of errors and percentage of that model's total errors. Categories: (a)~surface-form mismatch, (b)~same disease family, (c)~plausible differential, (d)~off-topic/hallucinated, (e)~empty/refusal.}
+\label{tab:error_taxonomy}
+\begin{tabular}{l r rrrrr}
+\toprule
+\textbf{Model} & \textbf{Total} & \textbf{(a)} & \textbf{(b)} & \textbf{(c)} & \textbf{(d)} & \textbf{(e)} \\
+ & \textbf{errors} & \textbf{\%} & \textbf{\%} & \textbf{\%} & \textbf{\%} & \textbf{\%} \\
+\midrule
+\multicolumn{7}{l}{\textit{Proprietary}} \\
+\quad GPT-5.1        & 22 & 0.0 & 0.0 & 100.0 & 0.0 & 0.0 \\
+\quad GPT-5-mini     & 32 & 3.1 & 3.1 & 93.8  & 0.0 & 0.0 \\
+\quad Gemini 3.1 Pro & 17 & 0.0 & 0.0 & 100.0 & 0.0 & 0.0 \\
+\cmidrule{2-7}
+\quad \textit{Subtotal} & \textit{71} & \textit{1.4} & \textit{1.4} & \textit{97.2} & \textit{0.0} & \textit{0.0} \\
+\midrule
+\multicolumn{7}{l}{\textit{Open-source large}} \\
+\quad DeepSeek-R1    & 38 & 5.3 & 2.6 & 89.5  & 0.0 & 2.6 \\
+\midrule
+\multicolumn{7}{l}{\textit{On-device base}} \\
+\quad gpt-oss-20b (H)  & 40 & 7.5 & 7.5 & 85.0 & 0.0  & 0.0 \\
+\quad gpt-oss-120b (H) & 35 & 5.7 & 2.9 & 91.4 & 0.0  & 0.0 \\
+\quad Qwen3.5 9B       & 49 & 6.1 & 4.1 & 75.5 & 14.3 & 0.0 \\
+\quad Qwen3.5 27B      & 41 & 7.3 & 2.4 & 73.2 & 17.1 & 0.0 \\
+\quad Qwen3.5 35B      & 33 & 3.0 & 6.1 & 90.9 & 0.0  & 0.0 \\
+\quad Gemma 4 31B      & 28 & 3.6 & 3.6 & 92.9 & 0.0  & 0.0 \\
+\cmidrule{2-7}
+\quad \textit{Subtotal} & \textit{226} & \textit{5.8} & \textit{4.4} & \textit{83.6} & \textit{6.2} & \textit{0.0} \\
+\midrule
+\multicolumn{7}{l}{\textit{On-device fine-tuned}} \\
+\quad Qwen3.5 35B FT   & 23 & 8.7 & 4.3 & 87.0 & 0.0 & 0.0 \\
+\midrule
+\textbf{All models}     & \textbf{358} & \textbf{5.0} & \textbf{3.6} & \textbf{87.2} & \textbf{3.9} & \textbf{0.3} \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 
 \section*{Methods}
@@ -369,7 +416,9 @@ To represent the pinnacle of open-source capability, we evaluated the 671-billio
 The primary focus of this study is on-device LLMs from two model families. From the \texttt{gpt-oss} family, we evaluated both the 20-billion parameter variant (optimized for consumer GPUs) and the 120-billion parameter variant. The gpt-oss models were evaluated using the Hugging Face Inference Router, targeting the Fireworks AI provider for the 20b model and Cerebras for the 120b model to maximize throughput. Similar to the proprietary OpenAI models, we modulated the \texttt{reasoning\_effort} parameter (\texttt{low}, \texttt{medium}, \texttt{high}) through the system prompt to trigger extended chain-of-thought generation patterns. From the Qwen3.5 family, we evaluated three model sizes: 9B, 27B, and 35B parameters, as well as a fine-tuned 35B variant. The Qwen3.5 models were accessed via the Hugging Face Inference Router with high reasoning effort. Output parsing relied on a custom regex extractor to identify valid answer sequences within the generated text.
 From the Gemma family, we evaluated Gemma 4 31B, Google's open-weight on-device model. Inference was performed via the Hugging Face Inference Router using the same self-consistency protocol ($k=3$). Output parsing used the same regex-based extractor applied to other on-device models.
 
+\subsection*{Error taxonomy analysis}
 
+To characterize residual diagnostic errors on the Eurorad benchmark, we classified every incorrect $k=3$ majority-vote prediction into five categories: (a)~surface-form mismatch (clinically correct but differing in wording, synonym, or abbreviation), (b)~same disease family (correct organ system or disease group, wrong specific entity), (c)~plausible differential (a diagnosis on the provided list, but incorrect), (d)~off-topic (not on the differential list, anatomically unrelated, or hallucinated), and (e)~empty or refusal (no diagnosis produced or parse failure). Classification was performed by Claude Opus 4.6 (Anthropic) via AWS Bedrock, selected as a neutral judge external to the evaluation set to eliminate self-evaluation bias. For each error, the judge received the clinical history, differential diagnosis list, ground-truth diagnosis, and model prediction, and was instructed to assign exactly one category with a one-sentence justification. Case-level difficulty was computed as the fraction of models answering correctly per case, cross-tabulated by model family (proprietary, open-source large, on-device base, on-device fine-tuned). Hard-for-all cases were defined as the bottom decile ($\leq$36\% of models correct). Capability-gap cases were defined as those answered correctly by proprietary or fine-tuned models but missed by the majority of base on-device models. Best-of-3 oracle accuracy was computed per model as the fraction of cases where any of the three runs matched the ground truth.
 
 
 \subsection*{Training Dataset Preparation for Radiological Cases}
@@ -423,7 +472,9 @@ Beyond zero-shot performance, the adaptability of on-device models represents a 
 
 Taken together, the experiments in this study highlight three key insights. First, compact on-device LLMs across multiple model families (gpt-oss, Qwen3.5, Gemma 4) can provide strong general diagnostic reasoning and domain-specific performance. Second, on-device LLMs can approximate expert judgment with surprising fidelity, positioning them as valuable components of locally governed AI ecosystems that support both clinical decision-making and meta-evaluative tasks. Third, fine-tuning plays a critical role in achieving competitive accuracy across diverse subspecialties, allowing healthcare institutions to develop tailored high-performing models from relatively small architectures.
 
-Our study also has limitations. First, while our benchmarks cover diagnosis, management, and evaluation, they rely on retrospective patient cases and examination questions, which may not fully capture the complexity and noise of real-time clinical environments. Local deployment mitigates privacy and data governance concerns but introduces operational challenges, including hardware reliability, secure integration with clinical information systems, and ongoing monitoring of model behavior~\cite{asgari2025hallucination, omar2025adversarial}. Fine-tuning requires access to high-quality labeled data, which may be limited in certain specialties. Building on our findings regarding model-specific logic patterns, part of our future work will explore the variations in intrinsic reasoning styles between different vendors. Specifically, investigating multi-vendor, agentic debate frameworks—where diverse models collaborate, critique, or iteratively refine each other's diagnostic reasoning—could provide a novel mechanism to further enhance accuracy and reliability in highly complex clinical scenarios.
+Error characterization of incorrect predictions reveals a specific failure profile that further contextualizes these findings. Across all model families, the overwhelming majority of errors (87.2\%) are plausible differential selections---the model selects another diagnosis from the provided list rather than hallucinating or producing an off-topic response. This indicates that even when models err, they are performing constrained clinical reasoning within the differential. Off-topic or hallucinated predictions are confined to the two smallest on-device models (Qwen3.5 9B and 27B), while all models with $\geq$31B parameters produce zero such errors, suggesting that off-topic failure is a function of model scale rather than architecture or fine-tuning. Fine-tuning preferentially recovers capability-gap cases---those solvable by larger models but missed by base on-device variants---with 84.6\% of the fine-tuned Qwen3.5-35B's recovered cases falling within this set. The 23 hard-for-all cases that remain unsolved by most models are distributed proportionally across subspecialties and consist of rare histopathological subtypes and uncommon syndromes, defining a shared knowledge frontier that reflects the long tail of medical knowledge rather than a systematic architectural limitation.
+
+Our study also has limitations. First, while our benchmarks cover diagnosis, management, and evaluation, they rely on retrospective patient cases and examination questions, which may not fully capture the complexity and noise of real-time clinical environments. The error taxonomy analysis indicates that 5.0\% of incorrect predictions are surface-form mismatches (category~a), i.e., clinically correct diagnoses scored as errors under exact-match evaluation, suggesting that the reported accuracies conservatively estimate diagnostic capability. Local deployment mitigates privacy and data governance concerns but introduces operational challenges, including hardware reliability, secure integration with clinical information systems, and ongoing monitoring of model behavior~\cite{asgari2025hallucination, omar2025adversarial}. Fine-tuning requires access to high-quality labeled data, which may be limited in certain specialties. Building on our findings regarding model-specific logic patterns, part of our future work will explore the variations in intrinsic reasoning styles between different vendors. Specifically, investigating multi-vendor, agentic debate frameworks—where diverse models collaborate, critique, or iteratively refine each other's diagnostic reasoning—could provide a novel mechanism to further enhance accuracy and reliability in highly complex clinical scenarios.
 
 In summary, this work demonstrates that on-device LLMs offer a promising and practical alternative to large proprietary systems for clinical decision support. These compact models can achieve reliable diagnostic reasoning, robust subspecialty performance, and alignment with expert judgment---all while maintaining strict control over patient data and computational infrastructure. These features position on-device LLMs as strong candidates for safe, scalable, and equitable integration of AI into clinical practice.
 
