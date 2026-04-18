@@ -8,6 +8,7 @@ Diagnosis,gpt-oss-120b (H),0.0,-0.5,0.271,720
 Diagnosis,Qwen3.5 9B,0.0,0.0,0.5,720
 Diagnosis,Qwen3.5 27B,0.0,0.0,0.5,720
 Diagnosis,Qwen3.5 35B,0.0,-0.083,0.5,720
+Diagnosis,Gemma 4 31B,0.0,0.0,0.5,720
 Treatment,GPT-5.1,0.333,0.0,0.667,595
 Treatment,GPT-5-mini,0.25,0.0,0.667,595
 Treatment,Gemini 3.1,0.5,0.0,1.0,595
@@ -17,3 +18,4 @@ Treatment,gpt-oss-120b (H),0.167,-0.167,0.5,595
 Treatment,Qwen3.5 9B,0.5,0.0,0.833,595
 Treatment,Qwen3.5 27B,0.5,0.0,0.833,595
 Treatment,Qwen3.5 35B,0.5,0.0,1.0,595
+Treatment,Gemma 4 31B,0.5,0.0,0.75,595
