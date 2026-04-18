@@ -72,7 +72,7 @@ def load_eurorad_results():
         "GPT-5.1": ["gpt-5.1-1113-M1", "gpt-5.1-1113-M2", "gpt-5.1-1113-M3"],
         "GPT-5-mini": ["gpt-5-mini-0807-M1", "gpt-5-mini-0807-M2", "gpt-5-mini-0807-M3"],
         "Gemini 3.1": ["gemini-3.1-pro-M1", "gemini-3.1-pro-M2", "gemini-3.1-pro-M3"],
-        "DeepSeek-R1": ["deepseek r1 0528 v2", "deepseek r1 0528 v2.1", "deepseek r1 0528 v2.2"],
+        "DeepSeek": ["deepseek r1 0528 v2", "deepseek r1 0528 v2.1", "deepseek r1 0528 v2.2"],
         "Qwen 35B": ["qwen3.5 35B v1", "qwen3.5 35B v2", "qwen3.5 35B v3"],
         "35B (FT)": ["qwen3.5 35B fine-tuned v1", "qwen3.5 35B fine-tuned v2", "qwen3.5 35B fine-tuned v3"],
     }
@@ -137,7 +137,7 @@ def plot(output=None):
 
     # Bar order and properties
     bar_names = [
-        "DeepSeek-R1", "GPT-5-mini", "GPT-5.1", "Gemini 3.1",
+        "DeepSeek", "GPT-5-mini", "GPT-5.1", "Gemini 3.1",
         "Qwen 35B", "35B (FT)",
     ]
     bars = [(name, MODEL_COLORS[name]) for name in bar_names]

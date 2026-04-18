@@ -216,7 +216,7 @@ def panel_finetune(ax):
     ft_results = load_finetune_eval_results()
 
     bar_names = [
-        "DeepSeek-R1", "GPT-5-mini", "GPT-5.1", "Gemini 3.1",
+        "DeepSeek", "GPT-5-mini", "GPT-5.1", "Gemini 3.1",
         "Qwen 35B", "35B (FT)",
     ]
     bars = [(name, MODEL_COLORS[name]) for name in bar_names]
@@ -308,6 +308,10 @@ def panel_radar(ax):
         ax.plot(angles, accs, linewidth=style["lw"], linestyle=style["ls"],
                 color=style["color"], label=model_name, marker="o", markersize=3)
         ax.fill(angles, accs, alpha=style["fill_alpha"], color=style["color"])
+
+    for label in ax.get_xticklabels():
+        label.set_zorder(10)
+        label.set_bbox(dict(facecolor="white", edgecolor="none", pad=1.5, alpha=0.85))
 
     ax.legend(loc="lower center", bbox_to_anchor=(0.5, -0.15),
               fontsize=7, framealpha=0.9, edgecolor="#cccccc",
