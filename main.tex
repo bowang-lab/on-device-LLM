@@ -340,39 +340,26 @@ Finally, we examined the mechanism by which fine-tuning improves accuracy. We id
 \begin{table}[!htbp]
 \centering
 \scriptsize
-\setlength{\tabcolsep}{4pt}
+\setlength{\tabcolsep}{3pt}
 \caption{\textbf{Error taxonomy of incorrect majority-vote predictions on the Eurorad benchmark (N=207 cases).}
-Each incorrect prediction was classified into one of five categories by an independent LLM judge (Methods). Values show the number of errors and percentage of that model's total errors. Categories: (a)~surface-form mismatch, (b)~same disease family, (c)~plausible differential, (d)~off-topic/hallucinated, (e)~empty/refusal.}
+Each incorrect prediction was classified into one of five categories by an independent LLM judge (Methods). Values show the percentage of each model's total errors. Categories: (a)~surface-form mismatch, (b)~same disease family, (c)~plausible differential, (d)~off-topic/hallucinated, (e)~empty/refusal.}
 \label{tab:error_taxonomy}
-\begin{tabular}{l r rrrrr}
+\begin{tabular}{l ccc @{\hskip 6pt} c @{\hskip 6pt} cc @{\hskip 6pt} cccc @{\hskip 6pt} c}
 \toprule
-\textbf{Model} & \textbf{Total} & \textbf{(a)} & \textbf{(b)} & \textbf{(c)} & \textbf{(d)} & \textbf{(e)} \\
- & \textbf{errors} & \textbf{\%} & \textbf{\%} & \textbf{\%} & \textbf{\%} & \textbf{\%} \\
+& \multicolumn{3}{c}{\textbf{Proprietary}} & \textbf{Open} & \multicolumn{2}{c}{\textbf{gpt-oss}} & \multicolumn{4}{c}{\textbf{Qwen3.5}} & \textbf{Gemma 4} \\
+\cmidrule(lr){2-4} \cmidrule(lr){5-5} \cmidrule(lr){6-7} \cmidrule(lr){8-11} \cmidrule(lr){12-12}
+\textbf{Category (\%)} &
+\textbf{GPT-5.1} & \textbf{GPT-5-mini} & \textbf{Gemini-3.1} & \textbf{DS-R1} &
+\textbf{20b} & \textbf{120b} &
+\textbf{9B} & \textbf{27B} & \textbf{35B} & \textbf{35B-FT} & \textbf{31B} \\
 \midrule
-\multicolumn{7}{l}{\textit{Proprietary}} \\
-\quad GPT-5.1        & 22 & 0.0 & 0.0 & 100.0 & 0.0 & 0.0 \\
-\quad GPT-5-mini     & 32 & 3.1 & 3.1 & 93.8  & 0.0 & 0.0 \\
-\quad Gemini 3.1 Pro & 17 & 0.0 & 0.0 & 100.0 & 0.0 & 0.0 \\
-\cmidrule{2-7}
-\quad \textit{Subtotal} & \textit{71} & \textit{1.4} & \textit{1.4} & \textit{97.2} & \textit{0.0} & \textit{0.0} \\
+(a) Surface mismatch  & 0.0  & 3.1  & 0.0   & 5.3  & 7.5  & 5.7  & 6.1  & 7.3  & 3.0  & 8.7  & 3.6 \\
+(b) Same family       & 0.0  & 3.1  & 0.0   & 2.6  & 7.5  & 2.9  & 4.1  & 2.4  & 6.1  & 4.3  & 3.6 \\
+(c) Plausible diff.   & 100.0 & 93.8 & 100.0 & 89.5 & 85.0 & 91.4 & 75.5 & 73.2 & 90.9 & 87.0 & 92.9 \\
+(d) Off-topic         & 0.0  & 0.0  & 0.0   & 0.0  & 0.0  & 0.0  & 14.3 & 17.1 & 0.0  & 0.0  & 0.0 \\
+(e) Empty/refusal     & 0.0  & 0.0  & 0.0   & 2.6  & 0.0  & 0.0  & 0.0  & 0.0  & 0.0  & 0.0  & 0.0 \\
 \midrule
-\multicolumn{7}{l}{\textit{Open-source large}} \\
-\quad DeepSeek-R1    & 38 & 5.3 & 2.6 & 89.5  & 0.0 & 2.6 \\
-\midrule
-\multicolumn{7}{l}{\textit{On-device base}} \\
-\quad gpt-oss-20b (H)  & 40 & 7.5 & 7.5 & 85.0 & 0.0  & 0.0 \\
-\quad gpt-oss-120b (H) & 35 & 5.7 & 2.9 & 91.4 & 0.0  & 0.0 \\
-\quad Qwen3.5 9B       & 49 & 6.1 & 4.1 & 75.5 & 14.3 & 0.0 \\
-\quad Qwen3.5 27B      & 41 & 7.3 & 2.4 & 73.2 & 17.1 & 0.0 \\
-\quad Qwen3.5 35B      & 33 & 3.0 & 6.1 & 90.9 & 0.0  & 0.0 \\
-\quad Gemma 4 31B      & 28 & 3.6 & 3.6 & 92.9 & 0.0  & 0.0 \\
-\cmidrule{2-7}
-\quad \textit{Subtotal} & \textit{226} & \textit{5.8} & \textit{4.4} & \textit{83.6} & \textit{6.2} & \textit{0.0} \\
-\midrule
-\multicolumn{7}{l}{\textit{On-device fine-tuned}} \\
-\quad Qwen3.5 35B FT   & 23 & 8.7 & 4.3 & 87.0 & 0.0 & 0.0 \\
-\midrule
-\textbf{All models}     & \textbf{358} & \textbf{5.0} & \textbf{3.6} & \textbf{87.2} & \textbf{3.9} & \textbf{0.3} \\
+\textbf{Total errors} & \textbf{22} & \textbf{32} & \textbf{17} & \textbf{38} & \textbf{40} & \textbf{35} & \textbf{49} & \textbf{41} & \textbf{33} & \textbf{23} & \textbf{28} \\
 \bottomrule
 \end{tabular}
 \end{table}
