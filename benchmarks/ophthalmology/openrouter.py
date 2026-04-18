@@ -40,7 +40,8 @@ Return: One or more letters from A to Z, concatenated with no spaces (e.g., ABE 
 def parse_choice(raw: str) -> Optional[str]:
     if not raw:
         return None
-    m = LETTERS_RUN_RE.search((raw or "").strip().upper())
+    collapsed = re.sub(r"\s+", "", (raw or "").strip().upper())
+    m = LETTERS_RUN_RE.search(collapsed)
     return m.group(1) if m else None
 
 def call_openrouter(
@@ -219,7 +220,7 @@ def main():
     p = argparse.ArgumentParser(description="General-purpose OpenRouter CSV benchmarker (with reasoning controls)")
     p.add_argument("input_csv", help="Path to input CSV (e.g., data/datasets/ophthalmology.csv)")
     p.add_argument("--endpoint", required=True, help="OpenRouter model id, e.g. openai/gpt-oss-120b or qwen/...")
-    p.add_argument("--results_dir", default="results", help="Directory to write results (default: results)")
+    p.add_argument("--results_dir", default="csvs", help="Directory to write results (default: csvs)")
     p.add_argument("--output_csv", default=None, help="Explicit output path; otherwise auto-generated")
     p.add_argument("--workers", type=int, default=1, help="Number of concurrent workers")
     p.add_argument("--sleep", type=float, default=0.0, help="Sleep between requests per worker (seconds)")

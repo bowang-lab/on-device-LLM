@@ -109,6 +109,10 @@ def normalize_text(text: str) -> str:
     if not text:
         return ""
 
+    try:
+        text = text.encode("cp1252").decode("utf-8")
+    except (UnicodeDecodeError, UnicodeEncodeError):
+        pass
     text = text.lower().strip()
     text = re.sub(r"[^\w\s-]", "", text)  # Keep only alphanumeric, spaces, hyphens
     text = re.sub(r"\s+", " ", text)  # Collapse multiple spaces

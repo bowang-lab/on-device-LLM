@@ -11,16 +11,16 @@
 #     --model openai/gpt-oss-20b:fireworks-ai \
 #     --api chat \
 #     --workers 4 \
-#     --results results
+#     --results csvs
 #
 # Resume on the SAME output file (re-run only missing/errored rows):
-#   python benchmarks/hf_bench.py results/ophthalmology_openai-gpt-oss-20b-fireworks-ai_chat_re-high.csv \
+#   python benchmarks/hf_bench.py csvs/ophthalmology_openai-gpt-oss-20b-fireworks-ai_chat_re-high.csv \
 #     --model openai/gpt-oss-20b:fireworks-ai \
 #     --api chat \
 #     --workers 2 \
-#     --results results \
+#     --results csvs \
 #     --resume \
-#     --output_csv results/ophthalmology_openai-gpt-oss-20b-fireworks-ai_chat_re-high.csv
+#     --output_csv csvs/ophthalmology_openai-gpt-oss-20b-fireworks-ai_chat_re-high.csv
 #
 # Notes:
 # - By default, this script DOES NOT set temperature or generation limits;
@@ -63,7 +63,8 @@ def extract_final(text: str) -> str:
 def parse_choice(raw: str) -> Optional[str]:
     if not raw:
         return None
-    m = LETTERS_RUN_RE.search(raw.strip().upper())
+    collapsed = re.sub(r"\s+", "", raw.strip().upper())
+    m = LETTERS_RUN_RE.search(collapsed)
     return m.group(1) if m else None
 
 def build_user_prompt(row: pd.Series, user_template: str) -> str:
@@ -173,7 +174,7 @@ def main():
     ap.add_argument("--reasoning_effort", choices=["low","medium","high"], default=None)
     ap.add_argument("--max_output_tokens", type=int, default=None, help="If omitted, provider default is used.")
     ap.add_argument("--workers", type=int, default=4)
-    ap.add_argument("--results", default="results")
+    ap.add_argument("--results", default="csvs")
     ap.add_argument("--resume", action="store_true")
     ap.add_argument("--temperature", type=float, default=None, help="If omitted, provider default is used.")
     ap.add_argument("--output_csv", default=None, help="Write to this path (use when resuming from an output CSV).")

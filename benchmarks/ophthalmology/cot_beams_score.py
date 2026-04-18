@@ -99,6 +99,7 @@ def parse_choice_safe(raw: str, allowed: set) -> Optional[str]:
         cand = m.group(1).strip().upper()
         return cand if set(cand) <= allowed else None
 
+    s = re.sub(r"\s+", "", s)
     cands = []
     for m in LETTERS_RUN_RE.finditer(s.upper()):
         seq = m.group(1)

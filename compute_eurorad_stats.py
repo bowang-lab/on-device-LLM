@@ -2,7 +2,7 @@
 """
 Compute Eurorad benchmark statistics for the updated model lineup.
 
-Reads results/Eurorad.csv and computes:
+Reads csvs/Eurorad.csv and computes:
 1. Self-consistency accuracy (majority vote over 3 runs) per model
 2. Wilson Score 95% CIs
 3. Per-anatomical-category breakdown
@@ -28,8 +28,14 @@ from sklearn.metrics import cohen_kappa_score
 # ─── Text normalization (matches benchmarks/eurorad/hf_bench.py) ──────────────
 
 def norm_text(s: str) -> str:
-    t = unicodedata.normalize("NFKC", s or "")
+    t = s or ""
+    try:
+        t = t.encode("cp1252").decode("utf-8")
+    except (UnicodeDecodeError, UnicodeEncodeError):
+        pass
+    t = unicodedata.normalize("NFKC", t)
     t = t.replace("\u2013", "-").replace("\u2014", "-")  # en-dash, em-dash
+    t = re.sub(r"[^\w\s-]", "", t)
     t = " ".join(t.strip().split())
     return t.lower()
 
@@ -93,7 +99,7 @@ def fleiss_kappa(table):
 
 def load_eurorad():
     """Load Eurorad.csv handling duplicate DeepSeek column names."""
-    with open("results/Eurorad.csv", newline="", encoding="utf-8") as f:
+    with open("csvs/Eurorad.csv", newline="", encoding="utf-8") as f:
         reader = csv.reader(f)
         raw_headers = next(reader)
         rows = list(reader)
@@ -338,7 +344,7 @@ def compute_cohen(majority_results, model_order):
             print(f"  {m1:>22s} vs {m2:<22s}: κ = {kappa:.4f}")
 
 
-def save_csv(stats, model_order, filename="results/eurorad_stats.csv"):
+def save_csv(stats, model_order, filename="csvs/eurorad_stats.csv"):
     """Save all accuracy stats to CSV."""
     rows = []
     for cat in CATEGORIES + ["Average"]:

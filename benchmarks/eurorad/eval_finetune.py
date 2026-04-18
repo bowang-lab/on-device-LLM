@@ -22,7 +22,7 @@
 #     --model_dir outputs/checkpoint-552 \
 #     --base_model openai/gpt-oss-120b \
 #     --input_csv eurorad_test.csv \
-#     --results results \
+#     --results csvs \
 #     --batch_size 1 --max_new_tokens 8192 --stream
 
 import re, argparse, unicodedata, difflib, sys
@@ -111,8 +111,14 @@ def build_options_list(s: str) -> List[str]:
     return out
 
 def norm_text(s: str) -> str:
-    t = unicodedata.normalize("NFKC", s or "")
+    t = s or ""
+    try:
+        t = t.encode("cp1252").decode("utf-8")
+    except (UnicodeDecodeError, UnicodeEncodeError):
+        pass
+    t = unicodedata.normalize("NFKC", t)
     t = t.replace("–", "-").replace("—", "-")
+    t = re.sub(r"[^\w\s-]", "", t)
     t = " ".join(t.strip().split())
     return t.lower()
 
@@ -360,7 +366,7 @@ def main():
     ap.add_argument("--model_dir", type=str, required=True, help="Path to LoRA adapter directory, merged model dir, or HF repo id (e.g., openai/gpt-oss-120b).")
     ap.add_argument("--base_model", type=str, default="openai/gpt-oss-120b", help="Base model to load if model_dir is an adapter.")
     ap.add_argument("--input_csv", type=str, required=True)
-    ap.add_argument("--results", type=str, default="results")
+    ap.add_argument("--results", type=str, default="csvs")
     ap.add_argument("--output_csv", type=str, default=None)
     ap.add_argument("--resume", action="store_true")
     ap.add_argument("--max_new_tokens", type=int, default=256)

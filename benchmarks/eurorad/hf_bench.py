@@ -55,8 +55,14 @@ def build_options_list(s: str) -> List[str]:
     return out
 
 def norm_text(s: str) -> str:
-    t = unicodedata.normalize("NFKC", s or "")
+    t = s or ""
+    try:
+        t = t.encode("cp1252").decode("utf-8")
+    except (UnicodeDecodeError, UnicodeEncodeError):
+        pass
+    t = unicodedata.normalize("NFKC", t)
     t = t.replace("–", "-").replace("—", "-")
+    t = re.sub(r"[^\w\s-]", "", t)
     t = " ".join(t.strip().split())
     return t.lower()
 
@@ -183,7 +189,7 @@ def main():
     ap.add_argument("--reasoning_effort", choices=["low","medium","high"], default=None)
     ap.add_argument("--max_output_tokens", type=int, default=None)   # use provider default if None
     ap.add_argument("--workers", type=int, default=1)
-    ap.add_argument("--results", default="results")
+    ap.add_argument("--results", default="csvs")
     ap.add_argument("--resume", action="store_true")
     ap.add_argument("--temperature", type=float, default=None)       # use provider default if None
     ap.add_argument("--output_csv", default=None, help="Write to this path (also use when resuming).")

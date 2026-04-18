@@ -144,6 +144,10 @@ def report_cache(repo_id: str, resolved_path: str | None):
 # ------------------------- Task utils -------------------------
 def normalize_text(text: str) -> str:
     if not text: return ""
+    try:
+        text = text.encode("cp1252").decode("utf-8")
+    except (UnicodeDecodeError, UnicodeEncodeError):
+        pass
     t = text.lower().strip()
     t = re.sub(r"[^\w\s-]", "", t)
     t = re.sub(r"\s+", " ", t)

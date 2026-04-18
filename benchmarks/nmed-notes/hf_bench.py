@@ -183,7 +183,7 @@ def main():
     ap.add_argument("--limit", type=int, default=None, help="Process only the first N rows (debug).")
     ap.add_argument("--log_first_n_errors", type=int, default=3, help="Print the first N exceptions immediately.")
     ap.add_argument("--workers", type=int, default=4)
-    ap.add_argument("--results", default="results")
+    ap.add_argument("--results", default="csvs")
     ap.add_argument("--resume", action="store_true")
     ap.add_argument("--output_csv", default=None, help="Write to this path (use when resuming from an output CSV).")
     ap.add_argument("--max_retries", type=int, default=4)

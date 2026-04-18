@@ -59,8 +59,14 @@ def build_options_list(s: str) -> List[str]:
     return out
 
 def norm_text(s: str) -> str:
-    t = unicodedata.normalize("NFKC", s or "")
+    t = s or ""
+    try:
+        t = t.encode("cp1252").decode("utf-8")
+    except (UnicodeDecodeError, UnicodeEncodeError):
+        pass
+    t = unicodedata.normalize("NFKC", t)
     t = t.replace("–", "-").replace("—", "-")
+    t = re.sub(r"[^\w\s-]", "", t)
     t = " ".join(t.strip().split())
     return t.lower()
 
@@ -275,7 +281,7 @@ def main():
     p = argparse.ArgumentParser(description="OpenRouter radiology benchmark (verbatim option selection, resumable).")
     p.add_argument("input_csv", help="Path to input CSV (radiology cases).")
     p.add_argument("--endpoint", required=True, help="OpenRouter model id, e.g. openai/gpt-oss-20b or qwen/... ")
-    p.add_argument("--results_dir", default="results", help="Directory to write results")
+    p.add_argument("--results_dir", default="csvs", help="Directory to write results")
     p.add_argument("--output_csv", default=None, help="Explicit output path; otherwise auto-generated")
     p.add_argument("--workers", type=int, default=1, help="Concurrent workers")
     p.add_argument("--sleep", type=float, default=0.0, help="Sleep between requests per worker (seconds)")
