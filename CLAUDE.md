@@ -72,10 +72,26 @@ on-device-LLM/
 │   └── train_wide.csv            # Training data
 ├── paper/                # LaTeX manuscript (synced to Overleaf)
 ├── data/                 # Dataset collection and preprocessing
+├── claude/               # Internal documentation
+│   ├── DATA_NOTES.md             # Data quality audit (all datasets)
+│   └── docs/CHANGELOG.md         # Change log
+│   └── docs/ROADMAP_CURRENT.md   # Error analysis extension plan
 └── gepa/                 # Prompt optimization
     ├── gepa_eurorad.py           # DSPy adapter (legacy, uses OpenAI)
     └── gepa_oa_eurorad.py        # optimize_anything for gpt-oss-120b (Bedrock)
 ```
+
+## Current Roadmap
+
+See `claude/docs/ROADMAP_CURRENT.md` for the error analysis extension plan. This is an
+additive revision (no changes to existing numbers/figures). Four phases:
+
+1. **Computation**: case difficulty, best-of-N oracle, scoring sensitivity, error taxonomy
+2. **Visualization**: Table 4 or Fig 4 (error categories by model family) + 3 supp tables
+3. **Write-up**: new Results subsection, Methods subsection, Discussion paragraph
+4. **Integration**: add to LaTeX, verify cross-refs, circulate to co-authors
+
+Scripts go under `analysis/`. Estimate: 5-7 working days.
 
 ## Key Technical Patterns
 
