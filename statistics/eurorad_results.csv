@@ -1,0 +1,111 @@
+model,category,accuracy,ci_lo,ci_hi,k,n
+GPT-5.1,Overall,88.9,83.9,92.5,184,207
+GPT-5.1,Musculoskeletal system,87.2,74.8,94.0,41,47
+GPT-5.1,Paediatric radiology,86.7,70.3,94.7,26,30
+GPT-5.1,Cardiovascular,83.3,43.6,97.0,5,6
+GPT-5.1,Abdominal imaging,88.9,74.7,95.6,32,36
+GPT-5.1,Uroradiology & genital male imaging,100.0,72.2,100.0,10,10
+GPT-5.1,Others,75.0,40.9,92.9,6,8
+GPT-5.1,Breast imaging,100.0,56.6,100.0,5,5
+GPT-5.1,Head & neck imaging,100.0,77.2,100.0,13,13
+GPT-5.1,Neuroradiology,87.8,74.5,94.7,36,41
+GPT-5.1,Chest imaging,90.9,62.3,98.4,10,11
+GPT-5-mini,Overall,84.1,78.5,88.4,174,207
+GPT-5-mini,Musculoskeletal system,83.0,69.9,91.1,39,47
+GPT-5-mini,Paediatric radiology,80.0,62.7,90.5,24,30
+GPT-5-mini,Cardiovascular,66.7,30.0,90.3,4,6
+GPT-5-mini,Abdominal imaging,88.9,74.7,95.6,32,36
+GPT-5-mini,Uroradiology & genital male imaging,90.0,59.6,98.2,9,10
+GPT-5-mini,Others,75.0,40.9,92.9,6,8
+GPT-5-mini,Breast imaging,80.0,37.6,96.4,4,5
+GPT-5-mini,Head & neck imaging,100.0,77.2,100.0,13,13
+GPT-5-mini,Neuroradiology,82.9,68.7,91.5,34,41
+GPT-5-mini,Chest imaging,81.8,52.3,94.9,9,11
+Gemini 3.1 Pro,Overall,91.3,86.7,94.4,189,207
+Gemini 3.1 Pro,Musculoskeletal system,87.2,74.8,94.0,41,47
+Gemini 3.1 Pro,Paediatric radiology,93.3,78.7,98.2,28,30
+Gemini 3.1 Pro,Cardiovascular,66.7,30.0,90.3,4,6
+Gemini 3.1 Pro,Abdominal imaging,97.2,85.8,99.5,35,36
+Gemini 3.1 Pro,Uroradiology & genital male imaging,100.0,72.2,100.0,10,10
+Gemini 3.1 Pro,Others,75.0,40.9,92.9,6,8
+Gemini 3.1 Pro,Breast imaging,100.0,56.6,100.0,5,5
+Gemini 3.1 Pro,Head & neck imaging,100.0,77.2,100.0,13,13
+Gemini 3.1 Pro,Neuroradiology,87.8,74.5,94.7,36,41
+Gemini 3.1 Pro,Chest imaging,100.0,74.1,100.0,11,11
+DeepSeek-R1,Overall,81.6,75.8,86.3,169,207
+DeepSeek-R1,Musculoskeletal system,87.2,74.8,94.0,41,47
+DeepSeek-R1,Paediatric radiology,73.3,55.6,85.8,22,30
+DeepSeek-R1,Cardiovascular,66.7,30.0,90.3,4,6
+DeepSeek-R1,Abdominal imaging,75.0,58.9,86.2,27,36
+DeepSeek-R1,Uroradiology & genital male imaging,100.0,72.2,100.0,10,10
+DeepSeek-R1,Others,75.0,40.9,92.9,6,8
+DeepSeek-R1,Breast imaging,80.0,37.6,96.4,4,5
+DeepSeek-R1,Head & neck imaging,84.6,57.8,95.7,11,13
+DeepSeek-R1,Neuroradiology,85.4,71.6,93.1,35,41
+DeepSeek-R1,Chest imaging,81.8,52.3,94.9,9,11
+gpt-oss-20b (H),Overall,80.7,74.8,85.5,167,207
+gpt-oss-20b (H),Musculoskeletal system,87.2,74.8,94.0,41,47
+gpt-oss-20b (H),Paediatric radiology,70.0,52.1,83.3,21,30
+gpt-oss-20b (H),Cardiovascular,50.0,18.8,81.2,3,6
+gpt-oss-20b (H),Abdominal imaging,80.6,65.0,90.2,29,36
+gpt-oss-20b (H),Uroradiology & genital male imaging,100.0,72.2,100.0,10,10
+gpt-oss-20b (H),Others,62.5,30.6,86.3,5,8
+gpt-oss-20b (H),Breast imaging,40.0,11.8,76.9,2,5
+gpt-oss-20b (H),Head & neck imaging,92.3,66.7,98.6,12,13
+gpt-oss-20b (H),Neuroradiology,85.4,71.6,93.1,35,41
+gpt-oss-20b (H),Chest imaging,81.8,52.3,94.9,9,11
+gpt-oss-120b (H),Overall,83.1,77.4,87.6,172,207
+gpt-oss-120b (H),Musculoskeletal system,85.1,72.3,92.6,40,47
+gpt-oss-120b (H),Paediatric radiology,83.3,66.4,92.7,25,30
+gpt-oss-120b (H),Cardiovascular,66.7,30.0,90.3,4,6
+gpt-oss-120b (H),Abdominal imaging,83.3,68.1,92.1,30,36
+gpt-oss-120b (H),Uroradiology & genital male imaging,90.0,59.6,98.2,9,10
+gpt-oss-120b (H),Others,62.5,30.6,86.3,5,8
+gpt-oss-120b (H),Breast imaging,60.0,23.1,88.2,3,5
+gpt-oss-120b (H),Head & neck imaging,92.3,66.7,98.6,12,13
+gpt-oss-120b (H),Neuroradiology,85.4,71.6,93.1,35,41
+gpt-oss-120b (H),Chest imaging,81.8,52.3,94.9,9,11
+Qwen3.5 9B,Overall,75.8,69.6,81.2,157,207
+Qwen3.5 9B,Musculoskeletal system,89.4,77.4,95.4,42,47
+Qwen3.5 9B,Paediatric radiology,63.3,45.5,78.1,19,30
+Qwen3.5 9B,Cardiovascular,50.0,18.8,81.2,3,6
+Qwen3.5 9B,Abdominal imaging,72.2,56.0,84.2,26,36
+Qwen3.5 9B,Uroradiology & genital male imaging,100.0,72.2,100.0,10,10
+Qwen3.5 9B,Others,75.0,40.9,92.9,6,8
+Qwen3.5 9B,Breast imaging,80.0,37.6,96.4,4,5
+Qwen3.5 9B,Head & neck imaging,84.6,57.8,95.7,11,13
+Qwen3.5 9B,Neuroradiology,70.7,55.5,82.4,29,41
+Qwen3.5 9B,Chest imaging,63.6,35.4,84.8,7,11
+Qwen3.5 27B,Overall,80.2,74.2,85.1,166,207
+Qwen3.5 27B,Musculoskeletal system,87.2,74.8,94.0,41,47
+Qwen3.5 27B,Paediatric radiology,70.0,52.1,83.3,21,30
+Qwen3.5 27B,Cardiovascular,50.0,18.8,81.2,3,6
+Qwen3.5 27B,Abdominal imaging,83.3,68.1,92.1,30,36
+Qwen3.5 27B,Uroradiology & genital male imaging,90.0,59.6,98.2,9,10
+Qwen3.5 27B,Others,75.0,40.9,92.9,6,8
+Qwen3.5 27B,Breast imaging,100.0,56.6,100.0,5,5
+Qwen3.5 27B,Head & neck imaging,92.3,66.7,98.6,12,13
+Qwen3.5 27B,Neuroradiology,78.0,63.3,88.0,32,41
+Qwen3.5 27B,Chest imaging,63.6,35.4,84.8,7,11
+Qwen3.5 35B,Overall,84.5,79.0,88.8,175,207
+Qwen3.5 35B,Musculoskeletal system,89.4,77.4,95.4,42,47
+Qwen3.5 35B,Paediatric radiology,80.0,62.7,90.5,24,30
+Qwen3.5 35B,Cardiovascular,66.7,30.0,90.3,4,6
+Qwen3.5 35B,Abdominal imaging,83.3,68.1,92.1,30,36
+Qwen3.5 35B,Uroradiology & genital male imaging,100.0,72.2,100.0,10,10
+Qwen3.5 35B,Others,75.0,40.9,92.9,6,8
+Qwen3.5 35B,Breast imaging,100.0,56.6,100.0,5,5
+Qwen3.5 35B,Head & neck imaging,92.3,66.7,98.6,12,13
+Qwen3.5 35B,Neuroradiology,82.9,68.7,91.5,34,41
+Qwen3.5 35B,Chest imaging,72.7,43.4,90.3,8,11
+Qwen3.5 35B FT,Overall,88.4,83.3,92.1,183,207
+Qwen3.5 35B FT,Musculoskeletal system,95.7,85.8,98.8,45,47
+Qwen3.5 35B FT,Paediatric radiology,86.7,70.3,94.7,26,30
+Qwen3.5 35B FT,Cardiovascular,83.3,43.6,97.0,5,6
+Qwen3.5 35B FT,Abdominal imaging,88.9,74.7,95.6,32,36
+Qwen3.5 35B FT,Uroradiology & genital male imaging,90.0,59.6,98.2,9,10
+Qwen3.5 35B FT,Others,62.5,30.6,86.3,5,8
+Qwen3.5 35B FT,Breast imaging,100.0,56.6,100.0,5,5
+Qwen3.5 35B FT,Head & neck imaging,84.6,57.8,95.7,11,13
+Qwen3.5 35B FT,Neuroradiology,85.4,71.6,93.1,35,41
+Qwen3.5 35B FT,Chest imaging,90.9,62.3,98.4,10,11
