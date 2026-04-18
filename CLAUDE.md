@@ -17,6 +17,7 @@ Evaluating on-device LLMs for clinical decision support:
 **Open-source:** DeepSeek-R1
 **On-device gpt-oss:** gpt-oss-20b (H), gpt-oss-120b (H)
 **On-device Qwen3.5:** 9B, 27B, 35B (base), 35B (fine-tuned)
+**On-device Gemma:** Gemma 4 31B, Gemma 4 26B
 
 ### Excluded Models
 GPT-5 (0807), GPT-5.2 (1211), and o4-mini are excluded from all figures and analyses.
@@ -47,7 +48,10 @@ on-device-LLM/
 │       ├── hf_bench.py / gpt.py / openrouter.py
 │       ├── cot_beams_score.py    # CoT beam search MCQ
 │       └── oss20b_inference.py   # OSS20B local MCQ
-├── csvs/                 # Results data
+├── csvs/                 # Results data (see csvs/README.md)
+│   ├── final_csvs/               # **Use this** — all fixes applied, Gemma included
+│   ├── updated_csvs/             # Raw Gemma additions (Eurorad Qwen unfixed — provenance only)
+│   └── finetune-eval/            # Per-checkpoint LoRA evaluation CSVs
 ├── statistics/           # Statistical analysis scripts
 │   ├── utils.py                  # Shared: Wilson CI, McNemar, bootstrap
 │   ├── eurorad_stats.py          # Nominal: accuracy, McNemar, kappa
@@ -68,7 +72,9 @@ on-device-LLM/
 │   └── train_wide.csv            # Training data
 ├── paper/                # LaTeX manuscript (synced to Overleaf)
 ├── data/                 # Dataset collection and preprocessing
-└── gepa/                 # DSPy-based prompt optimization
+└── gepa/                 # Prompt optimization
+    ├── gepa_eurorad.py           # DSPy adapter (legacy, uses OpenAI)
+    └── gepa_oa_eurorad.py        # optimize_anything for gpt-oss-120b (Bedrock)
 ```
 
 ## Key Technical Patterns
@@ -114,8 +120,47 @@ All figures run from repo root: `python figures/<script>.py --output figures/<na
 Combined paper figure: `python figures/combined_figure.py --output figures/combined.png`
 
 ## Text Normalization
-- NFC Unicode normalization, lowercase, em/en-dash → hyphen
+- CP1252 mojibake recovery: `s.encode("cp1252").decode("utf-8")` (fixes Qwen outputs, no-op on clean text)
+- NFKC Unicode normalization, lowercase, em/en-dash → hyphen
 - Whitespace collapse, special character removal
+
+## Data Quality Notes
+See `claude/DATA_NOTES.md` for full details. Key issues (all fixed in `csvs/final_csvs/`):
+- **Qwen row-shift**: 9 Eurorad columns had predictions rotated +1 row in cases 19041-19087. Affected: Qwen 35B, 35B FT, 9B FT. Not affected: Qwen 27B, 9B base, all other models.
+- **Corrupted GT columns**: `FinalDiagnosisv2`, `v2_Alhusain`, `v3_Omar` removed. Use only `FinalDiagnosis`.
+- **Qwen mojibake**: CP1252 encoding artifacts in all Qwen 3.5 outputs (~15-18 per run). Fixed via `norm_text()`.
+- **Gemma 4**: Clean data, no issues found.
+
+## GEPA Prompt Optimization
+
+Automated prompt optimization using [GEPA](https://github.com/stanfordnlp/gepa) `optimize_anything`.
+Complements fine-tuning: optimizes the system prompt without modifying model weights.
+
+### Setup
+```bash
+pip install -e /path/to/gepa[full]    # GEPA with LiteLLM
+# AWS credentials inherited from SageMaker execution role — no env vars needed
+```
+
+### Running
+```bash
+python gepa/gepa_oa_eurorad.py
+```
+
+### Architecture
+- **Task model:** gpt-oss-120b via AWS Bedrock (`openai.gpt-oss-120b-1:0`)
+- **Reflection LM:** Claude Opus 4.6 via AWS Bedrock (`anthropic.claude-opus-4-6-v1`) — analyzes failures and proposes prompt improvements
+- **Dataset:** 1,895 train / 207 test Eurorad cases (from `finetune/` CSVs)
+- **Metric:** Accuracy (exact match after normalization)
+- **Budget:** 5,000 metric calls (up to 50 candidate proposals), minibatch size 5, disk-cached evaluations
+
+Results saved to `gepa/runs/eurorad_oss120b/` (checkpoints, best prompt).
+
+### Paper framing
+Cloud reflection LM is used only during **one-time development** on published training data.
+The optimized prompt deploys locally with the on-device model — no cloud dependency at inference.
+This mirrors the fine-tuning pipeline where gpt-oss-120b (via Cerebras) generated training data
+for gpt-oss-20b LoRA adaptation.
 
 ## Environment
 ```bash
