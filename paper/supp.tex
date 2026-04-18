@@ -222,6 +222,48 @@
 \vspace*{\fill} % Spring pushing up
 \clearpage % End page
 
+% --- Prompt 6: Error Taxonomy Judge ---
+\vspace*{4cm}
+
+\begin{baselinebox}
+    \textbf{Prompt 6. Error Taxonomy Judge Prompt (Claude Opus 4.6 via AWS Bedrock)}
+
+    \vspace{1em}
+    You are an expert medical diagnostician classifying errors in a clinical diagnosis task.
+
+    \vspace{0.5em}
+    A model was given a patient case and a list of differential diagnoses, and asked to select the correct diagnosis verbatim from the list. The model's prediction was scored INCORRECT under exact text matching.
+
+    \vspace{0.5em}
+    Your task: classify this error into exactly one of five categories.
+
+    \vspace{0.5em}
+    \textbf{Categories:}
+    \begin{enumerate}[label=(\alph*), leftmargin=*, noitemsep, topsep=2pt]
+        \item \textbf{SURFACE\_MISMATCH} --- The prediction is clinically correct but differs in surface form (synonym, eponym, abbreviation, nomenclature variant, or minor wording difference). The model identified the right condition.
+        \item \textbf{SAME\_FAMILY} --- The prediction names a condition in the same disease family or anatomical system as the ground truth, but is the wrong specific entity.
+        \item \textbf{PLAUSIBLE\_DIFFERENTIAL} --- The prediction is a plausible differential diagnosis that was on the provided list, but is incorrect. The model's reasoning was clinically defensible but wrong.
+        \item \textbf{OFF\_TOPIC} --- The prediction names a condition that is not on the differential list, is anatomically/pathologically unrelated, or is a hallucinated entity.
+        \item \textbf{EMPTY\_OR\_REFUSAL} --- The prediction is empty, a refusal to answer, a parse failure, or contains no identifiable diagnosis.
+    \end{enumerate}
+
+    \vspace{0.5em}
+    \textbf{Case information:}
+    \\
+    Ground truth diagnosis: \textit{[ground\_truth]}
+    \\
+    Model prediction: \textit{[prediction]}
+    \\
+    Differential diagnosis list: \textit{[differentials]}
+
+    \vspace{0.5em}
+    \textbf{Instructions:}
+    Respond with ONLY the category letter (a, b, c, d, or e) on the first line, followed by a one-sentence justification on the second line.
+\end{baselinebox}
+
+\vspace*{\fill}
+\clearpage
+
 % Supplementary Table 1: Full CIs for Generalist task
 \begin{sidewaystable}[p]
 \centering
