@@ -1,0 +1,5 @@
+family,total_errors,cat_a_count,cat_a_pct,cat_b_count,cat_b_pct,cat_c_count,cat_c_pct,cat_d_count,cat_d_pct,cat_e_count,cat_e_pct
+proprietary,71,1,1.4,1,1.4,69,97.2,0,0.0,0,0.0
+open_large,38,2,5.3,1,2.6,34,89.5,0,0.0,1,2.6
+on_device_base,226,13,5.8,10,4.4,189,83.6,14,6.2,0,0.0
+on_device_ft,23,2,8.7,1,4.3,20,87.0,0,0.0,0,0.0

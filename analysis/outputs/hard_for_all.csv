@@ -1,0 +1,24 @@
+case_id,section,ground_truth,n_models_correct,n_models_total,frac_correct,frac_proprietary,frac_open_large,frac_on_device_base,frac_on_device_ft,GPT-5.1,GPT-5-mini,Gemini 3.1 Pro,DeepSeek-R1,gpt-oss-20b (H),gpt-oss-120b (H),Qwen3.5 9B,Qwen3.5 27B,Qwen3.5 35B,Qwen3.5 35B FT,Gemma 4 31B
+19116.0,Others,Mixed malignant ovarian germ cell tumour,0,11,0.0,0.0,0.0,0.0,0.0,0,0,0,0,0,0,0,0,0,0,0
+19002.0,Paediatric radiology,Retroperitoneal ganglioneuroblastoma-intermixed,0,11,0.0,0.0,0.0,0.0,0.0,0,0,0,0,0,0,0,0,0,0,0
+19067.0,Paediatric radiology,Cystic pulmonary tuberculosis,0,11,0.0,0.0,0.0,0.0,0.0,0,0,0,0,0,0,0,0,0,0,0
+19110.0,Others,Inflammatory myofibroblastic tumour,0,11,0.0,0.0,0.0,0.0,0.0,0,0,0,0,0,0,0,0,0,0,0
+19101.0,Neuroradiology,Neuro-Behçet’s disease,1,11,0.091,0.0,0.0,0.167,0.0,0,0,0,0,0,0,0,0,0,0,1
+19024.0,Chest imaging,Usual interstitial pneumonia secondary to connective tissue disorder,1,11,0.091,0.333,0.0,0.0,0.0,0,0,1,0,0,0,0,0,0,0,0
+19161.0,Musculoskeletal system,Mycobacterium kansasii tenosynovitis,1,11,0.091,0.0,0.0,0.0,1.0,0,0,0,0,0,0,0,0,0,1,0
+19158.0,Paediatric radiology,"Paediatric-type diffuse low-grade glioma, MAP kinase pathway altered (FGFR1::TACC1 fusion)",1,11,0.091,0.333,0.0,0.0,0.0,0,0,1,0,0,0,0,0,0,0,0
+19044.0,Neuroradiology,Chorea-acanthocytosis,1,11,0.091,0.0,1.0,0.0,0.0,0,0,0,1,0,0,0,0,0,0,0
+19138.0,Musculoskeletal system,Chondroblastic osteosarcoma,1,11,0.091,0.0,0.0,0.0,1.0,0,0,0,0,0,0,0,0,0,1,0
+18897.0,Musculoskeletal system,Central/low-grade osteosarcoma,2,11,0.182,0.0,0.0,0.167,1.0,0,0,0,0,0,0,0,0,0,1,1
+19114.0,Neuroradiology,Rosette-forming glioneuronal tumour (RGNT),2,11,0.182,0.333,0.0,0.167,0.0,0,0,1,0,1,0,0,0,0,0,0
+19058.0,Abdominal imaging,Intraductal papillary neoplasm of the bile duct with low-grade dysplasia,2,11,0.182,0.333,0.0,0.0,1.0,0,0,1,0,0,0,0,0,0,1,0
+19141.0,Neuroradiology,Anaplastic meningioma (WHO Grade III),2,11,0.182,0.333,0.0,0.0,1.0,1,0,0,0,0,0,0,0,0,1,0
+18919.0,Abdominal imaging,Lymphoepithelial cysts of the pancreas,2,11,0.182,0.667,0.0,0.0,0.0,1,0,1,0,0,0,0,0,0,0,0
+19015.0,Chest imaging,Pulmonary amyloidosis,3,11,0.273,0.667,0.0,0.0,1.0,1,0,1,0,0,0,0,0,0,1,0
+19140.0,Musculoskeletal system,Infection by Mycobacterium avium,3,11,0.273,0.0,0.0,0.5,0.0,0,0,0,0,0,0,1,1,0,0,1
+19070.0,Musculoskeletal system,Clear cell soft tissue sarcoma with melanocytic differentiation,3,11,0.273,0.333,0.0,0.167,1.0,1,0,0,0,0,0,0,1,0,1,0
+19038.0,Cardiovascular,Saw-tooth cardiomyopathy,4,11,0.364,0.667,0.0,0.333,0.0,1,0,1,0,0,1,0,0,0,0,1
+19149.0,Paediatric radiology,MASA syndrome,4,11,0.364,0.333,0.0,0.333,1.0,0,0,1,0,0,0,0,0,1,1,1
+18993.0,Abdominal imaging,Primary hepatic adenosarcoma,4,11,0.364,0.333,0.0,0.333,1.0,0,0,1,0,0,0,0,1,0,1,1
+18826.0,Neuroradiology,Tumefactive demyelination with open ring sign,4,11,0.364,0.0,1.0,0.5,0.0,0,0,0,1,1,1,0,1,0,0,0
+19022.0,Abdominal imaging,Vesico-appendiceal fistula,4,11,0.364,0.667,0.0,0.333,0.0,0,1,1,0,0,0,0,1,0,0,1
