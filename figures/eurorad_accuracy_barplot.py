@@ -63,6 +63,7 @@ MODELS = {
     "Qwen3.5 9B": ["qwen3.5 9B v1", "qwen3.5 9B v2", "qwen3.5 9B v3"],
     "Qwen3.5 27B": ["qwen3.5 27B v1", "qwen3.5 27B v2", "qwen3.5 27B v3"],
     "Qwen3.5 35B": ["qwen3.5 35B v1", "qwen3.5 35B v2", "qwen3.5 35B v3"],
+    "Gemma 4 31B": ["gemma-4-31b-M1", "gemma-4-31b-M2", "gemma-4-31b-M3"],
 }
 
 MODEL_ORDER = list(MODELS.keys())
@@ -77,17 +78,19 @@ SHORT_LABELS = {
     "Qwen3.5 9B": "9B",
     "Qwen3.5 27B": "27B",
     "Qwen3.5 35B": "35B",
+    "Gemma 4 31B": "31B",
 }
 
 GROUPS = {
     "Proprietary": ["DeepSeek-R1", "GPT-5-mini", "GPT-5.1", "Gemini 3.1 Pro"],
     "gpt-oss": ["OSS-20B (H)", "OSS-120B (H)"],
     "Qwen 3.5": ["Qwen3.5 9B", "Qwen3.5 27B", "Qwen3.5 35B"],
+    "Gemma 4": ["Gemma 4 31B"],
 }
 
 # ─── Load & compute ─────────────────────────────────────────────────────────
 
-def load_eurorad(path="csvs/Eurorad.csv"):
+def load_eurorad(path="csvs/final_csvs/Eurorad.csv"):
     with open(path, newline="", encoding="utf-8") as f:
         reader = csv.reader(f)
         raw_headers = next(reader)
@@ -188,13 +191,15 @@ def plot_accuracy(results, output=None):
     # Group bracket labels
     trans = ax.get_xaxis_transform()
     for group_name, (start, end) in group_spans.items():
-        if start == end:
-            continue
         mid = (start + end) / 2
-        ax.plot([start - 0.35, end + 0.35], [-0.18, -0.18],
-                color="#999999", lw=0.8, transform=trans, clip_on=False)
-        ax.text(mid, -0.22, group_name, ha="center", va="top",
-                fontsize=9, color="#666666", transform=trans)
+        if start == end:
+            ax.text(mid, -0.18, group_name, ha="center", va="top",
+                    fontsize=9, color="#666666", transform=trans)
+        else:
+            ax.plot([start - 0.35, end + 0.35], [-0.18, -0.18],
+                    color="#999999", lw=0.8, transform=trans, clip_on=False)
+            ax.text(mid, -0.22, group_name, ha="center", va="top",
+                    fontsize=9, color="#666666", transform=trans)
 
     ax.set_xticks(positions)
     ax.set_xticklabels([SHORT_LABELS[m] for m in labels], fontsize=10)
@@ -219,7 +224,7 @@ def plot_accuracy(results, output=None):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--input", default="csvs/Eurorad.csv")
+    ap.add_argument("--input", default="csvs/final_csvs/Eurorad.csv")
     ap.add_argument("--output", "-o", default=None,
                     help="Output file (e.g., figures/eurorad_accuracy.png). Shows interactive plot if omitted.")
     args = ap.parse_args()

@@ -86,13 +86,15 @@ def panel_accuracy(ax):
 
     trans = ax.get_xaxis_transform()
     for group_name, (start, end) in group_spans.items():
-        if start == end:
-            continue
         mid = (start + end) / 2
-        ax.plot([start - 0.35, end + 0.35], [-0.18, -0.18],
-                color="#999999", lw=0.8, transform=trans, clip_on=False)
-        ax.text(mid, -0.22, group_name, ha="center", va="top",
-                fontsize=8, color="#666666", transform=trans)
+        if start == end:
+            ax.text(mid, -0.18, group_name, ha="center", va="top",
+                    fontsize=8, color="#666666", transform=trans)
+        else:
+            ax.plot([start - 0.35, end + 0.35], [-0.18, -0.18],
+                    color="#999999", lw=0.8, transform=trans, clip_on=False)
+            ax.text(mid, -0.22, group_name, ha="center", va="top",
+                    fontsize=8, color="#666666", transform=trans)
 
     ax.set_xticks(positions)
     ax.set_xticklabels([ACC_SHORT[m] for m in labels], fontsize=8)
@@ -109,8 +111,8 @@ def panel_accuracy(ax):
 # ─── Panel b: NMED split violin plot ──────────────────────────────────────
 
 def panel_violin(ax):
-    df_diag = pd.read_csv("csvs/NMED_Diagnosis.csv")
-    df_treat = pd.read_csv("csvs/NMED_Treatment.csv")
+    df_diag = pd.read_csv("csvs/final_csvs/NMED_Diagnosis.csv")
+    df_treat = pd.read_csv("csvs/final_csvs/NMED_Treatment.csv")
     df_diag = df_diag[df_diag["Clinical specialty"].notna()]
     df_treat = df_treat[df_treat["Clinical specialty"].notna()]
 
@@ -279,7 +281,7 @@ def panel_finetune(ax):
 # ─── Panel d: Eurorad radar plot ──────────────────────────────────────────
 
 def panel_radar(ax):
-    df = pd.read_csv("csvs/Eurorad.csv")
+    df = pd.read_csv("csvs/final_csvs/Eurorad.csv")
     df = df[df["FinalDiagnosis"].notna() &
             (df["FinalDiagnosis"].astype(str).str.strip() != "")]
     results = compute_section_accuracy(df)

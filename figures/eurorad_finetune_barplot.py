@@ -64,7 +64,7 @@ def majority_vote_accuracy(gt_series, col_list, df):
 
 def load_eurorad_results():
     """Load accuracy from main Eurorad CSV."""
-    df = pd.read_csv("csvs/Eurorad.csv")
+    df = pd.read_csv("csvs/final_csvs/Eurorad.csv")
     df = df[df["FinalDiagnosis"].notna() & (df["FinalDiagnosis"].astype(str).str.strip() != "")]
     gt = df["FinalDiagnosis"]
 

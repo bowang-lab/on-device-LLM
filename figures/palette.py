@@ -27,6 +27,9 @@ MODEL_COLORS = {
     "Qwen 35B (FT)":  "#5E9CD0",  # deeper blue
     "9B (FT)":        "#5E9CD0",  # deeper blue   (alias for finetune)
     "35B (FT)":       "#5E9CD0",  # deeper blue   (alias for finetune)
+    # Gemma family (warm orange/amber)
+    "Gemma 4 31B":    "#F4A261",  # warm orange
+    "Gemma 4 26B":    "#F4C89A",  # pastel amber
 }
 
 # Aliases used across scripts with different naming conventions

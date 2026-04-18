@@ -43,6 +43,7 @@ MODELS = {
     "DeepSeek-R1":   ["deepseek r1 0528 v2", "deepseek r1 0528 v2.1", "deepseek r1 0528 v2.2"],
     "OSS-120B (H)":  ["oss-120b (H) v1", "oss-120b (H) v2", "oss-120b (H) v3"],
     "Qwen 35B (FT)": ["qwen3.5 35B fine-tuned v1", "qwen3.5 35B fine-tuned v2", "qwen3.5 35B fine-tuned v3"],
+    "Gemma 4 31B":   ["gemma-4-31b-M1", "gemma-4-31b-M2", "gemma-4-31b-M3"],
 }
 
 MODEL_STYLES = {
@@ -51,6 +52,7 @@ MODEL_STYLES = {
     "DeepSeek-R1":   {"color": MODEL_COLORS["DeepSeek-R1"],   "ls": "--", "lw": 2.0, "fill_alpha": 0.08},
     "OSS-120B (H)":  {"color": MODEL_COLORS["OSS-120B (H)"],  "ls": "-",  "lw": 2.5, "fill_alpha": 0.10},
     "Qwen 35B (FT)": {"color": MODEL_COLORS["Qwen 35B (FT)"], "ls": "-",  "lw": 2.5, "fill_alpha": 0.15},
+    "Gemma 4 31B":   {"color": MODEL_COLORS["Gemma 4 31B"],   "ls": "-",  "lw": 2.5, "fill_alpha": 0.10},
 }
 
 # ─── Subspecialty layout (clockwise from top, matching example) ─────────────
@@ -125,7 +127,7 @@ def compute_section_accuracy(df):
 # ─── Plot ───────────────────────────────────────────────────────────────────
 
 def plot(output=None):
-    df = pd.read_csv("csvs/Eurorad.csv")
+    df = pd.read_csv("csvs/final_csvs/Eurorad.csv")
     df = df[df["FinalDiagnosis"].notna() &
             (df["FinalDiagnosis"].astype(str).str.strip() != "")]
 

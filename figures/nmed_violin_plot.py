@@ -24,6 +24,10 @@ from palette import MODEL_COLORS
 # (display_name, diagnosis_cols, treatment_cols)
 
 MODELS = {
+    "DeepSeek-R1": {
+        "diag": ["deepseek-0528-v1", "deepseek-0528-v2", "deepseek-0528-v3"],
+        "treat": ["deepseek-r1-0528-v1", "deepseek-r1-0528-v2", "deepseek-r1-0528-v3"],
+    },
     "GPT-5-mini": {
         "diag": ["gpt-5-mini-0807-m1", "gpt-5-mini-0807-m2", "gpt-5-mini-0807-m3"],
         "treat": ["gpt-5-mini-0807-m1", "gpt-5-mini-0807-m2", "gpt-5-mini-0807-m3"],
@@ -35,10 +39,6 @@ MODELS = {
     "Gemini 3.1": {
         "diag": ["gemini-3.1-pro-m1", "gemini-3.1-pro-m2", "gemini-3.1-pro-m3"],
         "treat": ["gemini-3.1-pro-m1", "gemini-3.1-pro-m2", "gemini-3.1-pro-m3"],
-    },
-    "DeepSeek-R1": {
-        "diag": ["deepseek-0528-v1", "deepseek-0528-v2", "deepseek-0528-v3"],
-        "treat": ["deepseek-r1-0528-v1", "deepseek-r1-0528-v2", "deepseek-r1-0528-v3"],
     },
     "OSS-20B (H)": {
         "diag": ["oss20b (H) v1", "oss20b (H) v2", "oss20b (H) v3"],
@@ -56,6 +56,10 @@ MODELS = {
         "diag": ["qwen3.5 35B v1", "qwen3.5 35B v2", "qwen3.5 35B v3"],
         "treat": ["qwen3.5 35B v1", "qwen3.5 35B v2", "qwen3.5 35B v3"],
     },
+    "Gemma 4 31B": {
+        "diag": ["gemma4 31B v1", "gemma4 31B v2", "gemma4 31B v3"],
+        "treat": ["gemma4 31B v1", "gemma4 31B v2", "gemma4 31B v3"],
+    },
 }
 
 SHORT_LABELS = {
@@ -67,6 +71,7 @@ SHORT_LABELS = {
     "OSS-120B (H)": "gpt-oss-120b (H)",
     "Qwen 9B": "Qwen 9B",
     "Qwen 35B": "Qwen 35B",
+    "Gemma 4 31B": "Gemma 4 31B",
 }
 
 # Split violin colors (matching example reference)
@@ -86,8 +91,8 @@ def compute_errors(df, gt_col, model_cols):
 
 
 def plot(output=None):
-    df_diag = pd.read_csv("csvs/NMED_Diagnosis.csv")
-    df_treat = pd.read_csv("csvs/NMED_Treatment.csv")
+    df_diag = pd.read_csv("csvs/final_csvs/NMED_Diagnosis.csv")
+    df_treat = pd.read_csv("csvs/final_csvs/NMED_Treatment.csv")
     df_diag = df_diag[df_diag["Clinical specialty"].notna()]
     df_treat = df_treat[df_treat["Clinical specialty"].notna()]
 

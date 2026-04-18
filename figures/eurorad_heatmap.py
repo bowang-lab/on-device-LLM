@@ -21,6 +21,7 @@ MODEL_ORDER = [
     "GPT-5.1", "GPT-5-mini", "Gemini 3.1 Pro", "DeepSeek-R1",
     "gpt-oss-20b (H)", "gpt-oss-120b (H)",
     "Qwen3.5 9B", "Qwen3.5 27B", "Qwen3.5 35B", "Qwen3.5 35B FT",
+    "Gemma 4 31B",
 ]
 
 MODEL_LABELS = {
@@ -34,6 +35,7 @@ MODEL_LABELS = {
     "Qwen3.5 27B": "Qwen3.5 27B",
     "Qwen3.5 35B": "Qwen3.5 35B",
     "Qwen3.5 35B FT": "Qwen3.5 35B FT",
+    "Gemma 4 31B": "Gemma 4 31B",
 }
 
 # Row order (subspecialties)
@@ -119,7 +121,7 @@ def plot(output=None):
         ax.axvline(j - 0.5, color="white", linewidth=1.5)
 
     # Separator lines between model groups
-    group_boundaries = [3.5, 5.5]  # after DeepSeek-R1, after gpt-oss-120b
+    group_boundaries = [3.5, 5.5, 9.5]  # after DeepSeek-R1, after gpt-oss-120b, after Qwen3.5 35B FT
     for gb in group_boundaries:
         ax.axvline(gb, color="#333333", linewidth=2.0)
 
