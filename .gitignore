@@ -1,9 +1,11 @@
 csvs/archive/
 csvs/finetune-eval/
+csvs/updated_csvs/
 figures/*.png
 __pycache__/
 .ipynb_checkpoints/
 *.ipynb
+gepa/runs/
 
 # Finetune intermediate/generated data
 finetune/*.jsonl
