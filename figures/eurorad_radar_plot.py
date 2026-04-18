@@ -153,10 +153,9 @@ def plot(output=None):
     ax.yaxis.grid(True, color="grey", alpha=0.3, linewidth=0.5)
     ax.xaxis.grid(True, color="grey", alpha=0.3, linewidth=0.5)
 
-    # Angular axis
+    # Angular axis — suppress default labels; we draw them manually after plotting
     ax.set_xticks(angles[:-1])
-    ax.set_xticklabels([SECTION_LABELS[s] for s in SECTION_ORDER],
-                       fontsize=10, fontweight="medium")
+    ax.set_xticklabels([])
 
     # Plot each model
     for model_name in MODELS:
@@ -169,6 +168,22 @@ def plot(output=None):
                 color=style["color"], label=model_name,
                 marker="o", markersize=4)
         ax.fill(angles, accs, alpha=style["fill_alpha"], color=style["color"])
+
+    # Draw category labels on top of plot lines using polar data coords
+    label_r = 115  # radial position beyond the 0-100 data range
+    for angle, sec in zip(angles[:-1], SECTION_ORDER):
+        # Determine horizontal alignment based on position around the circle
+        cos_val = np.cos(angle - np.pi / 2)
+        if cos_val > 0.1:
+            ha = "left"
+        elif cos_val < -0.1:
+            ha = "right"
+        else:
+            ha = "center"
+        ax.text(angle, label_r, SECTION_LABELS[sec],
+                ha=ha, va="center", fontsize=10, fontweight="medium",
+                bbox=dict(facecolor="white", edgecolor="none", pad=2, alpha=0.9),
+                zorder=20)
 
     # Legend (horizontal, below the plot)
     ax.legend(loc="lower center", bbox_to_anchor=(0.5, -0.15),

@@ -298,8 +298,7 @@ def panel_radar(ax):
     ax.yaxis.grid(True, color="grey", alpha=0.3, linewidth=0.5)
     ax.xaxis.grid(True, color="grey", alpha=0.3, linewidth=0.5)
     ax.set_xticks(angles[:-1])
-    ax.set_xticklabels([SECTION_LABELS[s] for s in SECTION_ORDER],
-                       fontsize=8, fontweight="medium")
+    ax.set_xticklabels([])  # suppress default labels; we'll draw them manually
 
     for model_name in RADAR_MODELS:
         accs = [results[model_name][sec] for sec in SECTION_ORDER]
@@ -309,9 +308,20 @@ def panel_radar(ax):
                 color=style["color"], label=model_name, marker="o", markersize=3)
         ax.fill(angles, accs, alpha=style["fill_alpha"], color=style["color"])
 
-    for label in ax.get_xticklabels():
-        label.set_zorder(10)
-        label.set_bbox(dict(facecolor="white", edgecolor="none", pad=1.5, alpha=0.85))
+    # Draw category labels on top of plot lines using polar data coords
+    label_r = 115
+    for angle, sec in zip(angles[:-1], SECTION_ORDER):
+        cos_val = np.cos(angle - np.pi / 2)
+        if cos_val > 0.1:
+            ha = "left"
+        elif cos_val < -0.1:
+            ha = "right"
+        else:
+            ha = "center"
+        ax.text(angle, label_r, SECTION_LABELS[sec],
+                ha=ha, va="center", fontsize=8, fontweight="medium",
+                bbox=dict(facecolor="white", edgecolor="none", pad=2, alpha=0.9),
+                zorder=20)
 
     ax.legend(loc="lower center", bbox_to_anchor=(0.5, -0.15),
               fontsize=7, framealpha=0.9, edgecolor="#cccccc",
