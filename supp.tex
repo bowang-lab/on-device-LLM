@@ -264,6 +264,8 @@
 \vspace*{\fill}
 \clearpage
 
+
+
 % Supplementary Table 1: Full CIs for Generalist task
 \begin{sidewaystable}[p]
 \centering
@@ -315,48 +317,49 @@ Others                        & 75.0 (40.9--92.9) & 75.0 (40.9--92.9) & 75.0 (40
 \end{sidewaystable}
 
 
+% Omar 
 % Supplementary Table 2: Full CIs for all models
 \begin{sidewaystable}[p]
 \centering
 \tiny
 \setlength{\tabcolsep}{2pt}
-\caption{\textbf{Supplementary Table 2: Complete ophthalmology accuracy with 95\% confidence intervals.} 
-Performance across all models including temperature variants (L=Low, M=Medium, H=High) for gpt-oss models.}
+\caption{\textbf{ Complete ophthalmology accuracy with 95\% confidence intervals,} 
+performance across all models including temperature variants (L=Low, M=Medium, H=High) for gpt-oss models.}
 \label{tab:ophthalmology_full_ci}
-\begin{tabular}{ll ccc c ccc ccc ccc}
+\begin{tabular}{ll ccc c ccc ccc ccc c}
 \toprule
-& & \multicolumn{3}{c}{\textbf{Proprietary}} & \textbf{Open} & \multicolumn{3}{c}{\textbf{gpt-oss-20b}} & \multicolumn{3}{c}{\textbf{gpt-oss-120b}} & \multicolumn{3}{c}{\textbf{Qwen3.5}} \\
-\cmidrule(lr){3-5} \cmidrule(lr){6-6} \cmidrule(lr){7-9} \cmidrule(lr){10-12} \cmidrule(lr){13-15}
-\textbf{Type} & \textbf{Topic} & \textbf{GPT-5.1} & \textbf{5-mini} & \textbf{Gem-3.1} & \textbf{DS-R1} & \textbf{L} & \textbf{M} & \textbf{H} & \textbf{L} & \textbf{M} & \textbf{H} & \textbf{9B} & \textbf{27B} & \textbf{35B} \\
+& & \multicolumn{3}{c}{\textbf{Proprietary}} & \textbf{Open} & \multicolumn{3}{c}{\textbf{gpt-oss-20b}} & \multicolumn{3}{c}{\textbf{gpt-oss-120b}} & \multicolumn{3}{c}{\textbf{Qwen3.5}} & \textbf{Gemma4} \\
+\cmidrule(lr){3-5} \cmidrule(lr){6-6} \cmidrule(lr){7-9} \cmidrule(lr){10-12} \cmidrule(lr){13-15} \cmidrule(lr){16-16}
+\textbf{Type} & \textbf{Topic} & \textbf{GPT-5.1} & \textbf{5-mini} & \textbf{Gem-3.1} & \textbf{DS-R1} & \textbf{L} & \textbf{M} & \textbf{H} & \textbf{L} & \textbf{M} & \textbf{H} & \textbf{9B} & \textbf{27B} & \textbf{35B} & \textbf{31B} \\
 \midrule
 \multirow{6}{*}{\rotatebox{90}{\textbf{Diag}}}
-& Glaucoma & 100.0 (64.6--100.0) & 100.0 (64.6--100.0) & 100.0 (64.6--100.0) & 100.0 (64.6--100.0) & 71.4 (35.9--91.8) & 85.7 (48.7--97.4) & 85.7 (48.7--97.4) & 85.7 (48.7--97.4) & 85.7 (48.7--97.4) & 85.7 (48.7--97.4) & 100.0 (64.6--100.0) & 100.0 (64.6--100.0) & 100.0 (64.6--100.0) \\
-& Ext.\ Eye/Orb & 90.0 (59.6--98.2) & 80.0 (49.0--94.3) & 90.0 (59.6--98.2) & 90.0 (59.6--98.2) & 70.0 (39.7--89.2) & 70.0 (39.7--89.2) & 80.0 (49.0--94.3) & 70.0 (39.7--89.2) & 80.0 (49.0--94.3) & 80.0 (49.0--94.3) & 70.0 (39.7--89.2) & 70.0 (39.7--89.2) & 70.0 (39.7--89.2) \\
-& Retinal & 100.0 (43.8--100.0) & 100.0 (43.8--100.0) & 100.0 (43.8--100.0) & 100.0 (43.8--100.0) & 66.7 (20.8--93.9) & 66.7 (20.8--93.9) & 66.7 (20.8--93.9) & 100.0 (43.8--100.0) & 66.7 (20.8--93.9) & 66.7 (20.8--93.9) & 66.7 (20.8--93.9) & 100.0 (43.8--100.0) & 100.0 (43.8--100.0) \\
-& Ant.\ Segment & 50.0 (21.5--78.5) & 75.0 (40.9--92.9) & 75.0 (40.9--92.9) & 75.0 (40.9--92.9) & 62.5 (30.6--86.3) & 62.5 (30.6--86.3) & 62.5 (30.6--86.3) & 75.0 (40.9--92.9) & 75.0 (40.9--92.9) & 75.0 (40.9--92.9) & 75.0 (40.9--92.9) & 87.5 (52.9--97.8) & 75.0 (40.9--92.9) \\
-& Ocular Trauma & 100.0 (61.0--100.0) & 83.3 (43.6--97.0) & 100.0 (61.0--100.0) & 100.0 (61.0--100.0) & 83.3 (43.6--97.0) & 66.7 (30.0--90.3) & 83.3 (43.6--97.0) & 83.3 (43.6--97.0) & 100.0 (61.0--100.0) & 83.3 (43.6--97.0) & 83.3 (43.6--97.0) & 100.0 (61.0--100.0) & 100.0 (61.0--100.0) \\
-& Refract./Strab & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) \\
-\cmidrule{2-15}
-& \textit{Avg} & \textit{87.2 (73.3--94.4)} & \textit{87.2 (73.3--94.4)} & \textit{92.3 (79.7--97.3)} & \textit{92.3 (79.7--97.3)} & \textit{74.4 (58.9--85.4)} & \textit{74.4 (58.9--85.4)} & \textit{79.5 (64.5--89.2)} & \textit{82.1 (67.3--91.0)} & \textit{84.6 (70.3--92.8)} & \textit{82.1 (67.3--91.0)} & \textit{82.1 (67.3--91.0)} & \textit{89.7 (76.4--95.9)} & \textit{87.2 (73.3--94.4)} \\
+& Glaucoma & 100.0 (64.6--100.0) & 100.0 (64.6--100.0) & 100.0 (64.6--100.0) & 100.0 (64.6--100.0) & 71.4 (35.9--91.8) & 85.7 (48.7--97.4) & 85.7 (48.7--97.4) & 85.7 (48.7--97.4) & 85.7 (48.7--97.4) & 85.7 (48.7--97.4) & 100.0 (64.6--100.0) & 100.0 (64.6--100.0) & 100.0 (64.6--100.0) & 85.7 (48.7--97.4) \\
+& Ext.\ Eye/Orb & 90.0 (59.6--98.2) & 80.0 (49.0--94.3) & 90.0 (59.6--98.2) & 90.0 (59.6--98.2) & 70.0 (39.7--89.2) & 70.0 (39.7--89.2) & 80.0 (49.0--94.3) & 70.0 (39.7--89.2) & 80.0 (49.0--94.3) & 80.0 (49.0--94.3) & 70.0 (39.7--89.2) & 70.0 (39.7--89.2) & 70.0 (39.7--89.2) & 80.0 (49.0--94.3) \\
+& Retinal & 100.0 (43.8--100.0) & 100.0 (43.8--100.0) & 100.0 (43.8--100.0) & 100.0 (43.8--100.0) & 66.7 (20.8--93.9) & 66.7 (20.8--93.9) & 66.7 (20.8--93.9) & 100.0 (43.8--100.0) & 66.7 (20.8--93.9) & 66.7 (20.8--93.9) & 66.7 (20.8--93.9) & 100.0 (43.8--100.0) & 100.0 (43.8--100.0) & 66.7 (20.8--93.9) \\
+& Ant.\ Segment & 50.0 (21.5--78.5) & 75.0 (40.9--92.9) & 75.0 (40.9--92.9) & 75.0 (40.9--92.9) & 62.5 (30.6--86.3) & 62.5 (30.6--86.3) & 62.5 (30.6--86.3) & 75.0 (40.9--92.9) & 75.0 (40.9--92.9) & 75.0 (40.9--92.9) & 75.0 (40.9--92.9) & 87.5 (52.9--97.8) & 75.0 (40.9--92.9) & 75.0 (40.9--92.9) \\
+& Ocular Trauma & 100.0 (61.0--100.0) & 83.3 (43.6--97.0) & 100.0 (61.0--100.0) & 100.0 (61.0--100.0) & 83.3 (43.6--97.0) & 66.7 (30.0--90.3) & 83.3 (43.6--97.0) & 83.3 (43.6--97.0) & 100.0 (61.0--100.0) & 83.3 (43.6--97.0) & 83.3 (43.6--97.0) & 100.0 (61.0--100.0) & 100.0 (61.0--100.0) & 100.0 (61.0--100.0) \\
+& Refract./Strab & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) \\
+\cmidrule{2-16}
+& \textit{Avg} & \textit{87.2 (73.3--94.4)} & \textit{87.2 (73.3--94.4)} & \textit{92.3 (79.7--97.3)} & \textit{92.3 (79.7--97.3)} & \textit{74.4 (58.9--85.4)} & \textit{74.4 (58.9--85.4)} & \textit{79.5 (64.5--89.2)} & \textit{82.1 (67.3--91.0)} & \textit{84.6 (70.3--92.8)} & \textit{82.1 (67.3--91.0)} & \textit{82.1 (67.3--91.0)} & \textit{89.7 (76.4--95.9)} & \textit{87.2 (73.3--94.4)} & \textit{84.6 (70.3--92.8)} \\
 \midrule
 \multirow{6}{*}{\rotatebox{90}{\textbf{Mgmt}}}
-& Glaucoma & 85.7 (60.1--96.0) & 64.3 (38.8--83.7) & 85.7 (60.1--96.0) & 71.4 (45.4--88.3) & 50.0 (26.8--73.2) & 64.3 (38.8--83.7) & 50.0 (26.8--73.2) & 71.4 (45.4--88.3) & 78.6 (52.4--92.4) & 64.3 (38.8--83.7) & 64.3 (38.8--83.7) & 85.7 (60.1--96.0) & 85.7 (60.1--96.0) \\
-& Ext.\ Eye/Orb & 71.4 (45.4--88.3) & 57.1 (32.6--78.6) & 64.3 (38.8--83.7) & 78.6 (52.4--92.4) & 57.1 (32.6--78.6) & 71.4 (45.4--88.3) & 64.3 (38.8--83.7) & 71.4 (45.4--88.3) & 71.4 (45.4--88.3) & 71.4 (45.4--88.3) & 78.6 (52.4--92.4) & 71.4 (45.4--88.3) & 92.9 (68.5--98.7) \\
-& Retinal & 37.5 (13.7--69.4) & 25.0 (7.1--59.1) & 37.5 (13.7--69.4) & 37.5 (13.7--69.4) & 12.5 (2.2--47.1) & 25.0 (7.1--59.1) & 37.5 (13.7--69.4) & 50.0 (21.5--78.5) & 37.5 (13.7--69.4) & 37.5 (13.7--69.4) & 37.5 (13.7--69.4) & 25.0 (7.1--59.1) & 37.5 (13.7--69.4) \\
-& Ant.\ Segment & 82.4 (59.0--93.8) & 64.7 (41.3--82.7) & 82.4 (59.0--93.8) & 70.6 (46.9--86.7) & 76.5 (52.7--90.4) & 64.7 (41.3--82.7) & 76.5 (52.7--90.4) & 70.6 (46.9--86.7) & 76.5 (52.7--90.4) & 70.6 (46.9--86.7) & 58.8 (36.0--78.4) & 64.7 (41.3--82.7) & 64.7 (41.3--82.7) \\
-& Ocular Trauma & 65.4 (46.2--80.6) & 57.7 (38.9--74.5) & 65.4 (46.2--80.6) & 76.9 (57.9--89.0) & 42.3 (25.5--61.1) & 57.7 (38.9--74.5) & 50.0 (32.1--67.9) & 65.4 (46.2--80.6) & 76.9 (57.9--89.0) & 57.7 (38.9--74.5) & 57.7 (38.9--74.5) & 61.5 (42.5--77.6) & 57.7 (38.9--74.5) \\
-& Refract./Strab & 83.3 (55.2--95.3) & 75.0 (46.8--91.1) & 91.7 (64.6--98.5) & 91.7 (64.6--98.5) & 66.7 (39.1--86.2) & 58.3 (32.0--80.7) & 83.3 (55.2--95.3) & 83.3 (55.2--95.3) & 91.7 (64.6--98.5) & 83.3 (55.2--95.3) & 91.7 (64.6--98.5) & 91.7 (64.6--98.5) & 83.3 (55.2--95.3) \\
-\cmidrule{2-15}
-& \textit{Avg} & \textit{72.5 (62.6--80.6)} & \textit{59.3 (49.1--68.9)} & \textit{72.5 (62.6--80.6)} & \textit{73.6 (63.7--81.6)} & \textit{52.7 (42.6--62.7)} & \textit{59.3 (49.1--68.9)} & \textit{60.4 (50.2--69.9)} & \textit{69.2 (59.1--77.8)} & \textit{74.7 (64.9--82.5)} & \textit{64.8 (54.6--73.9)} & \textit{64.8 (54.6--73.9)} & \textit{68.1 (58.0--76.8)} & \textit{70.3 (60.3--78.7)} \\
+& Glaucoma & 85.7 (60.1--96.0) & 64.3 (38.8--83.7) & 85.7 (60.1--96.0) & 71.4 (45.4--88.3) & 50.0 (26.8--73.2) & 64.3 (38.8--83.7) & 50.0 (26.8--73.2) & 71.4 (45.4--88.3) & 78.6 (52.4--92.4) & 64.3 (38.8--83.7) & 64.3 (38.8--83.7) & 85.7 (60.1--96.0) & 85.7 (60.1--96.0) & 71.4 (45.4--88.3) \\
+& Ext.\ Eye/Orb & 71.4 (45.4--88.3) & 57.1 (32.6--78.6) & 64.3 (38.8--83.7) & 78.6 (52.4--92.4) & 57.1 (32.6--78.6) & 71.4 (45.4--88.3) & 64.3 (38.8--83.7) & 71.4 (45.4--88.3) & 71.4 (45.4--88.3) & 71.4 (45.4--88.3) & 78.6 (52.4--92.4) & 71.4 (45.4--88.3) & 92.9 (68.5--98.7) & 78.6 (52.4--92.4) \\
+& Retinal & 37.5 (13.7--69.4) & 25.0 (7.1--59.1) & 37.5 (13.7--69.4) & 37.5 (13.7--69.4) & 12.5 (2.2--47.1) & 25.0 (7.1--59.1) & 37.5 (13.7--69.4) & 50.0 (21.5--78.5) & 37.5 (13.7--69.4) & 37.5 (13.7--69.4) & 37.5 (13.7--69.4) & 25.0 (7.1--59.1) & 37.5 (13.7--69.4) & 37.5 (13.7--69.4) \\
+& Ant.\ Segment & 82.4 (59.0--93.8) & 64.7 (41.3--82.7) & 82.4 (59.0--93.8) & 70.6 (46.9--86.7) & 76.5 (52.7--90.4) & 64.7 (41.3--82.7) & 76.5 (52.7--90.4) & 70.6 (46.9--86.7) & 76.5 (52.7--90.4) & 70.6 (46.9--86.7) & 58.8 (36.0--78.4) & 64.7 (41.3--82.7) & 64.7 (41.3--82.7) & 58.8 (36.0--78.4) \\
+& Ocular Trauma & 65.4 (46.2--80.6) & 57.7 (38.9--74.5) & 65.4 (46.2--80.6) & 76.9 (57.9--89.0) & 42.3 (25.5--61.1) & 57.7 (38.9--74.5) & 50.0 (32.1--67.9) & 65.4 (46.2--80.6) & 76.9 (57.9--89.0) & 57.7 (38.9--74.5) & 57.7 (38.9--74.5) & 61.5 (42.5--77.6) & 57.7 (38.9--74.5) & 65.4 (46.2--80.6) \\
+& Refract./Strab & 83.3 (55.2--95.3) & 75.0 (46.8--91.1) & 91.7 (64.6--98.5) & 91.7 (64.6--98.5) & 66.7 (39.1--86.2) & 58.3 (32.0--80.7) & 83.3 (55.2--95.3) & 83.3 (55.2--95.3) & 91.7 (64.6--98.5) & 83.3 (55.2--95.3) & 91.7 (64.6--98.5) & 91.7 (64.6--98.5) & 83.3 (55.2--95.3) & 91.7 (64.6--98.5) \\
+\cmidrule{2-16}
+& \textit{Avg} & \textit{72.5 (62.6--80.6)} & \textit{59.3 (49.1--68.9)} & \textit{72.5 (62.6--80.6)} & \textit{73.6 (63.7--81.6)} & \textit{52.7 (42.6--62.7)} & \textit{59.3 (49.1--68.9)} & \textit{60.4 (50.2--69.9)} & \textit{69.2 (59.1--77.8)} & \textit{74.7 (64.9--82.5)} & \textit{64.8 (54.6--73.9)} & \textit{64.8 (54.6--73.9)} & \textit{68.1 (58.0--76.8)} & \textit{70.3 (60.3--78.7)} & \textit{68.1 (58.0--76.8)} \\
 \midrule
-\multicolumn{2}{l}{\textbf{Overall}} & \textbf{76.9 (69.0--83.3)} & \textbf{67.7 (59.2--75.1)} & \textbf{78.5 (70.6--84.7)} & \textbf{79.2 (71.5--85.3)} & \textbf{59.2 (50.6--67.3)} & \textbf{63.8 (55.3--71.6)} & \textbf{66.2 (57.7--73.7)} & \textbf{73.1 (64.9--80.0)} & \textbf{77.7 (69.8--84.0)} & \textbf{70.0 (61.6--77.2)} & \textbf{70.0 (61.6--77.2)} & \textbf{74.6 (66.5--81.3)} & \textbf{75.4 (67.3--82.0)} \\
+\multicolumn{2}{l}{\textbf{Overall}} & \textbf{76.9 (69.0--83.3)} & \textbf{67.7 (59.2--75.1)} & \textbf{78.5 (70.6--84.7)} & \textbf{79.2 (71.5--85.3)} & \textbf{59.2 (50.6--67.3)} & \textbf{63.8 (55.3--71.6)} & \textbf{66.2 (57.7--73.7)} & \textbf{73.1 (64.9--80.0)} & \textbf{77.7 (69.8--84.0)} & \textbf{70.0 (61.6--77.2)} & \textbf{70.0 (61.6--77.2)} & \textbf{74.6 (66.5--81.3)} & \textbf{75.4 (67.3--82.0)} & \textbf{73.1 (64.9--80.0)} \\
 \bottomrule
 \end{tabular}
 \end{sidewaystable}
 
 
 
-
+%% %Omar Updated  
 % Supplementary Table 3: Full IQR for Clinical Judge task
 \begin{sidewaystable}[p]
 \centering
@@ -364,64 +367,68 @@ Performance across all models including temperature variants (L=Low, M=Medium, H
 \setlength{\tabcolsep}{2pt}
 \caption{\textbf{LLM-as-a-Clinical-Judge Task: Median error with interquartile ranges across five specialties.} Scores are presented as the median error (25\%--75\% IQR) relative to human expert scores. A value of 0 indicates perfect alignment; negative values indicate underestimation.}
 \label{tab:specialty_full_iqr}
-\begin{tabular}{ll *{13}{c}}
+\begin{tabular}{ll *{14}{c}}
 \toprule
-& & \multicolumn{3}{c}{\textbf{Proprietary}} & \textbf{Open} & \multicolumn{3}{c}{\textbf{gpt-oss-20b}} & \multicolumn{3}{c}{\textbf{gpt-oss-120b}} & \multicolumn{3}{c}{\textbf{qwen3.5}} \\
-\cmidrule(lr){3-5} \cmidrule(lr){6-6} \cmidrule(lr){7-9} \cmidrule(lr){10-12} \cmidrule(lr){13-15}
-\textbf{Type} & \textbf{Topic} & \textbf{GPT-5.1} & \textbf{Gemini} & \textbf{5.1-mini} & \textbf{DS-R1} & \textbf{L} & \textbf{M} & \textbf{H} & \textbf{L} & \textbf{M} & \textbf{H} & \textbf{9B} & \textbf{27B} & \textbf{35B} \\
+& & \multicolumn{3}{c}{\textbf{Proprietary}} & \textbf{Open} & \multicolumn{3}{c}{\textbf{gpt-oss-20b}} & \multicolumn{3}{c}{\textbf{gpt-oss-120b}} & \multicolumn{3}{c}{\textbf{qwen3.5}} & \textbf{Gemma4} \\
+\cmidrule(lr){3-5} \cmidrule(lr){6-6} \cmidrule(lr){7-9} \cmidrule(lr){10-12} \cmidrule(lr){13-15} \cmidrule(lr){16-16}
+\textbf{Type} & \textbf{Topic} & \textbf{GPT-5.1} & \textbf{Gemini} & \textbf{5.1-mini} & \textbf{DS-R1} & \textbf{L} & \textbf{M} & \textbf{H} & \textbf{L} & \textbf{M} & \textbf{H} & \textbf{9B} & \textbf{27B} & \textbf{35B} & \textbf{31B} \\
 \midrule
 \multirow{6}{*}{\rotatebox{90}{\textbf{Treatment}}}
-& Gynecology & 0.25 (-0.33--0.50) & 0.50 (0.00--1.00) & 0.25 (0.00--0.69) & 0.38 (0.00--0.67) & 0.17 (-0.02--0.52) & 0.17 (-0.33--0.50) & 0.17 (-0.10--0.50) & 0.00 (-0.35--0.50) & 0.17 (-0.33--0.50) & 0.00 (-0.25--0.50) & 0.50 (0.00--1.00) & 0.50 (0.00--0.83) & 0.50 (0.00--1.00) \\
-& Internal Medicine & 0.33 (0.00--0.50) & 0.50 (0.00--0.75) & 0.00 (0.00--0.50) & 0.17 (0.00--0.50) & 0.00 (-0.33--0.50) & 0.00 (-0.08--0.50) & 0.00 (-0.17--0.50) & 0.00 (-0.08--0.50) & 0.00 (-0.08--0.50) & 0.00 (-0.17--0.50) & 0.33 (0.00--0.75) & 0.42 (0.00--0.50) & 0.50 (0.00--0.67) \\
-& Neurology & 0.50 (0.00--1.00) & 0.50 (0.00--1.00) & 0.33 (0.00--0.75) & 0.21 (0.00--0.83) & 0.00 (-0.17--0.67) & 0.17 (-0.17--0.50) & 0.00 (-0.33--0.50) & 0.17 (-0.17--0.50) & 0.17 (-0.17--0.67) & 0.17 (0.00--0.67) & 0.50 (0.00--1.00) & 0.50 (0.00--1.00) & 0.50 (0.00--1.00) \\
-& Pediatrics & 0.25 (0.00--0.50) & 0.50 (0.00--0.75) & 0.21 (0.00--0.50) & 0.17 (0.00--0.50) & 0.00 (-0.33--0.50) & 0.00 (-0.33--0.50) & 0.00 (-0.33--0.50) & 0.17 (-0.17--0.50) & 0.00 (-0.19--0.50) & 0.04 (-0.17--0.50) & 0.33 (0.00--0.50) & 0.33 (0.00--0.50) & 0.50 (0.00--0.52) \\
-& Surgery & 0.50 (0.00--1.00) & 0.50 (0.25--1.00) & 0.50 (0.00--1.00) & 0.50 (0.00--1.00) & 0.25 (-0.08--0.83) & 0.33 (0.00--1.00) & 0.50 (-0.08--1.00) & 0.33 (0.00--1.00) & 0.50 (0.00--1.00) & 0.50 (0.00--1.00) & 0.50 (0.00--1.00) & 0.50 (0.00--1.00) & 0.50 (0.08--1.00) \\
-\cmidrule{2-15}
-& \textit{Overall} & \textit{0.33 (0.00--0.67)} & \textit{0.50 (0.00--1.00)} & \textit{0.25 (0.00--0.67)} & \textit{0.29 (0.00--0.67)} & \textit{0.08 (-0.17--0.50)} & \textit{0.17 (-0.17--0.50)} & \textit{0.17 (-0.29--0.50)} & \textit{0.17 (-0.17--0.50)} & \textit{0.17 (-0.17--0.58)} & \textit{0.17 (-0.17--0.50)} & \textit{0.50 (0.00--0.83)} & \textit{0.50 (0.00--0.83)} & \textit{0.50 (0.00--1.00)} \\
+& Gynecology & 0.25 (-0.33--0.50) & 0.50 (0.00--1.00) & 0.25 (0.00--0.69) & 0.38 (0.00--0.67) & 0.17 (-0.02--0.52) & 0.17 (-0.33--0.50) & 0.17 (-0.10--0.50) & 0.00 (-0.35--0.50) & 0.17 (-0.33--0.50) & 0.00 (-0.25--0.50) & 0.50 (0.00--1.00) & 0.50 (0.00--0.83) & 0.50 (0.00--1.00) & 0.25 (0.00--0.67) \\
+& Internal Medicine & 0.33 (0.00--0.50) & 0.50 (0.00--0.75) & 0.00 (0.00--0.50) & 0.17 (0.00--0.50) & 0.00 (-0.33--0.50) & 0.00 (-0.08--0.50) & 0.00 (-0.17--0.50) & 0.00 (-0.08--0.50) & 0.00 (-0.08--0.50) & 0.00 (-0.17--0.50) & 0.33 (0.00--0.75) & 0.42 (0.00--0.50) & 0.50 (0.00--0.67) & 0.42 (0.00--0.50) \\
+& Neurology & 0.50 (0.00--1.00) & 0.50 (0.00--1.00) & 0.33 (0.00--0.75) & 0.21 (0.00--0.83) & 0.00 (-0.17--0.67) & 0.17 (-0.17--0.50) & 0.00 (-0.33--0.50) & 0.17 (-0.17--0.50) & 0.17 (-0.17--0.67) & 0.17 (0.00--0.67) & 0.50 (0.00--1.00) & 0.50 (0.00--1.00) & 0.50 (0.00--1.00) & 0.50 (0.00--1.00) \\
+& Pediatrics & 0.25 (0.00--0.50) & 0.50 (0.00--0.75) & 0.21 (0.00--0.50) & 0.17 (0.00--0.50) & 0.00 (-0.33--0.50) & 0.00 (-0.33--0.50) & 0.00 (-0.33--0.50) & 0.17 (-0.17--0.50) & 0.00 (-0.19--0.50) & 0.04 (-0.17--0.50) & 0.33 (0.00--0.50) & 0.33 (0.00--0.50) & 0.50 (0.00--0.52) & 0.50 (0.00--0.50) \\
+& Surgery & 0.50 (0.00--1.00) & 0.50 (0.25--1.00) & 0.50 (0.00--1.00) & 0.50 (0.00--1.00) & 0.25 (-0.08--0.83) & 0.33 (0.00--1.00) & 0.50 (-0.08--1.00) & 0.33 (0.00--1.00) & 0.50 (0.00--1.00) & 0.50 (0.00--1.00) & 0.50 (0.00--1.00) & 0.50 (0.00--1.00) & 0.50 (0.08--1.00) & 0.50 (0.00--1.00) \\
+\cmidrule{2-16}
+& \textit{Overall} & \textit{0.33 (0.00--0.67)} & \textit{0.50 (0.00--1.00)} & \textit{0.25 (0.00--0.67)} & \textit{0.29 (0.00--0.67)} & \textit{0.08 (-0.17--0.50)} & \textit{0.17 (-0.17--0.50)} & \textit{0.17 (-0.29--0.50)} & \textit{0.17 (-0.17--0.50)} & \textit{0.17 (-0.17--0.58)} & \textit{0.17 (-0.17--0.50)} & \textit{0.50 (0.00--0.83)} & \textit{0.50 (0.00--0.83)} & \textit{0.50 (0.00--1.00)} & \textit{0.50 (0.00--0.75)} \\
 \midrule
 \multirow{6}{*}{\rotatebox{90}{\textbf{Diagnosis}}}
-& Gynecology & 0.00 (-0.50--0.00) & 0.00 (0.00--0.25) & -0.50 (-1.00--0.00) & -0.17 (-0.50--0.00) & -0.17 (-0.50--0.00) & -0.17 (-0.67--0.00) & -0.33 (-0.67--0.00) & 0.00 (-0.33--0.00) & 0.00 (-0.33--0.00) & 0.00 (-0.33--0.08) & 0.00 (0.00--0.33) & 0.00 (0.00--0.42) & 0.00 (0.00--0.25) \\
-& Internal Medicine & 0.00 (-0.50--0.17) & 0.00 (0.00--0.50) & -0.50 (-1.02--0.00) & -0.33 (-0.75--0.00) & -0.33 (-1.00--0.00) & -0.33 (-0.69--0.00) & -0.33 (-0.94--0.00) & 0.00 (-0.50--0.25) & 0.00 (-0.50--0.33) & 0.00 (-0.54--0.33) & 0.00 (-0.17--0.50) & 0.00 (0.00--0.50) & 0.00 (-0.33--0.50) \\
-& Neurology & -0.17 (-0.67--0.00) & 0.00 (-0.48--0.50) & -0.83 (-1.67--0.00) & -0.33 (-0.67--0.00) & -0.33 (-1.02--0.00) & -0.33 (-1.00--0.00) & -0.17 (-1.17--0.00) & -0.17 (-1.50--0.17) & -0.17 (-1.54--0.17) & -0.17 (-1.67--0.17) & 0.00 (-0.33--0.50) & 0.00 (0.00--0.50) & 0.00 (-0.33--0.50) \\
-& Pediatrics & 0.00 (-0.40--0.00) & 0.00 (0.00--0.50) & -0.67 (-1.00--0.00) & -0.33 (-0.67--0.00) & -0.33 (-0.83--0.00) & -0.33 (-0.79--0.00) & -0.33 (-0.67--0.00) & 0.00 (-0.50--0.23) & 0.00 (-0.50--0.17) & 0.00 (-0.33--0.25) & 0.00 (0.00--0.40) & 0.00 (0.00--0.50) & 0.00 (-0.06--0.25) \\
-& Surgery & 0.00 (-0.33--0.42) & 0.00 (0.00--0.56) & -0.50 (-1.00--0.00) & -0.17 (-0.50--0.17) & 0.00 (-0.50--0.33) & 0.00 (-0.58--0.33) & 0.00 (-0.58--0.27) & 0.00 (-0.50--0.37) & 0.00 (-0.33--0.50) & 0.00 (-0.35--0.50) & 0.33 (0.00--0.75) & 0.25 (0.00--0.75) & 0.25 (0.00--0.75) \\
-\cmidrule{2-15}
-& \textbf{Overall} & \textbf{0.00 (-0.50--0.08)} & \textbf{0.00 (0.00--0.50)} & \textbf{-0.50 (-1.13--0.00)} & \textbf{-0.33 (-0.67--0.00)} & \textbf{-0.33 (-0.67--0.00)} & \textbf{-0.25 (-0.67--0.00)} & \textbf{-0.25 (-0.67--0.00)} & \textbf{0.00 (-0.50--0.25)} & \textbf{0.00 (-0.50--0.25)} & \textbf{0.00 (-0.50--0.25)} & \textbf{0.00 (0.00--0.50)} & \textbf{0.00 (0.00--0.50)} & \textbf{0.00 (-0.08--0.50)} \\
+& Gynecology & 0.00 (-0.50--0.00) & 0.00 (0.00--0.25) & -0.50 (-1.00--0.00) & -0.17 (-0.50--0.00) & -0.17 (-0.50--0.00) & -0.17 (-0.67--0.00) & -0.33 (-0.67--0.00) & 0.00 (-0.33--0.00) & 0.00 (-0.33--0.00) & 0.00 (-0.33--0.08) & 0.00 (0.00--0.33) & 0.00 (0.00--0.42) & 0.00 (0.00--0.25) & 0.00 (0.00--0.25) \\
+& Internal Medicine & 0.00 (-0.50--0.17) & 0.00 (0.00--0.50) & -0.50 (-1.02--0.00) & -0.33 (-0.75--0.00) & -0.33 (-1.00--0.00) & -0.33 (-0.69--0.00) & -0.33 (-0.94--0.00) & 0.00 (-0.50--0.25) & 0.00 (-0.50--0.33) & 0.00 (-0.54--0.33) & 0.00 (-0.17--0.50) & 0.00 (0.00--0.50) & 0.00 (-0.33--0.50) & 0.00 (0.00--0.50) \\
+& Neurology & -0.17 (-0.67--0.00) & 0.00 (-0.48--0.50) & -0.83 (-1.67--0.00) & -0.33 (-0.67--0.00) & -0.33 (-1.02--0.00) & -0.33 (-1.00--0.00) & -0.17 (-1.17--0.00) & -0.17 (-1.50--0.17) & -0.17 (-1.54--0.17) & -0.17 (-1.67--0.17) & 0.00 (-0.33--0.50) & 0.00 (0.00--0.50) & 0.00 (-0.33--0.50) & 0.00 (-0.10--0.50) \\
+& Pediatrics & 0.00 (-0.40--0.00) & 0.00 (0.00--0.50) & -0.67 (-1.00--0.00) & -0.33 (-0.67--0.00) & -0.33 (-0.83--0.00) & -0.33 (-0.79--0.00) & -0.33 (-0.67--0.00) & 0.00 (-0.50--0.23) & 0.00 (-0.50--0.17) & 0.00 (-0.33--0.25) & 0.00 (0.00--0.40) & 0.00 (0.00--0.50) & 0.00 (-0.06--0.25) & 0.00 (0.00--0.50) \\
+& Surgery & 0.00 (-0.33--0.42) & 0.00 (0.00--0.56) & -0.50 (-1.00--0.00) & -0.17 (-0.50--0.17) & 0.00 (-0.50--0.33) & 0.00 (-0.58--0.33) & 0.00 (-0.58--0.27) & 0.00 (-0.50--0.37) & 0.00 (-0.33--0.50) & 0.00 (-0.35--0.50) & 0.33 (0.00--0.75) & 0.25 (0.00--0.75) & 0.25 (0.00--0.75) & 0.25 (0.00--0.75) \\
+\cmidrule{2-16}
+& \textbf{Overall} & \textbf{0.00 (-0.50--0.08)} & \textbf{0.00 (0.00--0.50)} & \textbf{-0.50 (-1.13--0.00)} & \textbf{-0.33 (-0.67--0.00)} & \textbf{-0.33 (-0.67--0.00)} & \textbf{-0.25 (-0.67--0.00)} & \textbf{-0.25 (-0.67--0.00)} & \textbf{0.00 (-0.50--0.25)} & \textbf{0.00 (-0.50--0.25)} & \textbf{0.00 (-0.50--0.25)} & \textbf{0.00 (0.00--0.50)} & \textbf{0.00 (0.00--0.50)} & \textbf{0.00 (-0.08--0.50)} & \textbf{0.00 (0.00--0.50)} \\
 \bottomrule
 \end{tabular}
 \end{sidewaystable}
+%%
+
+
 
 % Alhusain's table (Frequency) -- mean consensus median aggregation
+%Updated Omar 
 
+% Alhusain's table (Frequency) -- mean consensus median aggregation
 \begin{sidewaystable}[p]
 \centering
 \tiny
 \setlength{\tabcolsep}{2pt}
 \caption{\textbf{LLM-as-a-Clinical-Judge Task: Impact of disease prevalence on clinical judgment accuracy.} Model alignment with human expert scoring is stratified by disease frequency (Rare, Less Frequent, Frequent). Scores are presented as the median error (25\%--75\% interquartile range, IQR) relative to human expert scores.}
 \label{tab:frequency_results_with_total}
-\begin{tabular}{ll ccc c ccc ccc ccc}
+\begin{tabular}{ll ccc c ccc ccc ccc c}
 \toprule
-& & \multicolumn{3}{c}{\textbf{Proprietary}} & \textbf{Open} & \multicolumn{3}{c}{\textbf{gpt-oss-20b}} & \multicolumn{3}{c}{\textbf{gpt-oss-120b}} & \multicolumn{3}{c}{\textbf{qwen3.5}} \\
-\cmidrule(lr){3-5} \cmidrule(lr){6-6} \cmidrule(lr){7-9} \cmidrule(lr){10-12} \cmidrule(lr){13-15}
-\textbf{Type} & \textbf{Frequency} & \textbf{GPT-5.1} & \textbf{Gemini} & \textbf{5.1-mini} & \textbf{DS-R1} & \textbf{L} & \textbf{M} & \textbf{H} & \textbf{L} & \textbf{M} & \textbf{H} & \textbf{9B} & \textbf{27B} & \textbf{35B} \\
+& & \multicolumn{3}{c}{\textbf{Proprietary}} & \textbf{Open} & \multicolumn{3}{c}{\textbf{gpt-oss-20b}} & \multicolumn{3}{c}{\textbf{gpt-oss-120b}} & \multicolumn{3}{c}{\textbf{qwen3.5}} & \textbf{Gemma4} \\
+\cmidrule(lr){3-5} \cmidrule(lr){6-6} \cmidrule(lr){7-9} \cmidrule(lr){10-12} \cmidrule(lr){13-15} \cmidrule(lr){16-16}
+\textbf{Type} & \textbf{Frequency} & \textbf{GPT-5.1} & \textbf{Gemini} & \textbf{5.1-mini} & \textbf{DS-R1} & \textbf{L} & \textbf{M} & \textbf{H} & \textbf{L} & \textbf{M} & \textbf{H} & \textbf{9B} & \textbf{27B} & \textbf{35B} & \textbf{31B} \\
 \midrule
 \multirow{4}{*}{\rotatebox{90}{\textbf{Treatment}}}
-& Rare & 0.33 (0.00--0.50) & 0.50 (0.00--1.00) & 0.25 (0.00--0.50) & 0.25 (0.00--0.67) & 0.00 (-0.17--0.50) & 0.08 (-0.17--0.50) & 0.00 (-0.33--0.50) & 0.17 (0.00--0.50) & 0.00 (-0.17--0.50) & 0.00 (-0.17--0.50) & 0.33 (0.00--0.75) & 0.50 (0.00--1.00) & 0.50 (0.00--0.83) \\
-& Less Frequent & 0.50 (0.00--0.75) & 0.50 (0.00--1.00) & 0.50 (0.00--0.75) & 0.42 (0.00--0.50) & 0.17 (-0.17--0.50) & 0.17 (-0.17--0.50) & 0.17 (-0.31--0.50) & 0.17 (0.00--0.50) & 0.25 (0.00--0.63) & 0.25 (0.00--0.65) & 0.50 (0.00--0.81) & 0.50 (0.00--0.75) & 0.50 (0.00--0.83) \\
-& Frequent & 0.25 (0.00--0.52) & 0.50 (0.00--1.00) & 0.25 (0.00--0.54) & 0.17 (0.00--0.71) & 0.00 (-0.27--0.50) & 0.00 (-0.17--0.67) & 0.17 (-0.17--0.50) & 0.17 (-0.17--0.50) & 0.17 (-0.17--0.58) & 0.17 (-0.17--0.50) & 0.50 (0.00--1.00) & 0.50 (0.00--0.83) & 0.50 (0.00--1.00) \\
-\cmidrule{2-15}
-& \textit{Overall} & \textit{0.33 (0.00--0.67)} & \textit{0.50 (0.00--1.00)} & \textit{0.25 (0.00--0.67)} & \textit{0.29 (0.00--0.67)} & \textit{0.08 (-0.17--0.50)} & \textit{0.17 (-0.17--0.50)} & \textit{0.17 (-0.29--0.50)} & \textit{0.17 (-0.17--0.50)} & \textit{0.17 (-0.17--0.58)} & \textit{0.17 (-0.17--0.50)} & \textit{0.50 (0.00--0.83)} & \textit{0.50 (0.00--0.83)} & \textit{0.50 (0.00--1.00)} \\
+& Rare & 0.33 (0.00--0.50) & 0.50 (0.00--1.00) & 0.25 (0.00--0.50) & 0.25 (0.00--0.67) & 0.00 (-0.17--0.50) & 0.08 (-0.17--0.50) & 0.00 (-0.33--0.50) & 0.17 (0.00--0.50) & 0.00 (-0.17--0.50) & 0.00 (-0.17--0.50) & 0.33 (0.00--0.75) & 0.50 (0.00--1.00) & 0.50 (0.00--0.83) & 0.50 (0.00--0.75) \\
+& Less Frequent & 0.50 (0.00--0.75) & 0.50 (0.00--1.00) & 0.50 (0.00--0.75) & 0.42 (0.00--0.50) & 0.17 (-0.17--0.50) & 0.17 (-0.17--0.50) & 0.17 (-0.31--0.50) & 0.17 (0.00--0.50) & 0.25 (0.00--0.63) & 0.25 (0.00--0.65) & 0.50 (0.00--0.81) & 0.50 (0.00--0.75) & 0.50 (0.00--0.83) & 0.50 (0.00--0.75) \\
+& Frequent & 0.25 (0.00--0.52) & 0.50 (0.00--1.00) & 0.25 (0.00--0.54) & 0.17 (0.00--0.71) & 0.00 (-0.27--0.50) & 0.00 (-0.17--0.67) & 0.17 (-0.17--0.50) & 0.17 (-0.17--0.50) & 0.17 (-0.17--0.58) & 0.17 (-0.17--0.50) & 0.50 (0.00--1.00) & 0.50 (0.00--0.83) & 0.50 (0.00--1.00) & 0.50 (0.00--0.77) \\
+\cmidrule{2-16}
+& \textit{Overall} & \textit{0.33 (0.00--0.67)} & \textit{0.50 (0.00--1.00)} & \textit{0.25 (0.00--0.67)} & \textit{0.29 (0.00--0.67)} & \textit{0.08 (-0.17--0.50)} & \textit{0.17 (-0.17--0.50)} & \textit{0.17 (-0.29--0.50)} & \textit{0.17 (-0.17--0.50)} & \textit{0.17 (-0.17--0.58)} & \textit{0.17 (-0.17--0.50)} & \textit{0.50 (0.00--0.83)} & \textit{0.50 (0.00--0.83)} & \textit{0.50 (0.00--1.00)} & \textit{0.50 (0.00--0.75)} \\
 \midrule
 \multirow{4}{*}{\rotatebox{90}{\textbf{Diagnosis}}}
-& Rare & 0.00 (-0.67--0.17) & 0.00 (-0.67--0.50) & -0.83 (-1.50--0.00) & -0.33 (-0.92--0.08) & -0.33 (-1.17--0.00) & -0.33 (-1.08--0.08) & -0.33 (-1.17--0.13) & 0.00 (-1.29--0.42) & 0.00 (-1.38--0.33) & 0.00 (-1.25--0.33) & 0.00 (-0.08--0.50) & 0.00 (0.00--0.50) & 0.00 (-0.33--0.50) \\
-& Less Frequent & 0.00 (-0.50--0.06) & 0.00 (0.00--0.50) & -0.50 (-1.06--0.00) & -0.29 (-0.67--0.00) & -0.33 (-0.83--0.00) & -0.33 (-0.67--0.00) & -0.33 (-0.67--0.00) & 0.00 (-0.67--0.17) & 0.00 (-0.67--0.23) & 0.00 (-0.67--0.25) & 0.00 (0.00--0.50) & 0.00 (0.00--0.50) & 0.00 (0.00--0.50) \\
-& Frequent & 0.00 (-0.33--0.06) & 0.00 (0.00--0.50) & -0.50 (-1.00--0.00) & -0.25 (-0.50--0.00) & 0.00 (-0.33--0.00) & 0.00 (-0.50--0.00) & -0.04 (-0.50--0.00) & 0.00 (-0.33--0.17) & 0.00 (-0.23--0.25) & 0.00 (-0.33--0.25) & 0.00 (0.00--0.50) & 0.00 (0.00--0.50) & 0.00 (0.00--0.50) \\
-\cmidrule{2-15}
-& \textbf{Overall} & \textbf{0.00 (-0.50--0.08)} & \textbf{0.00 (0.00--0.50)} & \textbf{-0.50 (-1.13--0.00)} & \textbf{-0.33 (-0.67--0.00)} & \textbf{-0.33 (-0.67--0.00)} & \textbf{-0.25 (-0.67--0.00)} & \textbf{-0.25 (-0.67--0.00)} & \textbf{0.00 (-0.50--0.25)} & \textbf{0.00 (-0.50--0.25)} & \textbf{0.00 (-0.50--0.25)} & \textbf{0.00 (0.00--0.50)} & \textbf{0.00 (0.00--0.50)} & \textbf{0.00 (-0.08--0.50)} \\
+& Rare & 0.00 (-0.67--0.17) & 0.00 (-0.67--0.50) & -0.83 (-1.50--0.00) & -0.33 (-0.92--0.08) & -0.33 (-1.17--0.00) & -0.33 (-1.08--0.08) & -0.33 (-1.17--0.13) & 0.00 (-1.29--0.42) & 0.00 (-1.38--0.33) & 0.00 (-1.25--0.33) & 0.00 (-0.08--0.50) & 0.00 (0.00--0.50) & 0.00 (-0.33--0.50) & 0.00 (-0.58--0.50) \\
+& Less Frequent & 0.00 (-0.50--0.06) & 0.00 (0.00--0.50) & -0.50 (-1.06--0.00) & -0.29 (-0.67--0.00) & -0.33 (-0.83--0.00) & -0.33 (-0.67--0.00) & -0.33 (-0.67--0.00) & 0.00 (-0.67--0.17) & 0.00 (-0.67--0.23) & 0.00 (-0.67--0.25) & 0.00 (0.00--0.50) & 0.00 (0.00--0.50) & 0.00 (0.00--0.50) & 0.00 (0.00--0.50) \\
+& Frequent & 0.00 (-0.33--0.06) & 0.00 (0.00--0.50) & -0.50 (-1.00--0.00) & -0.25 (-0.50--0.00) & 0.00 (-0.33--0.00) & 0.00 (-0.50--0.00) & -0.04 (-0.50--0.00) & 0.00 (-0.33--0.17) & 0.00 (-0.23--0.25) & 0.00 (-0.33--0.25) & 0.00 (0.00--0.50) & 0.00 (0.00--0.50) & 0.00 (0.00--0.50) & 0.00 (0.00--0.50) \\
+\cmidrule{2-16}
+& \textbf{Overall} & \textbf{0.00 (-0.50--0.08)} & \textbf{0.00 (0.00--0.50)} & \textbf{-0.50 (-1.13--0.00)} & \textbf{-0.33 (-0.67--0.00)} & \textbf{-0.33 (-0.67--0.00)} & \textbf{-0.25 (-0.67--0.00)} & \textbf{-0.25 (-0.67--0.00)} & \textbf{0.00 (-0.50--0.25)} & \textbf{0.00 (-0.50--0.25)} & \textbf{0.00 (-0.50--0.25)} & \textbf{0.00 (0.00--0.50)} & \textbf{0.00 (0.00--0.50)} & \textbf{0.00 (-0.08--0.50)} & \textbf{0.00 (0.00--0.50)} \\
 \bottomrule
 \end{tabular}
 \end{sidewaystable}
-
 
 
 
@@ -566,33 +573,36 @@ The algorithm employs diverse group beam search to generate multiple independent
 \end{figure}
 \clearpage
 
+
+
+
 % Omar Case Studies
 \section*{Case Studies}
-The following case studies illustrate the chain-of-thought reasoning capabilities of two fine-tuned models---gpt-oss-20b and Qwen3.5-35B---each fine-tuned on the Eurorad radiology dataset. For each model, we present paired before-and-after comparisons across three clinically diverse cases. Each case demonstrates the model's systematic approach to differential diagnosis: (1) identifying core clinical-radiologic patterns, (2) mapping each differential to observed features, (3) systematically eliminating unlikely diagnoses, and (4) converging on a final answer with supporting rationale.
-
-
-\vspace{1em}
-% --- gpt-oss-20b Cases ---
-The following cases demonstrate the reasoning behaviour of gpt-oss-20b before and after fine-tuning. The base model responses reflect common failure modes including superficial elimination, circular reasoning, and incorrect final answers in some instances.
+The following case studies illustrate the chain-of-thought reasoning capabilities of two fine-tuned models---gpt-oss-20b and Qwen3.5-35B---each fine-tuned on the Eurorad radiology dataset. For each model, we present paired before-and-after comparisons across two clinically diverse cases. Each case demonstrates the model's systematic approach to differential diagnosis: (1) identifying core clinical-radiologic patterns, (2) mapping each differential to observed features, (3) systematically eliminating unlikely diagnoses, and (4) converging on a final answer with supporting rationale.
 
 \vspace{1em}
-% --- Case 1: Von Hippel-Lindau Syndrome (Before/After Fine-Tuning) ---
+
+% -------------------------------------------------------
+% gpt-oss-20b Cases
+% -------------------------------------------------------
+The following cases demonstrate the reasoning behaviour of gpt-oss-20b before and after fine-tuning. The base model responses reflect common failure modes including superficial elimination, circular reasoning, and incorrect final answers.
+
+\vspace{1em}
+
+% --- Case 1: Primary Cardiac Lymphoma (gpt-oss-20b) ---
 \begin{casebox}
-    \textbf{Case Study 1: Von Hippel-Lindau Syndrome (gpt-oss-20b)}
+    \textbf{Case Study 1: Primary Cardiac Lymphoma (gpt-oss-20b)}
 
     \vspace{1em}
     \textbf{Case Presentation}
     
-    \textbf{Clinical History:} A 41-year-old male presents with a history of microscopic haematuria, a palpable right flank mass, and recurrent headaches. A CT scan was performed, followed by a brain MRI to rule out tumoural pathology. The patient had no significant medical history.
+    \textbf{Clinical History:} An 81-year-old male with paroxysmal atrial fibrillation presents with one-week onset of orthopnoea and exertional dyspnoea. Elevated troponins, third-degree AV block on ECG, and right ventricular thickening with pericardial effusion on echocardiogram.
     
-    \vspace{1em}
-    \textbf{Imaging Findings:} In the abdominal CT scan, multiple bilateral renal cystic lesions with septum formation were observed. The right kidney had multiple, irregular, heterogeneous lesions with significant enhancement post-contrast, and hypodense central areas related to necrosis, the biggest located in the superior pole. Similar characteristics were noted in the left kidney lesions. Also, multiple simple pancreatic cysts and splenic vein dilation were observed, along with pancreaticosplenic collaterals. There is a lesion in the splenic hilum that enhances and follows contrast in different phases, suggestive of a splenic hamartoma. The brain MRI revealed multiple heterogeneous lesions with a cystic and a solid component in the posterior fossa, showing avid and homogeneous enhancement of the solid portion, and causing vasogenic oedema and mass effect on the pons.
+    \vspace{0.5em}
+    \textbf{Imaging Findings:} PET-CT reveals a large hypermetabolic mass through the right chambers sparing the left ventricle, and a hypermetabolic left lung base nodule. Chest CT confirms an infiltrative hypodense myocardial mass involving the right atrium, right ventricle, interatrial septum, and AV groove, with a cuff around the right coronary artery, moderate pericardial effusion, and a solid left lower lobe nodule biopsied under CT guidance.
     
-    \vspace{1em}
-    \textbf{Differential diagnoses to consider:} Von Hippel-Lindau syndrome (VHL), Sporadic haemangioblastomas, Multiple endocrine neoplasia type 1 (MEN-1), Tuberous sclerosis complex (TSC), Polycystic kidney disease (PKD), Hereditary leiomyomatosis and renal cell cancer (HLRCC)
-    
-    \vspace{1em}
-    \textbf{Ground Truth:} Von Hippel-Lindau syndrome (VHL)
+    \vspace{0.5em}
+    \textbf{Differentials:} Angiosarcoma, IgG4-related disease, Primary cardiac lymphoma, Erdheim-Chester disease, Undifferentiated pleomorphic sarcoma \quad \textbf{Ground Truth:} Primary cardiac lymphoma
     
     \vspace{1em}
     \hrule
@@ -600,164 +610,20 @@ The following cases demonstrate the reasoning behaviour of gpt-oss-20b before an
 
     \textbf{Base Model Response (Before Fine-Tuning)}
 
-    \vspace{1em}
-    We need to consider the constellation: renal cystic lesions with septations, bilateral; pancreatic cysts; splenic hamartoma; brain hemangioblastomas. Also hematuria, flank mass. \textit{[Issue: Lists features but no systematic framework]}
+    \vspace{0.5em}
+    Angiosarcoma: Most common primary cardiac sarcoma. Usually involves right atrium, pericardial effusion, conduction block. Age typically younger (median 40--50). But can occur in older. Lung metastasis possible. So fits. \textit{[Issue: Makes excuses instead of using age as exclusion criterion; prematurely accepts this diagnosis]}
 
     \vspace{0.5em}
-    VHL is classic: bilateral clear cell RCC, hemangioblastomas of CNS, pancreatic cysts, renal cysts, etc. \textit{[Issue: Brief statement, no detailed reasoning]}
+    IgG4-related disease: Can involve heart. Rarely presents as large infiltrative myocardial mass. Not typical. \textit{[Issue: Rambling, uncertain reasoning]}
 
     \vspace{0.5em}
-    MEN1: pituitary, parathyroid, pancreatic endocrine tumors, but not renal cysts or hemangioblastomas. \textit{[Issue: Superficial elimination - just "but not X"]}
+    Primary cardiac lymphoma: Rare, involves right atrium, can cause conduction block, pericardial effusion. Could present with AV block. So possible. \textit{[Issue: Doesn't recognise AV block as KEY feature for lymphoma]}
 
     \vspace{0.5em}
-    TSC: cortical tubers, subependymal nodules, renal angiomyolipomas, but not hemangioblastomas. \textit{[Issue: Lists features without explaining why they exclude diagnosis]}
+    Erdheim-Chester disease: Osteosclerosis of long bones not mentioned. Less likely. \textit{[Issue: Superficial elimination]}
 
     \vspace{0.5em}
-    PKD: bilateral cystic kidneys, but not brain lesions. \textit{[Issue: One-sentence dismissal]}
-
-    \vspace{0.5em}
-    HLRCC: renal cell carcinoma (papillary type 2), cutaneous leiomyomas, uterine leiomyomas, but not brain hemangioblastomas. \textit{[Issue: No detailed analysis]}
-
-    \vspace{0.5em}
-    Thus VHL fits best. The presence of multiple bilateral renal cystic lesions with septations and enhancing lesions suggests clear cell RCC. The brain lesions are hemangioblastomas. Splenic hamartoma is also associated with VHL? \textit{[Issue: Shows uncertainty - questioning itself]} Splenic hamartoma is not classic but can be seen. Pancreatic cysts also seen. So VHL is the best. \textit{[Issue: Lacks confidence and systematic synthesis]}
-
-    \vspace{1em}
-    \noindent\textbf{Base Model Final Answer:} \colorbox{green!30}{Von Hippel-Lindau syndrome (VHL)} -- \textbf{CORRECT but with uncertain, superficial reasoning}
-
-    \vspace{1em}
-    \hrule
-    \vspace{1em}
-
-    \textbf{Fine-Tuned Model Response}
-
-    \vspace{1em}
-    \noindent\textbf{Step 1 -- Relate the clinical picture to the imaging}
-    
-    The patient is a 41-year-old man with microscopic haematuria, a palpable right-flank mass and recurrent headaches. \colorbox{yellow!30}{The flank mass corresponds to the enlarged, heterogeneous right kidney seen on CT}. The headaches are explained by the posterior-fossa lesions on brain MRI, which are cystic-solid, avidly enhancing and causing mass effect on the pons. The combination of renal cystic-solid lesions, pancreatic cysts, splenic vascular anomalies (splenic-vein dilation, pancreatic-splenic collaterals) and multiple posterior-fossa haemangioblastomas is highly suggestive of a hereditary tumour-spectrum disorder.
-    
-    \vspace{1em}
-    \noindent\textbf{Step 2 -- Map findings to each differential}
-    \vspace{1em}
-
-    \renewcommand{\arraystretch}{1.5}
-    \setlength{\tabcolsep}{10pt}
-    {\footnotesize
-    \begin{tabular}{|>{\raggedright\arraybackslash}p{2.5cm}|>{\raggedright\arraybackslash}p{4cm}|>{\raggedright\arraybackslash}p{3cm}|>{\raggedright\arraybackslash}p{2.5cm}|}
-    \hline
-    \textbf{Differential} & \textbf{Typical imaging/clinical hallmarks} & \textbf{Concordance with this case} & \textbf{Reason for exclusion} \\
-    \hline
-    \textbf{Von Hippel-Lindau (VHL)} & \textbf{Bilateral renal cystic-solid lesions (cystic-solid RCC), pancreatic cysts, splenic vascular malformations, multiple cerebellar/brain-stem haemangioblastomas, haematuria, flank mass, headaches.} & \textbf{All key features present; age fits (40-50 yr).} & \textbf{--} \\
-    \hline
-    Sporadic haemangioblastomas & Usually solitary, no systemic renal or pancreatic lesions. & Multiple haemangioblastomas present; renal and pancreatic findings are absent in sporadic disease. & Multiple haemangioblastomas with systemic findings exclude sporadic form. \\
-    \hline
-    MEN-1 & Pancreatic neuroendocrine tumours, parathyroid hyperplasia, pituitary adenomas; renal cysts are uncommon, haemangioblastomas are not typical. & Pancreatic cysts are simple, not neuroendocrine; no endocrine lesions reported; renal lesions are cystic-solid RCC, not typical MEN-1. & Absence of neuroendocrine tumours and endocrine dysfunction. \\
-    \hline
-    TSC & Multiple cortical tubers, subependymal nodules, renal angiomyolipomas (fat-dense), cardiac rhabdomyomas, retinal hamartomas. & No cortical tubers, no fat-dense renal lesions, no cardiac or retinal findings. & Pathognomonic TSC features (cortical tubers, angiomyolipomas) are absent. \\
-    \hline
-    PKD & Bilateral, large, non-enhancing cysts; no solid enhancing components; no pancreatic or splenic vascular lesions; no brain haemangioblastomas. & Renal lesions are cystic-solid with necrotic centres, not simple cysts; extra-renal lesions present. & Presence of solid enhancing components and extra-renal manifestations. \\
-    \hline
-    HLRCC & Renal cell carcinoma (often papillary type II) with aggressive behaviour; no pancreatic cysts or splenic vascular anomalies; no haemangioblastomas. & Renal lesions are cystic-solid but lack the classic papillary-type II morphology; extra-renal findings are absent in HLRCC. & Missing characteristic HLRCC features (aggressive papillary RCC, cutaneous leiomyomas). \\
-    \hline
-    \end{tabular}
-    }
-    
-    \vspace{1em}
-    \noindent\textbf{Step 3 -- Systematic elimination}
-    \begin{itemize}[leftmargin=*, noitemsep, topsep=2pt]
-        \item Sporadic haemangioblastomas are excluded because the patient has multiple CNS lesions accompanied by systemic renal and pancreatic manifestations, which are not seen in sporadic cases.
-        \item MEN-1 is ruled out by the absence of neuroendocrine pancreatic tumours, parathyroid disease, or pituitary adenomas.
-        \item TSC is eliminated by the absence of cortical tubers, subependymal nodules, and fat-dense angiomyolipomas.
-        \item PKD is excluded because the renal lesions are cystic-solid with enhancing components and necrotic centres, not simple non-enhancing cysts.
-        \item HLRCC is ruled out by the lack of aggressive papillary-type II RCC morphology and the presence of CNS haemangioblastomas, which are not part of HLRCC.
-        \item \colorbox{yellow!30}{\textbf{Only VHL accounts for the complete constellation of findings}}: bilateral cystic-solid renal lesions, pancreatic cysts, splenic vascular anomalies, and multiple CNS haemangioblastomas.
-    \end{itemize}
-    
-    \vspace{1em}
-    \noindent\textbf{Step 4 -- Converge on the final diagnosis}
-    
-    The presence of bilateral cystic-solid renal lesions with necrotic centres, multiple simple pancreatic cysts, splenic vascular dilatation, and multiple posterior-fossa haemangioblastomas together with haematuria and a flank mass fits the classic VHL phenotype. \colorbox{yellow!30}{None of the other entities account for the full spectrum of findings}. The logical synthesis of clinical presentation and imaging demonstrates that the patient's findings are most consistent with Von Hippel-Lindau syndrome. Genetic confirmation (VHL gene mutation) would be the next step, followed by multidisciplinary surveillance for renal, pancreatic, splenic, and CNS manifestations.
-    
-    \vspace{1em}
-    \noindent\textbf{Fine-Tuned Model Final Answer:} \colorbox{green!30}{\textbf{Von Hippel-Lindau syndrome (VHL)}} -- \textbf{CORRECT with systematic, confident reasoning}
-
-    \vspace{1em}
-    \hrule
-    \vspace{1em}
-
-    \textbf{Key Improvements from Fine-Tuning:}
-    \begin{itemize}[leftmargin=*, noitemsep, topsep=2pt]
-        \item \textbf{Structured framework:} Transformed unstructured list into systematic 4-step analysis with explicit clinical-imaging correlation
-        \item \textbf{Comprehensive comparison:} Added detailed 6-syndrome table with concordance/discordance columns vs. brief text dismissals
-        \item \textbf{Multi-system integration:} Step 1 explicitly synthesizes renal, pancreatic, splenic, and CNS findings into hereditary tumor syndrome pattern
-        \item \textbf{Explicit elimination logic:} "Reason for exclusion" column with pathophysiologic justification vs. superficial "but not X" statements
-        \item \textbf{Eliminated uncertainty:} Definitive statements about splenic findings vs. questioning ("Splenic hamartoma is also associated with VHL?")
-        \item \textbf{Clinical confidence:} Comprehensive synthesis with next-step recommendations vs. tentative conclusion
-    \end{itemize}
-\end{casebox}
-
-
-\vspace{1em}
-
-% --- Case 2: Primary Cardiac Lymphoma (Before/After Fine-Tuning) ---
-\vspace{1em}
-
-
-
-
-
-
-
-
-
-\begin{casebox}
-    \textbf{Case Study 2: Primary Cardiac Lymphoma (gpt-oss-20b)}
-
-    \vspace{1em}
-    \textbf{Case Presentation}
-    
-    \textbf{Clinical History:} An 81-year-old male with a history of paroxysmal atrial fibrillation presents to the emergency department with a one-week onset of orthopnoea and exertional dyspnoea. Laboratory tests demonstrate elevated troponins, the electrocardiogram reveals a third-degree atrioventricular block, and the echocardiogram shows right ventricular thickening and pericardial effusion.
-    
-    \vspace{1em}
-    \textbf{Imaging Findings:} A PET-CT scan was carried out revealing a large hypermetabolic myocardial tissue. It extended through the right chambers and around the large vessels, sparing the left ventricle. Additionally, a hypermetabolic nodular image was identified at the left lung base. Therefore, a contrast-enhanced chest CT scan was performed. It confirmed the presence of an infiltrative hypodense mass in the myocardium. It involved the right atrium, right ventricle, interatrial septum, and atrioventricular groove. The mass caused mural thickening of the right cavities. A cuff encircled the right coronary artery along its course. A moderate pericardial effusion was also observed. Finally, the CT scan confirmed the solid nodule in the posterior segment of the left lower lobe. A CT-guided percutaneous biopsy of the lung nodule was made for histological examination.
-    
-    \vspace{1em}
-    \textbf{Differential diagnoses to consider:} Angiosarcoma, IgG4-related disease, Primary cardiac lymphoma, Erdheim-Chester disease, Undifferentiated pleomorphic sarcoma
-    
-    \vspace{1em}
-    \textbf{Ground Truth:} Primary cardiac lymphoma
-    
-    \vspace{1em}
-    \hrule
-    \vspace{1em}
-
-    \textbf{Base Model Response (Before Fine-Tuning)}
-
-    \vspace{1em}
-    We need to reason step by step using only provided info. The case: 81-year-old male, paroxysmal atrial fibrillation, orthopnea, exertional dyspnea, elevated troponins, ECG shows third-degree AV block, echo shows right ventricular thickening and pericardial effusion. PET-CT shows large hypermetabolic myocardial tissue extending through right chambers and around large vessels, sparing left ventricle. Hypermetabolic nodular image at left lung base. Contrast CT confirms infiltrative hypodense mass in myocardium involving right atrium, right ventricle, interatrial septum, AV groove. Mural thickening of right cavities. Cuff around right coronary artery. Moderate pericardial effusion. Solid nodule in posterior segment left lower lobe. \textit{[Issue: Just lists findings without synthesis]}
-
-    \vspace{0.5em}
-    Let's analyze each:
-
-    \vspace{0.5em}
-    Angiosarcoma: Primary cardiac sarcoma, most common primary malignant tumor of heart. Usually involves right atrium, can extend to right ventricle, pericardial effusion, can cause arrhythmias, conduction block. PET hypermetabolic. Age: typically younger (median 40-50). But can occur in older. \textit{[Issue: Makes excuses instead of using age as exclusion criterion]} Lung metastasis possible. So fits. \textit{[Issue: Prematurely accepts this diagnosis]}
-
-    \vspace{0.5em}
-    IgG4-related disease: Infiltrative disease, can involve heart (IgG4-related pericarditis, myocarditis). Usually involves pericardium, can cause thickening, but not typically hypermetabolic mass on PET? Could show uptake. But IgG4 disease often involves multiple organs, but lung involvement can be nodules. However, IgG4 disease rarely presents as a large infiltrative mass in myocardium. Also would have elevated IgG4 levels, histology with IgG4 plasma cells. Not typical. \textit{[Issue: Rambling, uncertain reasoning]}
-
-    \vspace{0.5em}
-    Primary cardiac lymphoma: Rare, often involves right atrium, can cause conduction block, pericardial effusion, infiltration. PET hypermetabolic. Age: can be older. Lung involvement? Usually no lung nodules. But could metastasize to lung. But primary cardiac lymphoma often involves both atria and ventricles, but can be localized. Could present with AV block. So possible. \textit{[Issue: Doesn't recognize AV block as KEY feature for lymphoma]}
-
-    \vspace{0.5em}
-    Erdheim-Chester disease: Non-Langerhans cell histiocytosis, systemic infiltration, can involve heart (pericardial thickening, infiltration of myocardium). Usually involves both ventricles, but can involve right side. Also can involve lungs (nodules). Age: older adults. PET hypermetabolic. But typical features: symmetric osteosclerosis of long bones, retroperitoneal fibrosis, etc. Not mentioned. Also infiltration often involves both ventricles, not sparing left ventricle. So less likely. \textit{[Issue: Superficial elimination]}
-
-    \vspace{0.5em}
-    Undifferentiated pleomorphic sarcoma: A type of sarcoma, but not typical for heart. Could be primary cardiac sarcoma but usually angiosarcoma is most common. Undifferentiated pleomorphic sarcoma can be in heart but less common. Could present similarly. But the mass is hypermetabolic, infiltration of right chambers. Could be. \textit{[Issue: No real elimination logic]}
-
-    \vspace{0.5em}
-    We need to choose the most likely. The key features: right atrium/ventricle involvement, pericardial effusion, conduction block, hypermetabolic mass, lung nodule. Angiosarcoma is classic for right atrium, pericardial effusion, conduction block, metastasis to lung. \textit{[Issue: Misses that AV block is MORE classic for lymphoma]} Primary cardiac lymphoma also can present similarly. But which is more likely? Let's consider age: 81. Angiosarcoma usually younger. Primary cardiac lymphoma often in immunocompromised or older? Primary cardiac lymphoma can occur in older adults. But the presence of a lung nodule that was biopsied: likely metastasis. In angiosarcoma, lung metastases common. In primary cardiac lymphoma, metastasis to lung less common? Actually lymphoma can metastasize to lung. But the lung nodule is hypermetabolic. The biopsy would reveal histology. But we don't have histology results. \textit{[Issue: Circular reasoning without clear conclusion]}
-
-    \vspace{0.5em}
-    Angiosarcoma often shows infiltrative mass in right atrium, can extend to right ventricle, pericardial effusion, can encircle coronary arteries. The mass can be hypermetabolic. The left ventricle is spared. That fits. Primary cardiac lymphoma often involves both atria and ventricles, but can be localized. But the mass in this case is large, infiltrative, hypermetabolic, involving right atrium, right ventricle, interatrial septum, AV groove. That is typical for angiosarcoma. Also the presence of a lung nodule suggests metastasis. So angiosarcoma is likely. \textit{[Issue: Wrong conclusion - prioritized lung nodule over AV block]}
+    Angiosarcoma is classic for right atrium, pericardial effusion, conduction block, metastasis to lung. Left ventricle is spared. That fits. The lung nodule suggests metastasis. So angiosarcoma is likely. \textit{[Issue: Wrong conclusion---prioritised lung nodule over AV block and hypodense CT pattern]}
 
     \vspace{1em}
     \noindent\textbf{Base Model Final Answer:} \colorbox{red!30}{Angiosarcoma} -- \textbf{INCORRECT}
@@ -768,48 +634,47 @@ The following cases demonstrate the reasoning behaviour of gpt-oss-20b before an
 
     \textbf{Fine-Tuned Model Response}
 
-    \vspace{1em}
-    \noindent\textbf{Step 1 -- Relate the clinical picture to the imaging}
-    
-    The patient is an elderly man with new-onset orthopnoea, exertional dyspnoea, a third-degree AV block, elevated troponin and a right-ventricular-predominant thickening on echo. \colorbox{yellow!30}{These findings point to a process that involves the right-sided myocardium, the conduction system (AV node)} and produces a pericardial effusion. The PET-CT shows a large, intensely FDG-avid mass that surrounds the right atrium, right ventricle, inter-atrial septum and the atrioventricular groove, sparing the left ventricle. A second hypermetabolic nodule is seen in the left lower-lobe lung, later confirmed as a metastatic lesion. Thus we have a right-sided cardiac infiltrative tumour with extra-cardiac metastasis.
-    
-    \vspace{1em}
-    \noindent\textbf{Step 2 -- Map findings to each differential}
-    \vspace{1em}
+    \vspace{0.5em}
+    \noindent\textbf{Step 1 -- Clinical-imaging correlation}
 
-    \renewcommand{\arraystretch}{1.5}
-    \setlength{\tabcolsep}{10pt}
+    \colorbox{yellow!30}{The third-degree AV block signals conduction system infiltration}, pointing to right-sided myocardial involvement. The PET-CT shows a large FDG-avid mass surrounding the right atrium, right ventricle, interatrial septum, and AV groove while sparing the left ventricle---with a second hypermetabolic lung nodule consistent with metastasis.
+
+    \vspace{0.5em}
+    \noindent\textbf{Step 2 -- Differential mapping}
+
+    \renewcommand{\arraystretch}{1.4}
+    \setlength{\tabcolsep}{6pt}
     {\footnotesize
-    \begin{tabular}{|>{\raggedright\arraybackslash}p{2.8cm}|>{\raggedright\arraybackslash}p{3.8cm}|>{\raggedright\arraybackslash}p{3.2cm}|>{\raggedright\arraybackslash}p{2.7cm}|}
+    \begin{tabular}{|>{\raggedright\arraybackslash}p{2.5cm}|>{\raggedright\arraybackslash}p{4.0cm}|>{\raggedright\arraybackslash}p{3.0cm}|>{\raggedright\arraybackslash}p{2.5cm}|}
     \hline
-    \textbf{Differential} & \textbf{Typical imaging \& clinical features} & \textbf{Concordance with this case} & \textbf{Discordance} \\
+    \textbf{Differential} & \textbf{Typical features} & \textbf{Concordance} & \textbf{Discordance} \\
     \hline
-    \textbf{Primary cardiac lymphoma (PCL)} & \textbf{Usually involves right-sided chambers, encases AV node → AV block; often presents with pericardial effusion; may be FDG-avid; can metastasize to lung; left ventricle usually spared.} & \textbf{All three hallmarks present (right-sided infiltrate, AV block, pericardial effusion, lung metastasis, FDG avidity).} & \textbf{None.} \\
+    \textbf{PCL} & \textbf{Right-sided chambers, AV node encasement $\to$ AV block, hypodense on CT, FDG-avid, LV spared.} & \textbf{All hallmarks present.} & \textbf{None.} \\
     \hline
-    Angiosarcoma & Most common primary cardiac sarcoma; tends to involve right atrium, may cause hemopericardium, pericardial effusion; often shows heterogeneous enhancement, necrosis, and may invade coronary arteries. & Right-sided location and pericardial effusion fit. & Angiosarcoma usually shows a more heterogeneous, necrotic mass with prominent vascular channels; the PET-CT shows a uniformly hypermetabolic, well-circumscribed infiltrate, and the mass encircles the right coronary artery without obvious necrosis. Metastasis to lung is possible but less common than lymphoma. \\
+    Angiosarcoma & Haemorrhagic, hyperdense mass; right atrium; younger patients. & Right-sided location fits. & Hypodense (not hyperdense); age 81 exceeds typical range; no haemorrhage. \\
     \hline
-    IgG4-related disease & Can cause "tumefactive" cardiac lesions, but typically presents with systemic features (pancreatitis, retro-orbital disease), and imaging shows diffuse myocardial thickening rather than a discrete mass; PET may be mildly FDG-avid. & None of the systemic IgG4 manifestations are present. & Lack of extra-cardiac IgG4-related lesions and the aggressive, FDG-avid nature argue against it. \\
+    IgG4-related & Systemic features (pancreatitis, retro-orbital); diffuse thickening. & None present. & No systemic IgG4 manifestations. \\
     \hline
-    Erdheim-Chester disease & Bilateral symmetric osteosclerosis of long bones, pericardial thickening, retro-orbital pseudotumor; cardiac involvement is usually infiltrative but not as focal; PET may be positive. & No bone lesions or other classic sites. & Unlikely. \\
+    ECD & Osteosclerosis of long bones; retroperitoneal fibrosis. & None present. & No bone/kidney findings. \\
     \hline
-    Undifferentiated pleomorphic sarcoma & Rare, often involves left ventricle, may be large, heterogeneous, necrotic, and can cause hemopericardium. & Right-sided location is atypical; mass is uniformly hypermetabolic without necrosis. & Unlikely. \\
+    UPS & Left ventricle predominance; heterogeneous, necrotic. & Right-sided location atypical. & Unlikely. \\
     \hline
     \end{tabular}
     }
-    
-    \vspace{1em}
+
+    \vspace{0.5em}
     \noindent\textbf{Step 3 -- Systematic elimination}
     \begin{itemize}[leftmargin=*, noitemsep, topsep=2pt]
-        \item Angiosarcoma is less likely because the lesion is uniformly FDG-avid, lacks necrotic areas, and the patient's age (81) is above the typical 30-50 yr range.
-        \item IgG4-related disease and Erdheim-Chester disease are excluded by the absence of systemic manifestations and characteristic extra-cardiac findings.
-        \item Undifferentiated pleomorphic sarcoma is improbable given the right-sided predominance and lack of necrosis.
+        \item Angiosarcoma excluded: \colorbox{yellow!30}{hypodense (not haemorrhagic) mass, age 81 above typical 30--50 yr range}.
+        \item IgG4 and ECD excluded by absence of systemic manifestations.
+        \item UPS improbable given right-sided predominance without necrosis.
     \end{itemize}
-    
-    \vspace{1em}
-    \noindent\textbf{Step 4 -- Converge on the most plausible diagnosis}
-    
-    The combination of (1) \colorbox{yellow!30}{right-sided cardiac infiltration with AV node encasement causing complete heart block}, (2) moderate pericardial effusion, (3) intense FDG uptake, (4) a solitary lung metastasis, and (5) the patient's age and clinical course, aligns perfectly with primary cardiac lymphoma. The subsequent CT-guided lung biopsy confirming metastatic lymphoma clinches the diagnosis.
-    
+
+    \vspace{0.5em}
+    \noindent\textbf{Step 4 -- Final diagnosis}
+
+    The combination of \colorbox{yellow!30}{right-sided cardiac infiltration with AV node encasement causing complete heart block}, hypodense CT appearance, intense FDG uptake, and lung metastasis confirmed as non-Hodgkin lymphoma on biopsy is diagnostic of primary cardiac lymphoma.
+
     \vspace{1em}
     \noindent\textbf{Fine-Tuned Model Final Answer:} \colorbox{green!30}{\textbf{Primary cardiac lymphoma}} -- \textbf{CORRECT}
 
@@ -819,58 +684,51 @@ The following cases demonstrate the reasoning behaviour of gpt-oss-20b before an
 
     \textbf{Key Improvements from Fine-Tuning:}
     \begin{itemize}[leftmargin=*, noitemsep, topsep=2pt]
-        \item \textbf{Recognized key clinical feature:} Immediately identified AV node encasement causing third-degree AV block as pathognomonic for primary cardiac lymphoma
-        \item \textbf{Systematic framework:} Transformed rambling analysis into structured 4-step approach with clear clinical synthesis
-        \item \textbf{Detailed differential table:} Added comprehensive 5-entity comparison with concordance/discordance analysis vs. unstructured text
-        \item \textbf{Proper age weighting:} Used patient age (81 years) to definitively exclude angiosarcoma (typical 30-50 yr) rather than making excuses
-        \item \textbf{Imaging pattern recognition:} Identified "uniformly hypermetabolic, well-circumscribed" pattern as distinguishing from heterogeneous, necrotic angiosarcoma
-        \item \textbf{Clinical correlation:} Step 4 synthesizes all findings (AV block + location + effusion + lung met + age) to converge on correct diagnosis
+        \item \textbf{Error correction:} Base model chose Angiosarcoma (INCORRECT); fine-tuned model correctly identified PCL
+        \item \textbf{Recognised pathognomonic feature:} AV node encasement causing complete heart block identified as KEY discriminator
+        \item \textbf{Imaging precision:} Hypodense (lymphoma) vs.\ hyperdense haemorrhagic (angiosarcoma) distinction applied correctly
+        \item \textbf{Age weighting:} Patient age (81 yr) used to exclude angiosarcoma (typical 30--50 yr) rather than dismissed
+        \item \textbf{Histologic integration:} Lung biopsy confirming non-Hodgkin lymphoma used to clinch diagnosis
     \end{itemize}
 \end{casebox}
 
 \vspace{1em}
 
-% --- Case 3: NICE Lesions (Before/After Fine-Tuning) ---
+% --- Case 2: NICE Lesions (gpt-oss-20b) ---
 \begin{casebox}
-    \textbf{Case Study 3: Non-Ischemic Cerebral Enhancing (NICE)  Lesions (gpt-oss-20b)}
+    \textbf{Case Study 2: Non-Ischemic Cerebral Enhancing (NICE) Lesions (gpt-oss-20b)}
 
     \vspace{1em}
     \textbf{Case Presentation}
-    
-    \textbf{Clinical History:} Five days after an uncomplicated embolisation of an asymptomatic, growing right middle cerebral artery (MCA) aneurysm, a 56-year-old woman comes to the ER due to headache, a seizure and fluctuant left upper extremity weakness and left campimetric defects. A Todd's paralysis is suspected, and the patient is admitted for a workup.
-    
-    \vspace{1em}
-    \textbf{Imaging Findings:} Initially, a brain CT is performed, which shows no significant abnormalities apart from the embolisation material. Then a brain MRI is performed, including the following sequences: DWI, SWI, T2, FLAIR, 3D TOF and pre and post-gadolinium T1. The MRI discloses multiple round lesions varying in size in the right hemisphere. The lesions are spontaneously T1 hypointense and T2 hyperintense, the largest ones showing a small, central T2 hypointensity. Post-gadolinium enhancement is demonstrated in all the lesions. No restricted diffusion or susceptibility artefacts are present. Follow-up imaging after 6 months shows overall improvement with resolution of the enhancing foci. However, T2 hyperintensity is still present, and central punctate susceptibility artefacts have appeared, interpreted as microhaemorrhagic foci.
-    
-    \vspace{1em}
-    \textbf{Differential diagnoses to consider:} Non-ischemic cerebral enhancing (NICE) lesions, Subacute cerebral infarcts, Cerebral microabscesses, Brain metastases
-    
-    \vspace{1em}
-    \textbf{Ground Truth:} Non-ischemic cerebral enhancing (NICE) lesions
-    
+
+    \textbf{Clinical History:} Five days after uncomplicated embolisation of a right MCA aneurysm, a 56-year-old woman presents with headache, seizure, fluctuant left upper extremity weakness, and left campimetric defects. Todd's paralysis suspected.
+
+    \vspace{0.5em}
+    \textbf{Imaging Findings:} Brain CT: no abnormalities apart from embolisation material. MRI: multiple round right-hemisphere lesions, T1 hypointense, T2 hyperintense, central T2 hypointensity in largest lesions, homogeneous post-gadolinium enhancement, no DWI restriction, no SWI artefacts. Six-month follow-up: enhancement resolves, T2 hyperintensity persists, central punctate susceptibility artefacts (microhaemorrhages) appear.
+
+    \vspace{0.5em}
+    \textbf{Differentials:} NICE lesions, Subacute cerebral infarcts, Cerebral microabscesses, Brain metastases \quad \textbf{Ground Truth:} NICE lesions
+
     \vspace{1em}
     \hrule
     \vspace{1em}
 
     \textbf{Base Model Response (Before Fine-Tuning)}
 
-    \vspace{1em}
-    We need to consider the imaging features: multiple round lesions, T1 hypointense, T2 hyperintense, central T2 hypointensity, post-gadolinium enhancement, no diffusion restriction, no susceptibility artifacts initially. After 6 months, resolution of enhancement, persistent T2 hyperintensity, central punctate susceptibility artifacts (microhemorrhages). \textit{[Issue: Lists features without prioritizing temporal context]}
+    \vspace{0.5em}
+    Subacute infarcts would show diffusion restriction early. But here no diffusion restriction. But maybe small lesions might not show diffusion restriction? \textit{[Issue: Makes excuses for contradictory evidence instead of using it to exclude]}
 
     \vspace{0.5em}
-    This suggests that the lesions were likely embolization-related changes: e.g., embolic microinfarcts? But no diffusion restriction. \textit{[Issue: Immediately questions own reasoning]} Subacute infarcts would show diffusion restriction early, then T2 hyperintensity, then resolution of enhancement? But subacute infarcts usually show restricted diffusion early, then T2 hyperintensity, then no enhancement. But here no diffusion restriction. \textit{[Issue: Circular reasoning]} Also multiple lesions after embolization could be due to embolic microinfarcts from procedure. But the lesions are enhancing, which is not typical for infarcts. However, early subacute infarcts can show enhancement due to breakdown of BBB. But they usually show diffusion restriction early. But maybe small lesions might not show diffusion restriction? \textit{[Issue: Making excuses for contradictory evidence instead of using it to exclude]} But central T2 hypointensity suggests hemorrhagic component? But no susceptibility artifacts initially. After 6 months, microhemorrhages appear. Could be due to microinfarcts with hemorrhagic transformation? But microhemorrhages appear later. \textit{[Issue: Continued circular reasoning]}
+    Microabscesses would show diffusion restriction (pus). No diffusion restriction here. So unlikely.
 
     \vspace{0.5em}
-    Alternatively, could be cerebral microabscesses? They would show diffusion restriction, rim enhancement, central T2 hyperintensity. But no diffusion restriction. So unlikely.
+    Brain metastases would not spontaneously resolve after 6 months. No known primary cancer. Less likely.
 
     \vspace{0.5em}
-    Brain metastases: multiple enhancing lesions, T1 hypointense, T2 hyperintense, central T2 hypointensity? Usually metastases have ring enhancement, central necrosis, sometimes hemorrhage. But metastases would show diffusion restriction? Not necessarily. But metastases would not spontaneously resolve after 6 months unless treated. Also patient had no known primary cancer. So less likely.
+    NICE lesions: This is a broad category. \textit{[Issue: Dismisses correct answer as ``too broad'']} Could be post-embolisation changes. The resolution of enhancement over 6 months fits. But the microhemorrhages appear later due to microinfarcts with haemorrhagic transformation. \textit{[Issue: Talks around NICE but doesn't recognise it as specific diagnosis]}
 
     \vspace{0.5em}
-    Non-ischemic cerebral enhancing (NICE) lesions: This is a broad category. \textit{[Issue: Dismisses correct answer as "too broad"]} Could include inflammatory lesions, demyelinating lesions, etc. But the context of embolization suggests procedure-related changes. Could be "post-embolization changes" like "cerebral embolic infarcts" or "cerebral microinfarcts" that enhance due to BBB breakdown. The resolution of enhancement over 6 months fits with healing of infarcts. The persistent T2 hyperintensity indicates gliosis or chronic changes. The microhemorrhages appear later due to microinfarcts with hemorrhagic transformation. \textit{[Issue: Talks around NICE but doesn't recognize it as specific diagnosis]}
-
-    \vspace{0.5em}
-    Thus the most likely is Subacute cerebral infarcts. \textit{[Issue: Wrong conclusion - failed to use absence of DWI restriction as definitive exclusion criterion]}
+    Thus the most likely is Subacute cerebral infarcts. \textit{[Issue: Wrong conclusion---failed to use absence of DWI restriction as definitive exclusion criterion]}
 
     \vspace{1em}
     \noindent\textbf{Base Model Final Answer:} \colorbox{red!30}{Subacute cerebral infarcts} -- \textbf{INCORRECT}
@@ -881,151 +739,39 @@ The following cases demonstrate the reasoning behaviour of gpt-oss-20b before an
 
     \textbf{Fine-Tuned Model Response}
 
-    \vspace{1em}
-    \noindent\textbf{Step 1 -- Relate the clinical picture to the imaging problem}
-    
-    The patient had a recent endovascular embolisation of a right MCA aneurysm. Five days later she develops a new headache, a focal seizure and transient left-sided weakness with visual field loss. This post-intervention presentation with focal neurological deficits \colorbox{yellow!30}{immediately suggests a complication} rather than a primary neoplasm or infection. The transient weakness is classic for Todd's paralysis, which is a post-ictal phenomenon that can mimic a new infarct.
-    
-    \vspace{1em}
-    \noindent\textbf{Step 2 -- Describe the MRI pattern and map to differentials}
-    
-    \textbf{MRI Pattern:}
-    \begin{itemize}[leftmargin=*, noitemsep, topsep=2pt]
-        \item Multiple round foci confined to the right cerebral hemisphere (the side of the intervention).
-        \item Spontaneous T1-hypointensity, T2-hyperintensity, with a small central T2-hypointense core.
-        \item Uniform, homogeneous post-gadolinium enhancement in all lesions.
-        \item No diffusion restriction on DWI, no blooming on SWI at the initial scan.
-        \item Follow-up (6 mo) shows resolution of enhancement, persistent T2 hyperintensity, and new tiny susceptibility foci (micro-haemorrhages).
-    \end{itemize}
-    This pattern is characteristic of NICE lesions: they are multiple, well-circumscribed, enhance avidly, lack diffusion restriction, and evolve to a non-enhancing T2-hyperintense state with occasional micro-bleeds.
-    
-    \vspace{1em}
-    \renewcommand{\arraystretch}{1.5}
-    \setlength{\tabcolsep}{10pt}
+    \vspace{0.5em}
+    \noindent\textbf{Step 1 -- Clinical-imaging correlation}
+
+    \colorbox{yellow!30}{The temporal relationship to endovascular intervention is the key clue}. Five days post-embolisation, the presentation with focal deficits suggests a procedural complication. The transient weakness is consistent with Todd's paralysis.
+
+    \vspace{0.5em}
+    \noindent\textbf{Step 2 -- MRI pattern and differential mapping}
+
+    \renewcommand{\arraystretch}{1.4}
+    \setlength{\tabcolsep}{6pt}
     {\footnotesize
-    \begin{tabular}{|>{\raggedright\arraybackslash}p{2.8cm}|>{\raggedright\arraybackslash}p{4.2cm}|>{\raggedright\arraybackslash}p{5.0cm}|}
+    \begin{tabular}{|>{\raggedright\arraybackslash}p{2.5cm}|>{\raggedright\arraybackslash}p{4.2cm}|>{\raggedright\arraybackslash}p{5.0cm}|}
     \hline
-    \textbf{Differential} & \textbf{Expected imaging features} & \textbf{Concordance/discordance with case} \\
+    \textbf{Differential} & \textbf{Expected features} & \textbf{Concordance/discordance} \\
     \hline
-    \textbf{NICE (post-embolisation)} & \textbf{Multiple, round, enhancing lesions confined to the ipsilateral hemisphere; no diffusion restriction; may show central T2 hypointensity; evolution to non-enhancing T2 hyperintensity with micro-bleeds.} & \textbf{All criteria met: multiple right-hemisphere lesions, homogeneous enhancement, no DWI restriction, central T2 core, evolution pattern.} \\
+    \textbf{NICE} & \textbf{Multiple round ipsilateral lesions, no DWI restriction, homogeneous enhancement, evolution to T2 hyperintensity with microbleeds.} & \textbf{All criteria met.} \\
     \hline
-    Subacute cerebral infarcts & Usually wedge-shaped, follow vascular territories; diffusion restriction present in the acute/subacute phase; may show blooming on SWI due to haemorrhagic conversion; enhancement is often peripheral and delayed. & Lesions are round, not territorial; no diffusion restriction; no SWI blooming initially; enhancement is uniform, not peripheral. \\
+    Subacute infarcts & Wedge-shaped, vascular territory, DWI restriction present. & Round non-territorial lesions; \colorbox{yellow!30}{no DWI restriction excludes infarct}. \\
     \hline
-    Cerebral microabscesses & Often solitary or few, ring-enhancing with central diffusion restriction; may have surrounding oedema; SWI may show central susceptibility. & Multiple lesions, no diffusion restriction, no oedema, uniform rather than ring enhancement. \\
+    Microabscesses & Ring enhancement, central DWI restriction, oedema. & No DWI restriction, no oedema, uniform enhancement. \\
     \hline
-    Brain metastases & Usually multiple, often peripherally located, may have surrounding oedema, variable enhancement (often heterogeneous), and frequent susceptibility artefacts from haemorrhage. & Lesions are confined to one hemisphere, lack surrounding oedema, enhancement is homogeneous, and initial SWI is negative. \\
+    Metastases & Bilateral, perilesional oedema, no spontaneous resolution. & Unilateral; resolve at 6 months; no known primary. \\
     \hline
     \end{tabular}
     }
-    
-    \vspace{1em}
-    \noindent\textbf{Step 3 -- Systematic elimination}
-    \begin{itemize}[leftmargin=*, noitemsep, topsep=2pt]
-        \item Subacute infarcts are excluded by the absence of diffusion restriction and the non-territorial, round morphology. \colorbox{yellow!30}{Acute ischemic lesions would show restricted diffusion}, which is not present here.
-        \item Microabscesses are unlikely because there is no diffusion restriction, no oedema, and the enhancement is not ring-like. Abscesses typically show a hyperintense DWI core.
-        \item Metastases are improbable given the unilateral distribution, lack of perilesional oedema, and the temporal relationship to a recent endovascular procedure. The patient also has no known primary malignancy.
-        \item The combination of a recent aneurysm embolisation, unilateral multiple enhancing lesions without diffusion restriction, central T2 hypointensity, and the characteristic evolution (resolution of enhancement, persistence of T2 hyperintensity, and later micro-bleeds) fits the classic profile of NICE lesions.
-    \end{itemize}
-    
-    \vspace{1em}
-    \noindent\textbf{Step 4 -- Converge on the final diagnosis}
-    
-    \colorbox{yellow!30}{The temporal relationship to endovascular intervention is the key clinical clue}. The combination of multiple ipsilateral round enhancing lesions without diffusion restriction, the presence of central T2 hypointensity, and the characteristic 6-month evolution (resolution of enhancement with persistent T2 signal and development of micro-haemorrhages) is pathognomonic for non-ischemic cerebral enhancing (NICE) lesions. Recognizing this pattern prevents unnecessary invasive workup and guides appropriate follow-up imaging.
-    
-    \noindent\textbf{Fine-Tuned Model Final Answer:} \colorbox{green!30}{\textbf{Non-ischemic cerebral enhancing (NICE) lesions}} -- \textbf{CORRECT}
-
-    \hrule
-    \vspace{1em}
-
-    \textbf{Key Improvements from Fine-Tuning:}
-    \begin{itemize}[leftmargin=*, noitemsep, topsep=2pt]
-        \item \textbf{Recognized temporal context:} Immediately identified "5 days post-embolization" as key diagnostic clue for procedural complication (NICE lesions)
-        \item \textbf{Used absence of DWI restriction definitively:} Applied lack of diffusion restriction to systematically exclude infarcts rather than making excuses
-        \item \textbf{Eliminated circular reasoning:} Replaced "But maybe..." contradictions with clear exclusion logic based on imaging features
-        \item \textbf{Recognized NICE as specific diagnosis:} Understood NICE lesions as established post-procedural entity, not just "broad category"
-        \item \textbf{Applied evolution pattern:} Used 6-month follow-up (resolution of enhancement → persistent T2 → microbleeds) as pathognomonic feature
-        \item \textbf{Systematic framework:} Transformed rambling analysis into structured 4-step approach with clear MRI pattern description and differential table
-    \end{itemize}
-\end{casebox}
-%Omar end of case studies 
-\vspace{1em}
-
-
-
-
-% Omar cases using Qwen 3.5 35b tuned model
-% --- Qwen3.5-35B Cases ---
-The following cases demonstrate the reasoning behaviour of Qwen3.5-35B before and after fine-tuning. The base model produces correct answers across all three cases but relies on verbose, unfocused reasoning. Fine-tuning consistently transforms this into concise, structured diagnostic reasoning grounded in the presented findings.
-
-\vspace{1em}
-% --- Case 1: Von Hippel-Lindau Syndrome (Qwen3.5-35B Before/After Fine-Tuning) ---
-\begin{casebox}
-    \textbf{Case Study 1: Von Hippel-Lindau Syndrome (Qwen3.5-35B)}
-
-    \vspace{1em}
-    \textbf{Case Presentation}
-    
-    \textbf{Clinical History:} A 41-year-old male presents with a history of microscopic haematuria, a palpable right flank mass, and recurrent headaches. A CT scan was performed, followed by a brain MRI to rule out tumoural pathology. The patient had no significant medical history.
-    
-    \vspace{1em}
-    \textbf{Imaging Findings:} In the abdominal CT scan, multiple bilateral renal cystic lesions with septum formation were observed. The right kidney had multiple, irregular, heterogeneous lesions with significant enhancement post-contrast, and hypodense central areas related to necrosis, the biggest located in the superior pole. Similar characteristics were noted in the left kidney lesions. Also, multiple simple pancreatic cysts and splenic vein dilation were observed, along with pancreaticosplenic collaterals. There is a lesion in the splenic hilum that enhances and follows contrast in different phases, suggestive of a splenic hamartoma. The brain MRI revealed multiple heterogeneous lesions with a cystic and a solid component in the posterior fossa, showing avid and homogeneous enhancement of the solid portion, and causing vasogenic oedema and mass effect on the pons.
-    
-    \vspace{1em}
-    \textbf{Differential diagnoses to consider:} Von Hippel-Lindau syndrome (VHL), Sporadic haemangioblastomas, Multiple endocrine neoplasia type 1 (MEN-1), Tuberous sclerosis complex (TSC), Polycystic kidney disease (PKD), Hereditary leiomyomatosis and renal cell cancer (HLRCC)
-    
-    \vspace{1em}
-    \textbf{Ground Truth:} Von Hippel-Lindau syndrome (VHL)
-    
-    \vspace{1em}
-    \hrule
-    \vspace{1em}
-
-    \textbf{Base Model Response (Before Fine-Tuning)}
-
-    \vspace{1em}
-    \textbf{Patient:} 41-year-old male. \textbf{Clinical History:} Microscopic haematuria, palpable right flank mass, recurrent headaches. No significant medical history. \textbf{Abdominal CT:} Multiple bilateral renal cystic lesions with septum formation. Right kidney: multiple irregular, heterogeneous lesions with significant enhancement, hypodense central areas (necrosis), biggest in superior pole. Left kidney: similar characteristics (suggests RCC). Pancreatic cysts. Splenic vein dilation and pancreaticosplenic collaterals. Splenic hilum lesion enhancing with contrast, suggestive of splenic hamartoma. \textbf{Brain MRI:} Multiple heterogeneous lesions in posterior fossa. Cystic and solid component. Avid/homogeneous enhancement of solid portion. Vasogenic oedema, mass effect on pons. This description is classic for haemangioblastomas (cerebellar posterior fossa location, cystic with enhancing mural nodule). \textit{[Issue: Exhaustive structured re-listing of case data without clinical synthesis]}
 
     \vspace{0.5em}
-    \textbf{Sporadic haemangioblastomas:} The CNS findings look like haemangioblastomas. However, the presence of bilateral renal masses (likely RCC), pancreatic cysts, and multiple CNS lesions makes a sporadic aetiology highly unlikely. This points to a syndrome. \textit{[Issue: Correct observation but no systematic framework applied]}
+    \noindent\textbf{Steps 3--4 -- Elimination and final diagnosis}
 
-    \vspace{0.5em}
-    \textbf{Von Hippel--Lindau syndrome (VHL):} VHL is strongly associated with Clear Cell RCC and renal cysts. Bilateral/multifocal disease is characteristic. The description of enhancing heterogeneous lesions fits ccRCC. VHL is characterised by CNS haemangioblastomas, particularly in the cerebellum (posterior fossa). The MRI description (cystic with solid enhancing nodule) is pathognomonic for haemangioblastoma. Pancreatic cysts are a common finding in VHL. Splenic hamartomas or cysts can occur, though less specific than renal/CNS findings. Age of 41 is typical for diagnosis/presentation of manifestations. This fits all the major findings perfectly (Bilateral RCC + Pancreatic Cysts + Posterior Fossa Haemangioblastomas). \textit{[Issue: Correct conclusion reached by listing known VHL features rather than reasoning from presented findings]}
-
-    \vspace{0.5em}
-    \textbf{Multiple endocrine neoplasia type 1 (MEN-1):} Associated with pituitary adenomas, parathyroid hyperplasia, and pancreatic neuroendocrine tumours. Renal involvement is not a primary feature. CNS haemangioblastomas are not a feature of MEN-1. \textit{[Issue: Superficial dismissal without imaging-based reasoning]}
-
-    \vspace{0.5em}
-    \textbf{Tuberous sclerosis complex (TSC):} Associated with renal angiomyolipomas, cortical tubers, subependymal nodules, cardiac rhabdomyomas. Renal cysts can occur but AMLs are more characteristic. CNS findings would be tubers/SEGAs, not posterior fossa haemangioblastomas. \textit{[Issue: Lists features without explicit exclusion logic tied to presented case]}
-
-    \vspace{0.5em}
-    \textbf{Polycystic kidney disease (PKD):} ADPKD causes multiple renal cysts and can cause RCC, but the specific enhancement pattern (heterogeneous solid enhancing lesions with necrosis) suggests malignancy rather than just cysts. CNS findings in ADPKD are berry aneurysms or cortical cysts, not posterior fossa haemangioblastomas. Pancreatic cysts are less common/characteristic compared to VHL. \textit{[Issue: Reasoning present but not systematically tied to imaging features]}
-
-    \vspace{0.5em}
-    \textbf{Hereditary leiomyomatosis and renal cell cancer (HLRCC):} Associated with aggressive Type 2 Papillary RCC and cutaneous leiomyomas. CNS haemangioblastomas are not a feature. \textit{[Issue: One-line dismissal]}
-
-    \vspace{0.5em}
-    The combination of bilateral renal masses (likely RCC), pancreatic cysts, and posterior fossa lesions with cystic/solid components (haemangioblastomas) is the classic triad for Von Hippel--Lindau syndrome. Confidence: 100\%. The constellation of findings (RCC + Haemangioblastoma + Pancreatic Cysts) is diagnostic for VHL. \textit{[Issue: Arrives at correct answer by matching constellation to memorised triad rather than systematic clinical reasoning; confidence expressed without elimination framework]}
+    \colorbox{yellow!30}{Absence of DWI restriction definitively excludes infarcts and abscesses}. Metastases excluded by spontaneous resolution and unilateral distribution. The post-embolisation context, homogeneous enhancement without DWI restriction, and \colorbox{yellow!30}{characteristic evolution (enhancement resolution $\to$ persistent T2 $\to$ microhaemorrhages)} is pathognomonic for NICE lesions.
 
     \vspace{1em}
-    \noindent\textbf{Base Model Final Answer:} \colorbox{green!30}{Von Hippel-Lindau syndrome (VHL)} -- \textbf{CORRECT but with verbose, unfocused, and unsystematic clinical reasoning}
-
-    \vspace{1em}
-    \hrule
-    \vspace{1em}
-
-    \textbf{Fine-Tuned Model Response}
-
-    \vspace{1em}
-    The diagnostic process begins by correlating the clinical triad of microscopic haematuria, a palpable flank mass, and recurrent headaches with the imaging findings. The abdominal CT demonstrates bilateral renal cysts with enhancing solid components, characteristic of complex cysts rather than simple ones. Crucially, the presence of pancreatic cysts and a splenic hamartoma suggests a systemic syndrome affecting multiple organs. The brain MRI reveals posterior fossa lesions with solid enhancing components, highly suggestive of haemangioblastomas.
-
-    \vspace{0.5em}
-    I systematically evaluate the differential diagnoses against this constellation of findings. \colorbox{yellow!30}{Polycystic Kidney Disease (PKD)} is unlikely because the renal cysts contain solid, enhancing nodules, whereas PKD typically presents with simple cysts. \colorbox{yellow!30}{Tuberous Sclerosis Complex (TSC)} is excluded due to the absence of cortical tubers, subependymal nodules, or other TSC-specific manifestations. \colorbox{yellow!30}{Multiple Endocrine Neoplasia type 1 (MEN-1)} is ruled out as there is no evidence of pancreatic neuroendocrine tumours (the cysts are simple) or parathyroid pathology. \colorbox{yellow!30}{Hereditary Leiomyomatosis and Renal Cell Cancer (HLRCC)} is considered but less likely; while HLRCC causes renal cysts, it typically presents with aggressive papillary RCC and cutaneous leiomyomas, which are absent here.
-
-    \vspace{0.5em}
-    The logical path converges on \colorbox{green!30}{\textbf{Von Hippel-Lindau (VHL) syndrome}}. This diagnosis is supported by the classic triad of findings: bilateral renal cysts with solid enhancing components (likely clear cell RCC), pancreatic cysts, and cerebellar haemangioblastomas. The splenic hamartoma further supports the multisystem nature of VHL. The enhancing solid components in the kidneys represent early neoplastic transformation, explaining the haematuria and mass. The posterior fossa lesions explain the headaches. Therefore, the imaging pattern of renal cysts with solid nodules, pancreatic cysts, and CNS haemangioblastomas definitively points to \colorbox{green!30}{\textbf{Von Hippel-Lindau (VHL) syndrome}}, necessitating genetic counselling and surveillance for associated malignancies.
-
-    \vspace{1em}
-    \noindent\textbf{Fine-Tuned Model Final Answer:} \colorbox{green!30}{\textbf{Von Hippel-Lindau (VHL) syndrome}} -- \textbf{CORRECT with focused clinical reasoning}
+    \noindent\textbf{Fine-Tuned Model Final Answer:} \colorbox{green!30}{\textbf{NICE lesions}} -- \textbf{CORRECT}
 
     \vspace{1em}
     \hrule
@@ -1033,68 +779,55 @@ The following cases demonstrate the reasoning behaviour of Qwen3.5-35B before an
 
     \textbf{Key Improvements from Fine-Tuning:}
     \begin{itemize}[leftmargin=*, noitemsep, topsep=2pt]
-        \item \textbf{Clinical synthesis from the outset:} Immediately correlated haematuria, flank mass, and headaches with multi-organ imaging findings rather than re-listing case data
-        \item \textbf{Systematic elimination:} Each differential explicitly excluded based on absent imaging features (simple cysts for PKD, no AMLs/tubers for TSC, no PNETs for MEN-1, no leiomyomas for HLRCC)
-        \item \textbf{Multi-system integration:} Pancreatic cysts and splenic hamartoma used as positive evidence for a systemic syndrome rather than incidental observations
-        \item \textbf{Reasoning quality vs.\ answer correctness:} Base model reached the correct answer by matching the classic VHL triad from memory; fine-tuned model arrives at the same answer through systematic reasoning from the presented findings
-        \item \textbf{Clinical correlation:} Posterior fossa lesions explicitly linked to headaches; renal solid components linked to haematuria and flank mass
-        \item \textbf{Concise and focused:} Replaced verbose multi-step recitation with structured diagnostic reasoning converging on a definitive conclusion
+        \item \textbf{Error correction:} Base model chose Subacute infarcts (INCORRECT); fine-tuned model correctly identified NICE lesions
+        \item \textbf{Decisive use of DWI:} Absence of diffusion restriction applied as definitive exclusion criterion rather than explained away
+        \item \textbf{Temporal reasoning:} Post-procedural timing (5 days) immediately identified as key diagnostic context
+        \item \textbf{Evolution pattern:} 6-month follow-up used as pathognomonic confirmation (enhancement $\to$ T2 persistence $\to$ microbleeds)
+        \item \textbf{Eliminated circular reasoning:} ``But maybe...'' hedging replaced with clear exclusion logic
     \end{itemize}
 \end{casebox}
+
 \vspace{1em}
 
+% -------------------------------------------------------
+% Qwen3.5-35B Cases
+% -------------------------------------------------------
+The following cases demonstrate the reasoning behaviour of Qwen3.5-35B before and after fine-tuning. The base model produces correct answers across both cases but relies on verbose, unfocused reasoning. Fine-tuning consistently transforms this into concise, structured diagnostic reasoning grounded in the presented findings.
 
-% --- Case 2: Primary Cardiac Lymphoma (Qwen3.5-35B Before/After Fine-Tuning) ---
-    
+\vspace{1em}
+
+% --- Case 3: Primary Cardiac Lymphoma (Qwen3.5-35B) ---
 \begin{casebox}
-    \textbf{Case Study 2: Primary Cardiac Lymphoma (Qwen3.5-35B)}
+    \textbf{Case Study 3: Primary Cardiac Lymphoma (Qwen3.5-35B)}
 
     \vspace{1em}
     \textbf{Case Presentation}
-    
-    \textbf{Clinical History:} An 81-year-old male with a history of paroxysmal atrial fibrillation presents to the emergency department with a one-week onset of orthopnoea and exertional dyspnoea. Laboratory tests demonstrate elevated troponins, the electrocardiogram reveals a third-degree atrioventricular block, and the echocardiogram shows right ventricular thickening and pericardial effusion.
-    
-    \vspace{1em}
-    \textbf{Imaging Findings:} A PET-CT scan was carried out revealing a large hypermetabolic myocardial tissue. It extended through the right chambers and around the large vessels, sparing the left ventricle. Additionally, a hypermetabolic nodular image was identified at the left lung base. Therefore, a contrast-enhanced chest CT scan was performed. It confirmed the presence of an infiltrative hypodense mass in the myocardium. It involved the right atrium, right ventricle, interatrial septum, and atrioventricular groove. The mass caused mural thickening of the right cavities. A cuff encircled the right coronary artery along its course. A moderate pericardial effusion was also observed. Finally, the CT scan confirmed the solid nodule in the posterior segment of the left lower lobe. A CT-guided percutaneous biopsy of the lung nodule was made for histological examination.
-    
-    \vspace{1em}
-    \textbf{Differential diagnoses to consider:} Angiosarcoma, IgG4-related disease, Primary cardiac lymphoma, Erdheim--Chester disease, Undifferentiated pleomorphic sarcoma
-    
-    \vspace{1em}
-    \textbf{Ground Truth:} Primary cardiac lymphoma
-    
+
+    \textit{Same case as Case Study 1 above.}
+
     \vspace{1em}
     \hrule
     \vspace{1em}
 
     \textbf{Base Model Response (Before Fine-Tuning)}
 
-    \vspace{1em}
-    \textbf{Patient:} 81-year-old male. \textbf{History:} Paroxysmal atrial fibrillation. \textbf{Symptoms:} Orthopnoea, exertional dyspnoea (1 week onset). \textbf{Labs/ECG/Echo:} Elevated troponins, 3rd-degree AV block, RV thickening, pericardial effusion. \textbf{PET-CT:} Large hypermetabolic myocardial tissue (right chambers, large vessels, sparing LV), hypermetabolic nodular image at left lung base. \textbf{Chest CT:} Infiltrative hypodense mass in myocardium involving RA, RV, interatrial septum, AV groove. Mural thickening of right cavities. Cuff around right coronary artery. Moderate pericardial effusion. Solid nodule in left lower lobe. \textbf{Biopsy:} CT-guided percutaneous biopsy of the lung nodule. \textit{[Issue: Exhaustive structured re-listing of case data without clinical synthesis]}
+    \vspace{0.5em}
+    \textbf{Patient:} 81-year-old male. \textbf{History:} Paroxysmal atrial fibrillation. \textbf{Labs/ECG/Echo:} Elevated troponins, 3rd-degree AV block, RV thickening, pericardial effusion. \textbf{PET-CT:} Large hypermetabolic mass, right chambers, sparing LV, lung nodule. \textbf{Chest CT:} Infiltrative hypodense mass, RA/RV/septum/AV groove, cuff around right coronary artery, pericardial effusion, lung nodule. \textit{[Issue: Exhaustive re-listing of case data without clinical synthesis]}
 
     \vspace{0.5em}
-    \textbf{Angiosarcoma:} Often younger adults, but can occur in elderly. Most common primary cardiac malignancy in adults (though metastases are more common overall). Typically involves the right atrium. Can be infiltrative, hemorrhagic (often hyperdense on CT due to blood), associated with pericardial effusion. Lung metastasis is common. The location (RA/RV) fits well. The infiltration and mass effect fit. However, angiosarcomas are usually hemorrhagic/hyperdense on non-contrast CT due to blood content, whereas this describes ``hypodense mass''. But can occur in elderly. So fits. \textit{[Issue: Makes excuses for contradictory imaging feature (hypodense vs.\ expected hyperdense) instead of using it as an exclusion criterion]}
+    \textbf{Angiosarcoma:} Most common primary cardiac malignancy. Right atrium location fits. Angiosarcomas are usually hyperdense on CT due to haemorrhage, whereas this describes a hypodense mass. But can occur in elderly. So fits. \textit{[Issue: Makes excuses for contradictory imaging feature instead of using it as exclusion criterion]}
 
     \vspace{0.5em}
-    \textbf{IgG4-related disease:} Older males. Can cause myocardial inflammation or masses (pseudotumors), but usually associated with other organ involvement (pancreas, salivary glands, retroperitoneum). Usually enhances well, but the aggressive infiltration of the AV groove and right chambers with a separate lung nodule requiring biopsy points more towards malignancy. IgG4 is less likely to present as a large hypermetabolic myocardial mass sparing the LV with a distinct lung nodule in this specific pattern without other systemic signs mentioned. \textit{[Issue: Superficial dismissal without imaging-based reasoning]}
+    \textbf{PCL:} The description ``infiltrative hypodense mass\ldots interatrial septum\ldots AV groove\ldots sparing the left ventricle'' is classic for PCL. PET hypermetabolic. Lung nodule could be metastasis. \textit{[Issue: Correct features identified but AV block not recognised as KEY discriminator; conclusion deferred]}
 
     \vspace{0.5em}
-    \textbf{Primary Cardiac Lymphoma (PCL):} Older adults, often immunocompromised but can occur in immunocompetent elderly. Typically involves the right atrium, interatrial septum, and AV groove. Often spares the left ventricle initially. Infiltrative mass, pericardial effusion common. PET-CT shows high metabolic activity. The description ``infiltrative hypodense mass\ldots involved the right atrium, right ventricle, interatrial septum, and atrioventricular groove\ldots sparing the left ventricle'' is a classic textbook description for Primary Cardiac Lymphoma (specifically Diffuse Large B-Cell Lymphoma). PET hypermetabolic. Lung nodule could be metastasis or part of multifocal disease. \textit{[Issue: Correct features identified but AV block not recognised as KEY discriminating feature; reasoning deferred rather than synthesised]}
+    \textbf{ECD:} Osteosclerosis of long bones---not mentioned. Less likely. \textbf{UPS:} Less specific anatomical pattern. \textit{[Issue: One-line dismissals]}
 
     \vspace{0.5em}
-    \textbf{Erdheim--Chester disease:} Pericardial effusion, right heart infiltration, ``hairy kidney'' (retroperitoneal fibrosis). Osteosclerosis of long bones is a hallmark---not mentioned here. Less likely. \textit{[Issue: One-line dismissal without imaging analysis]}
-
-    \vspace{0.5em}
-    \textbf{Undifferentiated pleomorphic sarcoma:} Can occur anywhere including heart, but less specific pattern regarding AV groove and interatrial septum compared to lymphoma. Lymphoma has stronger association with this anatomical distribution. \textit{[Issue: No detailed analysis or elimination logic]}
-
-    \vspace{0.5em}
-    The pattern (RA/RV mass, interatrial septum thickening, sparing LV, pericardial effusion, high metabolic activity) is classically described for Primary Cardiac Lymphoma. Angiosarcoma is the most common primary cardiac malignancy, but it typically presents as a hemorrhagic (hyperdense) mass in the right atrium. However, the ``hypodense'' description and the specific involvement of the AV groove/interatrial septum with conduction block favours lymphoma. The lung nodule biopsy might confirm lymphoma. Primary Cardiac Lymphoma typically affects the right heart (RA/RV), often involves the interatrial septum and AV groove, causes conduction blocks (AV block), shows pericardial effusion, appears hypodense on CT, and is FDG-avid on PET. This matches the case perfectly. \textit{[Issue: Arrives at correct answer by pattern-matching textbook descriptions rather than systematic clinical reasoning from presented findings]}
-
-    \vspace{0.5em}
-    Confirming ``hypodense'' aspect: Angiosarcoma is often hyperdense due to hemorrhage/blood content. Lymphoma is hypodense relative to myocardium, homogeneous or heterogeneous, hypovascular. The case says ``infiltrative hypodense mass''---this supports Lymphoma over Angiosarcoma. Is it possible it is metastatic disease? Metastasis is not an option in the candidate list. Primary Cardiac Lymphoma fits best. \textit{[Issue: Final verification restates earlier observations rather than adding new reasoning; conclusion correct but reached through elimination of non-options rather than positive clinical synthesis]}
+    The hypodense description supports lymphoma over angiosarcoma. PCL fits best. \textit{[Issue: Correct answer reached by textbook pattern-matching rather than systematic reasoning; AV block never used as discriminator]}
 
     \vspace{1em}
-    \noindent\textbf{Base Model Final Answer:} \colorbox{green!30}{Primary cardiac lymphoma} -- \textbf{CORRECT but with verbose, unfocused, and unsystematic clinical reasoning}
+    \noindent\textbf{Base Model Final Answer:} \colorbox{green!30}{Primary cardiac lymphoma} -- \textbf{CORRECT but with verbose, unfocused reasoning}
 
     \vspace{1em}
     \hrule
@@ -1102,17 +835,14 @@ The following cases demonstrate the reasoning behaviour of Qwen3.5-35B before an
 
     \textbf{Fine-Tuned Model Response}
 
-    \vspace{1em}
-    The patient presents with heart failure and third-degree AV block, which immediately signals right ventricular infiltration or conduction system involvement. The imaging is the key discriminator. We observe a hypermetabolic mass involving the right atrium, right ventricle, and interatrial septum, while notably \colorbox{yellow!30}{sparing the left ventricle}. This right-sided dominance is highly characteristic of Primary Cardiac Lymphoma (PCL), as the right chambers are the most common site of involvement.
+    \vspace{0.5em}
+    The patient presents with heart failure and \colorbox{yellow!30}{third-degree AV block}, which immediately signals conduction system infiltration. The imaging shows a hypermetabolic mass involving the right atrium, right ventricle, and interatrial septum while \colorbox{yellow!30}{sparing the left ventricle}---highly characteristic of PCL.
 
     \vspace{0.5em}
-    We must now map these findings to the differential diagnoses. \colorbox{yellow!30}{Angiosarcoma} is the most common primary cardiac malignancy, but it typically arises from the right atrium and invades the pericardium, often with haemorrhage. While this mass is right-sided, \colorbox{yellow!30}{the specific involvement of the interatrial septum and the ``cuff'' around the right coronary artery without pericardial haemorrhage favours lymphoma}. Furthermore, the lung nodule supports a systemic haematologic process rather than a primary sarcoma.
+    \colorbox{yellow!30}{Angiosarcoma} is excluded because it typically presents as a haemorrhagic, hyperdense mass in younger patients (median 40--50 yr); this mass is hypodense and the patient is 81. \colorbox{yellow!30}{ECD} requires osteosclerosis and perinephric fibrosis---neither present. \colorbox{yellow!30}{IgG4} is fibrotic and not hypermetabolic. \colorbox{yellow!30}{UPS} lacks this specific right-sided anatomical predilection.
 
     \vspace{0.5em}
-    \colorbox{yellow!30}{Erdheim--Chester disease (ECD)} is a strong consideration, but ECD typically presents with bone pain and bilateral perinephric fibrosis (``hairy kidney''), neither of which is present here. Additionally, ECD is a histiocytosis, whereas the lung biopsy confirmed non-Hodgkin lymphoma. \colorbox{yellow!30}{IgG4-related disease} causes infiltration but is usually atheromatous or fibrotic, not hypermetabolic and nodular. \colorbox{yellow!30}{Undifferentiated pleomorphic sarcoma} is a diagnosis of exclusion; the specific right-sided distribution and systemic lung involvement make PCL more likely.
-
-    \vspace{0.5em}
-    Finally, the PET-CT shows hypermetabolism, confirming malignancy. \colorbox{yellow!30}{The CT-guided biopsy of the lung nodule provided histological confirmation of non-Hodgkin lymphoma}. The convergence of right-sided cardiac dominance, hypermetabolic activity, and systemic lung involvement leads to the diagnosis of \colorbox{green!30}{\textbf{Primary Cardiac Lymphoma}}. This case highlights that while PCL is rare, its specific imaging signature---right chamber infiltration sparing the left ventricle---should prompt early consideration to avoid misdiagnosis as ischaemic cardiomyopathy.
+    \colorbox{yellow!30}{The CT-guided lung biopsy confirmed non-Hodgkin lymphoma}, clinching the diagnosis. The convergence of right-sided cardiac dominance, AV block, hypodense CT appearance, and histologic confirmation points definitively to \colorbox{green!30}{\textbf{Primary Cardiac Lymphoma}}.
 
     \vspace{1em}
     \noindent\textbf{Fine-Tuned Model Final Answer:} \colorbox{green!30}{\textbf{Primary Cardiac Lymphoma}} -- \textbf{CORRECT with focused clinical reasoning}
@@ -1123,59 +853,48 @@ The following cases demonstrate the reasoning behaviour of Qwen3.5-35B before an
 
     \textbf{Key Improvements from Fine-Tuning:}
     \begin{itemize}[leftmargin=*, noitemsep, topsep=2pt]
-        \item \textbf{Recognised pathognomonic features:} Immediately identified right-sided dominance with LV sparing and third-degree AV block as hallmarks of PCL
-        \item \textbf{Reasoning quality vs.\ answer correctness:} Base model reached the correct answer with verbose, unfocused reasoning; fine-tuned model arrives at the same answer through systematic clinical reasoning from the presented findings
-        \item \textbf{Imaging discrimination:} Distinguished hypodense, non-haemorrhagic pattern (lymphoma) from the haemorrhagic, hyperdense appearance typical of angiosarcoma
-        \item \textbf{Histologic integration:} Used lung biopsy result (non-Hodgkin lymphoma) to confirm diagnosis rather than ignoring it
-        \item \textbf{Systematic elimination:} Clear reasoning for excluding each differential---haemorrhage for angiosarcoma, bone/kidney for ECD, fibrotic pattern for IgG4
-        \item \textbf{Age-appropriate reasoning:} Used patient age (81 years) as a discriminating factor against angiosarcoma (typical median age 40--50)
-        \item \textbf{Eliminated verbose processing:} Replaced scattered, inconclusive deliberation with 350 words of focused clinical reasoning converging on the correct diagnosis
+        \item \textbf{Reasoning quality:} Base model correct but via pattern-matching; fine-tuned model reasons systematically from presented findings
+        \item \textbf{AV block as discriminator:} \colorbox{yellow!30}{Immediately identified as pathognomonic} for conduction system infiltration by PCL
+        \item \textbf{Imaging precision:} Hypodense appearance used decisively to exclude haemorrhagic angiosarcoma
+        \item \textbf{Histologic integration:} Biopsy result incorporated as confirmatory evidence
+        \item \textbf{Concise synthesis:} 200 words of focused reasoning vs.\ verbose pattern-recitation
     \end{itemize}
 \end{casebox}
+
 \vspace{1em}
 
-
-% --- Case 3: Non-ischemic Cerebral Enhancing (NICE) Lesions (Qwen3.5 35B) ---
+% --- Case 4: NICE Lesions (Qwen3.5-35B) ---
 \begin{casebox}
-    \textbf{Case Study 3: Non-ischemic Cerebral Enhancing (NICE) Lesions (Qwen3.5-35B)}
-    
+    \textbf{Case Study 4: Non-Ischemic Cerebral Enhancing (NICE) Lesions (Qwen3.5-35B)}
+
     \vspace{1em}
     \textbf{Case Presentation}
-    
-    \textbf{Clinical History:} A 56-year-old woman presents 5 days after uncomplicated embolization of an asymptomatic, growing right middle cerebral artery (MCA) aneurysm. She develops headache, seizure, fluctuant left upper extremity weakness, and left campimetric defects. Todd's paralysis is suspected.
-    
-    \vspace{1em}
-    \textbf{Imaging Findings:} Initial CT shows no significant abnormalities apart from embolization material. MRI reveals multiple round lesions in the right hemisphere that are T1 hypointense and T2 hyperintense. The largest lesions show a small central T2 hypointensity. Post-gadolinium imaging demonstrates enhancement in all lesions. Diffusion-weighted imaging (DWI) shows no restricted diffusion. No susceptibility artifacts are initially present. Follow-up imaging at 6 months demonstrates improvement with resolution of enhancing foci. T2 hyperintensity persists, and central punctate susceptibility artifacts have appeared, interpreted as microhaemorrhagic foci.
-    
-    \vspace{1em}
-    \textbf{Differential diagnoses to consider:} Non-ischemic cerebral enhancing (NICE) lesions, Subacute cerebral infarcts, Cerebral microabscesses, Brain metastases
-    
-    \vspace{1em}
-    \textbf{Ground Truth:} Non-ischemic cerebral enhancing (NICE) lesions
-    
+
+    \textit{Same case as Case Study 2 above.}
+
     \vspace{1em}
     \hrule
     \vspace{1em}
 
     \textbf{Base Model Response (Before Fine-Tuning)}
 
+    \vspace{0.5em}
+    Patient: 56-year-old woman, 5 days after embolization of right MCA aneurysm. MRI: multiple round right-hemisphere lesions, T1 hypointense, T2 hyperintense, central T2 hypointensity, all enhance, no DWI restriction, no SWI artefacts. Follow-up 6 months: enhancement resolves, T2 persists, microhaemorrhages appear. \textit{[Issue: Exhaustive listing without clinical synthesis]}
+
+    \vspace{0.5em}
+    Subacute infarcts: DWI should be positive at 5 days if infarct. No restricted diffusion here. Rules out ischemic stroke. \textit{[Issue: Correct reasoning but scattered, not applied systematically]}
+
+    \vspace{0.5em}
+    Microabscesses: Would show DWI restriction (pus). No restriction here. Unlikely.
+
+    \vspace{0.5em}
+    Metastases: Don't resolve over 6 months without treatment. Timing relative to embolisation makes iatrogenic complication more likely.
+
+    \vspace{0.5em}
+    NICE lesions: Specific to post-embolisation. DWI negative (unlike infarcts). Enhancement resolves on follow-up. Fits best. \textit{[Issue: Correct conclusion but buried in verbose meta-commentary about output formatting, literature searches, and acronym definitions]}
+
     \vspace{1em}
-    Patient: 56-year-old woman, 5 days after uncomplicated embolization of right MCA aneurysm. Presentation: Headache, seizure, left upper extremity weakness, left campimetric defects. CT shows no abnormalities except embolization material. MRI shows multiple round lesions in right hemisphere, T1 hypointense, T2 hyperintense, largest show central T2 hypointensity, all lesions enhance, no restricted diffusion on DWI, no susceptibility artifacts initially. Follow-up 6 months: Enhancement resolves, T2 hyperintensity persists, central punctate susceptibility artifacts appeared. \textit{[Issue: Exhaustive listing without clinical synthesis]}
-
-    \vspace{0.5em}
-    Subacute cerebral infarcts: Usually show restricted diffusion, DWI positive up to 1-2 weeks. If it's 5 days post event, DWI should be positive if it is an infarct. The prompt says "No restricted diffusion". This effectively rules out acute/subacute ischemic stroke. \textit{[Issue: Correct reasoning but scattered]}
-
-    \vspace{0.5em}
-    Cerebral microabscesses: Would typically show restricted diffusion (pus). The prompt says "No restricted diffusion". This makes abscess unlikely. \textit{[Issue: One-sentence dismissal]}
-
-    \vspace{0.5em}
-    Brain metastases: Multiple enhancing lesions are classic for mets. However, they usually don't resolve completely over 6 months without treatment. They wouldn't typically develop susceptibility artifacts after 6 months following resolution of enhancement. The timing relative to embolization makes iatrogenic/complication more likely than coincidental metastases. \textit{[Issue: Reasoning present but not systematic]}
-
-    \vspace{0.5em}
-    Non-ischemic cerebral enhancing (NICE) lesions: This term seems specific to post-embolization. After coil embolization, imaging shows multiple round lesions, enhancement, T2 hyperintensity. DWI often negative (unlike infarcts). Follow-up shows enhancement resolves. Microhemorrhages can appear due to hemosiderin deposition from coil material or microbleeds associated with inflammatory process. The negative DWI is key differentiator from infarcts. The resolution of enhancement differentiates from metastases. The lack of diffusion restriction differentiates from abscesses. This fits the "post-procedure", "enhancing", "no diffusion restriction" profile best. \textit{[Issue: Correct conclusion but buried in 1500+ words of meta-commentary about output formatting, literature searches, and acronym definitions]}
-
-    \vspace{1em}
-    \noindent\textbf{Base Model Final Answer:} \colorbox{green!30}{Non-ischemic cerebral enhancing (NICE) lesions} -- \textbf{CORRECT but with unfocused, verbose reasoning}
+    \noindent\textbf{Base Model Final Answer:} \colorbox{green!30}{NICE lesions} -- \textbf{CORRECT but with unfocused, verbose reasoning}
 
     \vspace{1em}
     \hrule
@@ -1183,23 +902,17 @@ The following cases demonstrate the reasoning behaviour of Qwen3.5-35B before an
 
     \textbf{Fine-Tuned Model Response}
 
-    \vspace{1em}
-    The patient presents with acute neurological deficits (seizure, hemiparesis) following aneurysm embolization, initially suggesting a post-procedural ischemic event. However, the MRI findings fundamentally contradict this hypothesis.
+    \vspace{0.5em}
+    The patient presents with neurological deficits following aneurysm embolisation, initially suggesting ischaemia. However, the MRI findings contradict this.
 
     \vspace{0.5em}
-    First, I assess for ischemia. The lesions are T1 hypointense and T2 hyperintense with central punctate susceptibility, but critically, there is \colorbox{yellow!30}{no restricted diffusion on DWI}. Subacute infarcts (2-5 days) typically demonstrate restricted diffusion. The absence of this finding effectively rules out ischemic stroke.
+    \colorbox{yellow!30}{No restricted diffusion on DWI} definitively rules out subacute infarcts (2--5 days post-event would show restriction). Microabscesses are excluded for the same reason, plus absent ring enhancement and oedema. Metastases are unlikely given unilateral distribution, no perilesional oedema, and \colorbox{yellow!30}{spontaneous resolution at 6 months}.
 
     \vspace{0.5em}
-    Next, I evaluate the lesion morphology. The lesions are multiple, round, and show homogeneous enhancement. While brain metastases fit the enhancement pattern, they typically present with mass effect and edema disproportionate to lesion size. Here, the lesions are small, and \colorbox{yellow!30}{the clinical course is subacute with follow-up showing resolution of enhancement}. This makes metastatic disease unlikely. Cerebral microabscesses are also unlikely; they typically present with ring enhancement and significant surrounding edema, often with clinical signs of infection, none of which are present.
-
-    \vspace{0.5em}
-    This leaves Non-ischemic Cerebral Enhancing (NICE) lesions. \colorbox{yellow!30}{The history of endovascular intervention is the key risk factor}. The pathophysiology involves microembolization of thrombus or coil fragments, leading to small vessel inflammation and blood-brain barrier disruption. \colorbox{yellow!30}{The timeline fits: symptoms appeared 5 days post-procedure}. The imaging signature—multiple enhancing, T2-hyperintense lesions without DWI restriction—is classic for NICE lesions. The follow-up evolution confirms this: enhancing foci resolved, while central susceptibility (microhemorrhage) persisted, consistent with the inflammatory and microvascular nature of the injury.
-
-    \vspace{0.5em}
-    Therefore, despite the initial seizure and weakness, \colorbox{yellow!30}{the absence of restricted diffusion and the specific post-embolization context converge to diagnose NICE lesions}.
+    \colorbox{yellow!30}{The post-embolisation context is the key risk factor}. The imaging signature---multiple enhancing T2-hyperintense lesions without DWI restriction---is classic for NICE lesions. \colorbox{yellow!30}{The follow-up evolution confirms the diagnosis: enhancement resolved while microhaemorrhages persisted}, consistent with the inflammatory microvascular injury pattern of NICE lesions.
 
     \vspace{1em}
-    \noindent\textbf{Fine-Tuned Model Final Answer:} \colorbox{green!30}{\textbf{Non-ischemic cerebral enhancing (NICE) lesions}} -- \textbf{CORRECT with focused clinical reasoning}
+    \noindent\textbf{Fine-Tuned Model Final Answer:} \colorbox{green!30}{\textbf{NICE lesions}} -- \textbf{CORRECT with focused clinical reasoning}
 
     \vspace{1em}
     \hrule
@@ -1207,23 +920,15 @@ The following cases demonstrate the reasoning behaviour of Qwen3.5-35B before an
 
     \textbf{Key Improvements from Fine-Tuning:}
     \begin{itemize}[leftmargin=*, noitemsep, topsep=2pt]
-        \item \textbf{Identified critical discriminator:} Immediately recognized absence of DWI restriction as the key finding excluding infarction and abscess
-        \item \textbf{Temporal reasoning:} Emphasized post-procedural timing (5 days) as distinguishing feature pointing to iatrogenic complication
-        \item \textbf{Imaging evolution synthesis:} Integrated initial findings with 6-month follow-up to demonstrate characteristic NICE lesion pattern
-        \item \textbf{Systematic exclusion:} Clear physiologic reasoning for eliminating each differential (DWI for infarct/abscess, enhancement resolution for metastases)
-        \item \textbf{Pathognomonic pattern recognition:} Identified the enhancement → resolution → hemosiderin sequence as diagnostic for NICE lesions
-        \item \textbf{Eliminated meta-commentary:} Removed 1500+ words about literature searches, acronym definitions, and output formatting concerns
-        \item \textbf{Concise clinical focus:} 350 words of diagnostic reasoning vs. verbose meta-processing
+        \item \textbf{Reasoning quality:} Base model correct but verbose and unfocused; fine-tuned model concise and systematic
+        \item \textbf{Decisive DWI use:} \colorbox{yellow!30}{Absence of restriction applied immediately} as definitive exclusion, not hedged
+        \item \textbf{Temporal reasoning:} Post-procedural context identified as primary diagnostic anchor
+        \item \textbf{Evolution pattern:} 6-month follow-up synthesised as pathognomonic confirmation
+        \item \textbf{Eliminated meta-commentary:} Verbose processing replaced with 150 words of focused clinical reasoning
     \end{itemize}
 \end{casebox}
 
 \vspace{1em}
-
-
-% \newpage
-% \bibliographystyle{IEEEtran}
-% \bibliography{supp}
-
 \end{document}
 
 
