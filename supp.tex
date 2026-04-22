@@ -1,0 +1,934 @@
+\documentclass[10pt,journal,compsoc, onecolumn]{IEEEtran}
+% onecolumn
+% If IEEEtran.cls has not been installed into the LaTeX system files,
+% manually specify the path to it like:
+% \documentclass[10pt,journal,compsoc]{../sty/IEEEtran}
+
+\usepackage{cite}
+\usepackage[pdftex]{graphicx}
+\graphicspath{{../pdf/}{../jpeg/}}
+\DeclareGraphicsExtensions{.pdf,.jpeg,.png}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{amssymb}
+% \usepackage{mdwmath}
+% \usepackage{mdwtab}
+\usepackage{eqparbox}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{multirow}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{lineno} % 'switch' option for two-column documents
+\usepackage{booktabs}
+\usepackage{rotating} % Add this to your preamble
+
+% Required Package
+\usepackage{enumitem}
+
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage[most]{tcolorbox}
+% Define Colors
+\definecolor{promptFrame}{HTML}{999999}
+\definecolor{promptBody}{HTML}{f2f2f2}
+
+% Define the "Case Study" box environment
+\newtcolorbox{casebox}{
+    enhanced,
+    breakable,
+    colback=promptBody,
+    colframe=promptFrame,
+    colbacktitle=promptFrame,
+    coltitle=white,
+    fonttitle=\bfseries\large,
+    title={Case Study},
+    sharp corners,
+    boxrule=0.5mm,
+    width=\linewidth,
+    top=3mm, bottom=3mm, left=3mm, right=3mm,
+    toptitle=2mm, bottomtitle=2mm
+}
+
+% Define the new box environment
+\newtcolorbox{baselinebox}{
+    enhanced,
+    colback=promptBody,      % Light gray background
+    colframe=promptFrame,    % Dark gray border and header
+    colbacktitle=promptFrame,% Ensure header matches border
+    coltitle=white,          % Text color in the gray bar
+    fonttitle=\bfseries\large,
+    title={Prompt},          % Fixed title "Prompt" in the header
+    sharp corners,           % Square edges
+    boxrule=0.5mm,           % Thin border width
+    width=\linewidth,
+    top=3mm, bottom=3mm, left=3mm, right=3mm, % Inner padding
+    toptitle=2mm, bottomtitle=2mm % Padding for the "Prompt" header text
+}
+
+% correct bad hyphenation here
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+
+\begin{document}
+
+\title{Supplementary}
+%
+% make the title area
+\maketitle
+
+
+
+% \IEEEdisplaynontitleabstractindextext
+
+% \IEEEpeerreviewmaketitle
+
+
+
+% ALIF: PROMPTS %
+% Usage in your document body:
+
+% --- Box 1: Radiology Task ---
+\begin{baselinebox}
+    \textbf{Prompt 1. Prompt for General Radiology Diagnosis}
+    
+    \vspace{1em}
+    You are a careful radiology diagnosis selector. Given a clinical case description and a finite list of candidate diagnoses, choose the single most likely final diagnosis FROM THE LIST.
+    
+    \vspace{1em}
+    Response rules:
+    \begin{enumerate}[label=\arabic*), leftmargin=*, noitemsep, topsep=2pt]
+        \item Output EXACTLY one option, copied VERBATIM from the list.
+        \item Output ONLY the diagnosis text. No explanation. No punctuation. No quotes.
+    \end{enumerate}
+\end{baselinebox}
+
+\vspace{1em} % Spacing between boxes
+
+% --- Box 2: Ophthalmology Task ---
+\begin{baselinebox}
+    \textbf{Prompt 2. Prompts for Ophthalmology QA}
+    
+    \vspace{1em}
+    You are a careful ophthalmology question-answering assistant. You will be given a multiple-choice case with options labeled A–Z. Some questions have a single correct answer, while others have multiple correct answers. Select ALL correct answers. If only one answer is correct, return just that single letter. Respond with ONLY the capital letters (A–Z), concatenated together with no spaces or punctuation (e.g., 'ABE' for multiple answers, or 'D' if only one). Do not explain.
+    
+    \vspace{1em}
+
+    Case: \textit{[Case Data Inserted Here]}
+    
+    \vspace{1em}
+    Task: Choose the correct answer(s).
+    
+    \vspace{1em}
+    Return: One or more letters from A to Z, concatenated with no spaces (e.g., ABE or D).
+\end{baselinebox}
+
+\vspace{1em}
+
+% --- PAGE 1: Prompts 3 and 4 (Centered Together) ---
+\clearpage
+\vspace*{2.2cm}
+
+% --- Box 3 ---
+\begin{baselinebox}
+    \textbf{Prompt 3. Prompt for LLM-as-a-Clinical-Judge on Diagnosis Tasks}
+    
+    \vspace{1em}
+    You are asked to evaluate the quality of a model’s diagnostic output using the following rubric:
+    
+    \vspace{1em}
+    \textbf{Scoring Rubric (Likert scale 1–5):}
+    \begin{enumerate}[label=\arabic*., leftmargin=*, noitemsep, topsep=2pt]
+    \item Most relevant diagnoses not mentioned.
+    \item Many relevant diagnoses missing or incorrectly identified.
+    \item Some relevant diagnoses mentioned, but important omissions or inaccuracies present.
+    \item Most relevant diagnoses correctly identified, with only minor omissions.
+    \item All relevant diagnoses correctly identified.
+    \end{enumerate}
+
+    
+    \vspace{1em}
+    \textbf{Instruction:}\\
+    Given the following task description, the true disease, and the model output, assign a single integer score from 1 to 5 according to the rubric. Half-point scores (e.g., 1.5, 2.5, 3.5, 4.5) are allowed if the quality falls between two rubric levels. Output \textbf{only the score}, with no explanation or justification.
+    
+    \vspace{1em}
+    \textbf{Inputs}:\\
+    \textit{[Case Data Inserted Here]}
+\end{baselinebox}
+
+\vspace{2em} % Gap between the two boxes so they don't touch
+
+% --- Box 4 ---
+\begin{baselinebox}
+    \textbf{Prompt 4. Prompt for LLM-as-a-Clinical-Judge on Treatment Tasks}
+    
+    \vspace{1em}
+    You are asked to evaluate the quality of a model’s treatment suggestion output using the following rubric:
+    
+    \vspace{1em}
+    \textbf{Scoring Rubric (Likert scale 1–5):}
+    \begin{enumerate}[label=\arabic*., leftmargin=*, noitemsep, topsep=2pt]
+        \item All or most suggested options redundant or unjustified.  
+        \item Some suggested options redundant or unjustified.
+        \item Most suggested options appropriate, but minor redundancy or weak justification present.
+        \item Few suggested options redundant or unjustified.  
+        \item No suggested options redundant or unjustified.  
+    \end{enumerate}
+    
+    \vspace{1em}
+    \textbf{Instruction:}\\
+    Given the following task description, the true disease, and the model output, assign a score from 1 to 5 according to the rubric. Half-point scores (e.g., 1.5, 2.5, 3.5, 4.5) are allowed if the quality falls between two rubric levels. Output \textbf{only the score}, with no explanation or justification.
+    
+    \vspace{1em}
+    \textbf{Inputs}:\\
+    \textit{[Case Data Inserted Here]}
+\end{baselinebox}
+
+\vspace*{\fill} % Spring pushing up
+\clearpage % Force page break
+
+
+% --- PAGE 2: Prompt 5 (Centered Alone) ---
+\vspace*{6.5cm}
+
+% --- Box 5 ---
+\begin{baselinebox}
+    \textbf{Prompt 5. Prompt for Reasoning Data Generation, Fine-tuning gpt-oss-20b, and Inference (Same prompt for all)}
+    
+    \vspace{1em}
+    You are an expert radiologist demonstrating step-by-step diagnostic reasoning.
+    
+    \vspace{1em}
+    \textbf{Case presentation:}
+    \\
+    \textit{[Case Data Inserted Here]}
+    
+    \vspace{1em}
+    \textbf{Differential diagnoses to consider:}
+    \\
+    \textit{[Answer Options]}
+    
+    \vspace{1em}
+    Generate systematic Chain-of-Thought reasoning that shows how clinicians think through cases:
+    
+    \begin{enumerate}[label=\arabic*., leftmargin=*, noitemsep, topsep=2pt]
+        \item \textbf{Connect symptoms to findings}: Link clinical presentation with imaging observations
+        \item \textbf{Map to differentials}: Show how findings support or contradict each differential diagnosis
+        \item \textbf{Systematic elimination}: Explicitly rule out less likely options with reasoning
+        \item \textbf{Converge to answer}: Demonstrate the logical path to the correct diagnosis
+    \end{enumerate}
+\end{baselinebox}
+
+\vspace*{\fill} % Spring pushing up
+\clearpage % End page
+
+% --- Prompt 6: Error Taxonomy Judge ---
+\vspace*{4cm}
+
+\begin{baselinebox}
+    \textbf{Prompt 6. Error Taxonomy Judge Prompt (Claude Opus 4.6 via AWS Bedrock)}
+
+    \vspace{1em}
+    You are an expert medical diagnostician classifying errors in a clinical diagnosis task.
+
+    \vspace{0.5em}
+    A model was given a patient case and a list of differential diagnoses, and asked to select the correct diagnosis verbatim from the list. The model's prediction was scored INCORRECT under exact text matching.
+
+    \vspace{0.5em}
+    Your task: classify this error into exactly one of five categories.
+
+    \vspace{0.5em}
+    \textbf{Categories:}
+    \begin{enumerate}[label=(\alph*), leftmargin=*, noitemsep, topsep=2pt]
+        \item \textbf{SURFACE\_MISMATCH} --- The prediction is clinically correct but differs in surface form (synonym, eponym, abbreviation, nomenclature variant, or minor wording difference). The model identified the right condition.
+        \item \textbf{SAME\_FAMILY} --- The prediction names a condition in the same disease family or anatomical system as the ground truth, but is the wrong specific entity.
+        \item \textbf{PLAUSIBLE\_DIFFERENTIAL} --- The prediction is a plausible differential diagnosis that was on the provided list, but is incorrect. The model's reasoning was clinically defensible but wrong.
+        \item \textbf{OFF\_TOPIC} --- The prediction names a condition that is not on the differential list, is anatomically/pathologically unrelated, or is a hallucinated entity.
+        \item \textbf{EMPTY\_OR\_REFUSAL} --- The prediction is empty, a refusal to answer, a parse failure, or contains no identifiable diagnosis.
+    \end{enumerate}
+
+    \vspace{0.5em}
+    \textbf{Case information:}
+    \\
+    Ground truth diagnosis: \textit{[ground\_truth]}
+    \\
+    Model prediction: \textit{[prediction]}
+    \\
+    Differential diagnosis list: \textit{[differentials]}
+
+    \vspace{0.5em}
+    \textbf{Instructions:}
+    Respond with ONLY the category letter (a, b, c, d, or e) on the first line, followed by a one-sentence justification on the second line.
+\end{baselinebox}
+
+\vspace*{\fill}
+\clearpage
+
+
+
+% Supplementary Table 1: Full CIs for Generalist task
+\begin{sidewaystable}[p]
+\centering
+\tiny
+\setlength{\tabcolsep}{2pt}
+\caption{\textbf{LLM-as-a-Generalist Task: Diagnostic accuracy with 95\% confidence intervals across radiological anatomical subgroups.}
+Performance is evaluated using self-consistency majority voting accuracy (\%, 95\% Wilson CI).}
+\label{tab:generalist_full_ci}
+\begin{tabular}{l *{13}{c}}
+\toprule
+& \multicolumn{3}{c}{\textbf{Proprietary}} & \textbf{Open} & \multicolumn{3}{c}{\textbf{gpt-oss-20b}} & \multicolumn{3}{c}{\textbf{gpt-oss-120b}} & \multicolumn{3}{c}{\textbf{Qwen3.5}} \\
+\cmidrule(lr){2-4} \cmidrule(lr){5-5} \cmidrule(lr){6-8} \cmidrule(lr){9-11} \cmidrule(lr){12-14}
+\textbf{Category} &
+\textbf{GPT-5.2} &
+\textbf{GPT-5-mini} &
+\textbf{Gemini-3.1} &
+\textbf{DeepSeek-R1} &
+\textbf{L} & \textbf{M} & \textbf{H} &
+\textbf{L} & \textbf{M} & \textbf{H} &
+\textbf{35B} & \textbf{27B} & \textbf{9B} \\
+\midrule
+Musculoskeletal system        & 87.2 (74.8--94.0) & 83.0 (69.9--91.1) & 87.2 (74.8--94.0) & 87.2 (74.8--94.0) & 80.9 (67.5--89.6) & 85.1 (72.3--92.6) & 87.2 (74.8--94.0) & 89.4 (77.4--95.4) & 83.0 (69.9--91.1) & 85.1 (72.3--92.6) & 72.3 (58.2--83.1) & 74.5 (60.5--84.7) & 76.6 (62.8--86.4) \\
+Cardiovascular                & 100.0 (61.0--100.0) & 83.3 (43.6--97.0) & 83.3 (43.6--97.0) & 66.7 (30.0--90.3) & 50.0 (18.8--81.2) & 50.0 (18.8--81.2) & 50.0 (18.8--81.2) & 66.7 (30.0--90.3) & 66.7 (30.0--90.3) & 66.7 (30.0--90.3) & 50.0 (18.8--81.2) & 50.0 (18.8--81.2) & 66.7 (30.0--90.3) \\
+Abdominal imaging             & 94.4 (81.9--98.5) & 88.9 (74.7--95.6) & 97.2 (85.8--99.5) & 75.0 (58.9--86.2) & 63.9 (47.6--77.5) & 66.7 (50.3--79.8) & 80.6 (65.0--90.2) & 86.1 (71.3--93.9) & 83.3 (68.1--92.1) & 83.3 (68.1--92.1) & 72.2 (56.0--84.2) & 80.6 (65.0--90.2) & 69.4 (53.1--82.0) \\
+Uroradiology \& genital male imaging
+                              & 100.0 (72.2--100.0) & 90.0 (59.6--98.2) & 100.0 (72.2--100.0) & 100.0 (72.2--100.0) & 80.0 (49.0--94.3) & 90.0 (59.6--98.2) & 100.0 (72.2--100.0) & 90.0 (59.6--98.2) & 100.0 (72.2--100.0) & 90.0 (59.6--98.2) & 80.0 (49.0--94.3) & 80.0 (49.0--94.3) & 90.0 (59.6--98.2) \\
+Neuroradiology                & 87.8 (74.5--94.7) & 82.9 (68.7--91.5) & 87.8 (74.5--94.7) & 85.4 (71.6--93.1) & 82.9 (68.7--91.5) & 82.9 (68.7--91.5) & 85.4 (71.6--93.1) & 82.9 (68.7--91.5) & 80.5 (66.0--89.8) & 85.4 (71.6--93.1) & 56.1 (41.0--70.1) & 61.0 (45.7--74.3) & 53.7 (38.7--67.9) \\
+Paediatric radiology          & 90.0 (74.4--96.5) & 80.0 (62.7--90.5) & 93.3 (78.7--98.2) & 73.3 (55.6--85.8) & 73.3 (55.6--85.8) & 76.7 (59.1--88.2) & 70.0 (52.1--83.3) & 76.7 (59.1--88.2) & 73.3 (55.6--85.8) & 80.0 (62.7--90.5) & 50.0 (33.2--66.8) & 70.0 (52.1--83.3) & 63.3 (45.5--78.1) \\
+Head \& neck imaging          & 100.0 (77.2--100.0) & 100.0 (77.2--100.0) & 100.0 (77.2--100.0) & 84.6 (57.8--95.7) & 84.6 (57.8--95.7) & 84.6 (57.8--95.7) & 92.3 (66.7--98.6) & 100.0 (77.2--100.0) & 76.9 (49.7--91.8) & 92.3 (66.7--98.6) & 84.6 (57.8--95.7) & 84.6 (57.8--95.7) & 76.9 (49.7--91.8) \\
+Breast imaging                & 100.0 (56.6--100.0) & 80.0 (37.6--96.4) & 100.0 (56.6--100.0) & 80.0 (37.6--96.4) & 40.0 (11.8--76.9) & 40.0 (11.8--76.9) & 40.0 (11.8--76.9) & 60.0 (23.1--88.2) & 60.0 (23.1--88.2) & 60.0 (23.1--88.2) & 60.0 (23.1--88.2) & 80.0 (37.6--96.4) & 60.0 (23.1--88.2) \\
+Chest imaging                 & 90.9 (62.3--98.4) & 81.8 (52.3--94.9) & 100.0 (74.1--100.0) & 81.8 (52.3--94.9) & 72.7 (43.4--90.3) & 81.8 (52.3--94.9) & 81.8 (52.3--94.9) & 81.8 (52.3--94.9) & 81.8 (52.3--94.9) & 81.8 (52.3--94.9) & 63.6 (35.4--84.8) & 63.6 (35.4--84.8) & 63.6 (35.4--84.8) \\
+Others                        & 75.0 (40.9--92.9) & 75.0 (40.9--92.9) & 75.0 (40.9--92.9) & 75.0 (40.9--92.9) & 62.5 (30.6--86.3) & 62.5 (30.6--86.3) & 62.5 (30.6--86.3) & 75.0 (40.9--92.9) & 75.0 (40.9--92.9) & 62.5 (30.6--86.3) & 50.0 (21.5--78.5) & 62.5 (30.6--86.3) & 62.5 (30.6--86.3) \\
+\midrule
+\textbf{Average}        & \textbf{90.8 (86.1--94.0)} &
+\textbf{84.5 (79.0--88.8)} &
+\textbf{91.8 (87.2--94.8)} &
+\textbf{81.6 (75.8--86.3)} &
+\textbf{74.4 (68.0--79.9)} &
+\textbf{77.3 (71.1--82.5)} &
+\textbf{80.7 (74.8--85.5)} &
+\textbf{84.1 (78.5--88.4)} &
+\textbf{80.2 (74.2--85.1)} &
+\textbf{82.6 (76.9--87.2)} &
+\textbf{64.7 (58.0--70.9)} &
+\textbf{71.5 (65.0--77.2)} &
+\textbf{67.6 (61.0--73.6)} \\
+\bottomrule
+\end{tabular}
+\end{sidewaystable}
+
+
+% Omar 
+% Supplementary Table 2: Full CIs for all models
+\begin{sidewaystable}[p]
+\centering
+\tiny
+\setlength{\tabcolsep}{2pt}
+\caption{\textbf{ Complete ophthalmology accuracy with 95\% confidence intervals,} 
+performance across all models including temperature variants (L=Low, M=Medium, H=High) for gpt-oss models.}
+\label{tab:ophthalmology_full_ci}
+\begin{tabular}{ll ccc c ccc ccc ccc c}
+\toprule
+& & \multicolumn{3}{c}{\textbf{Proprietary}} & \textbf{Open} & \multicolumn{3}{c}{\textbf{gpt-oss-20b}} & \multicolumn{3}{c}{\textbf{gpt-oss-120b}} & \multicolumn{3}{c}{\textbf{Qwen3.5}} & \textbf{Gemma4} \\
+\cmidrule(lr){3-5} \cmidrule(lr){6-6} \cmidrule(lr){7-9} \cmidrule(lr){10-12} \cmidrule(lr){13-15} \cmidrule(lr){16-16}
+\textbf{Type} & \textbf{Topic} & \textbf{GPT-5.1} & \textbf{5-mini} & \textbf{Gem-3.1} & \textbf{DS-R1} & \textbf{L} & \textbf{M} & \textbf{H} & \textbf{L} & \textbf{M} & \textbf{H} & \textbf{9B} & \textbf{27B} & \textbf{35B} & \textbf{31B} \\
+\midrule
+\multirow{6}{*}{\rotatebox{90}{\textbf{Diag}}}
+& Glaucoma & 100.0 (64.6--100.0) & 100.0 (64.6--100.0) & 100.0 (64.6--100.0) & 100.0 (64.6--100.0) & 71.4 (35.9--91.8) & 85.7 (48.7--97.4) & 85.7 (48.7--97.4) & 85.7 (48.7--97.4) & 85.7 (48.7--97.4) & 85.7 (48.7--97.4) & 100.0 (64.6--100.0) & 100.0 (64.6--100.0) & 100.0 (64.6--100.0) & 85.7 (48.7--97.4) \\
+& Ext.\ Eye/Orb & 90.0 (59.6--98.2) & 80.0 (49.0--94.3) & 90.0 (59.6--98.2) & 90.0 (59.6--98.2) & 70.0 (39.7--89.2) & 70.0 (39.7--89.2) & 80.0 (49.0--94.3) & 70.0 (39.7--89.2) & 80.0 (49.0--94.3) & 80.0 (49.0--94.3) & 70.0 (39.7--89.2) & 70.0 (39.7--89.2) & 70.0 (39.7--89.2) & 80.0 (49.0--94.3) \\
+& Retinal & 100.0 (43.8--100.0) & 100.0 (43.8--100.0) & 100.0 (43.8--100.0) & 100.0 (43.8--100.0) & 66.7 (20.8--93.9) & 66.7 (20.8--93.9) & 66.7 (20.8--93.9) & 100.0 (43.8--100.0) & 66.7 (20.8--93.9) & 66.7 (20.8--93.9) & 66.7 (20.8--93.9) & 100.0 (43.8--100.0) & 100.0 (43.8--100.0) & 66.7 (20.8--93.9) \\
+& Ant.\ Segment & 50.0 (21.5--78.5) & 75.0 (40.9--92.9) & 75.0 (40.9--92.9) & 75.0 (40.9--92.9) & 62.5 (30.6--86.3) & 62.5 (30.6--86.3) & 62.5 (30.6--86.3) & 75.0 (40.9--92.9) & 75.0 (40.9--92.9) & 75.0 (40.9--92.9) & 75.0 (40.9--92.9) & 87.5 (52.9--97.8) & 75.0 (40.9--92.9) & 75.0 (40.9--92.9) \\
+& Ocular Trauma & 100.0 (61.0--100.0) & 83.3 (43.6--97.0) & 100.0 (61.0--100.0) & 100.0 (61.0--100.0) & 83.3 (43.6--97.0) & 66.7 (30.0--90.3) & 83.3 (43.6--97.0) & 83.3 (43.6--97.0) & 100.0 (61.0--100.0) & 83.3 (43.6--97.0) & 83.3 (43.6--97.0) & 100.0 (61.0--100.0) & 100.0 (61.0--100.0) & 100.0 (61.0--100.0) \\
+& Refract./Strab & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) \\
+\cmidrule{2-16}
+& \textit{Avg} & \textit{87.2 (73.3--94.4)} & \textit{87.2 (73.3--94.4)} & \textit{92.3 (79.7--97.3)} & \textit{92.3 (79.7--97.3)} & \textit{74.4 (58.9--85.4)} & \textit{74.4 (58.9--85.4)} & \textit{79.5 (64.5--89.2)} & \textit{82.1 (67.3--91.0)} & \textit{84.6 (70.3--92.8)} & \textit{82.1 (67.3--91.0)} & \textit{82.1 (67.3--91.0)} & \textit{89.7 (76.4--95.9)} & \textit{87.2 (73.3--94.4)} & \textit{84.6 (70.3--92.8)} \\
+\midrule
+\multirow{6}{*}{\rotatebox{90}{\textbf{Mgmt}}}
+& Glaucoma & 85.7 (60.1--96.0) & 64.3 (38.8--83.7) & 85.7 (60.1--96.0) & 71.4 (45.4--88.3) & 50.0 (26.8--73.2) & 64.3 (38.8--83.7) & 50.0 (26.8--73.2) & 71.4 (45.4--88.3) & 78.6 (52.4--92.4) & 64.3 (38.8--83.7) & 64.3 (38.8--83.7) & 85.7 (60.1--96.0) & 85.7 (60.1--96.0) & 71.4 (45.4--88.3) \\
+& Ext.\ Eye/Orb & 71.4 (45.4--88.3) & 57.1 (32.6--78.6) & 64.3 (38.8--83.7) & 78.6 (52.4--92.4) & 57.1 (32.6--78.6) & 71.4 (45.4--88.3) & 64.3 (38.8--83.7) & 71.4 (45.4--88.3) & 71.4 (45.4--88.3) & 71.4 (45.4--88.3) & 78.6 (52.4--92.4) & 71.4 (45.4--88.3) & 92.9 (68.5--98.7) & 78.6 (52.4--92.4) \\
+& Retinal & 37.5 (13.7--69.4) & 25.0 (7.1--59.1) & 37.5 (13.7--69.4) & 37.5 (13.7--69.4) & 12.5 (2.2--47.1) & 25.0 (7.1--59.1) & 37.5 (13.7--69.4) & 50.0 (21.5--78.5) & 37.5 (13.7--69.4) & 37.5 (13.7--69.4) & 37.5 (13.7--69.4) & 25.0 (7.1--59.1) & 37.5 (13.7--69.4) & 37.5 (13.7--69.4) \\
+& Ant.\ Segment & 82.4 (59.0--93.8) & 64.7 (41.3--82.7) & 82.4 (59.0--93.8) & 70.6 (46.9--86.7) & 76.5 (52.7--90.4) & 64.7 (41.3--82.7) & 76.5 (52.7--90.4) & 70.6 (46.9--86.7) & 76.5 (52.7--90.4) & 70.6 (46.9--86.7) & 58.8 (36.0--78.4) & 64.7 (41.3--82.7) & 64.7 (41.3--82.7) & 58.8 (36.0--78.4) \\
+& Ocular Trauma & 65.4 (46.2--80.6) & 57.7 (38.9--74.5) & 65.4 (46.2--80.6) & 76.9 (57.9--89.0) & 42.3 (25.5--61.1) & 57.7 (38.9--74.5) & 50.0 (32.1--67.9) & 65.4 (46.2--80.6) & 76.9 (57.9--89.0) & 57.7 (38.9--74.5) & 57.7 (38.9--74.5) & 61.5 (42.5--77.6) & 57.7 (38.9--74.5) & 65.4 (46.2--80.6) \\
+& Refract./Strab & 83.3 (55.2--95.3) & 75.0 (46.8--91.1) & 91.7 (64.6--98.5) & 91.7 (64.6--98.5) & 66.7 (39.1--86.2) & 58.3 (32.0--80.7) & 83.3 (55.2--95.3) & 83.3 (55.2--95.3) & 91.7 (64.6--98.5) & 83.3 (55.2--95.3) & 91.7 (64.6--98.5) & 91.7 (64.6--98.5) & 83.3 (55.2--95.3) & 91.7 (64.6--98.5) \\
+\cmidrule{2-16}
+& \textit{Avg} & \textit{72.5 (62.6--80.6)} & \textit{59.3 (49.1--68.9)} & \textit{72.5 (62.6--80.6)} & \textit{73.6 (63.7--81.6)} & \textit{52.7 (42.6--62.7)} & \textit{59.3 (49.1--68.9)} & \textit{60.4 (50.2--69.9)} & \textit{69.2 (59.1--77.8)} & \textit{74.7 (64.9--82.5)} & \textit{64.8 (54.6--73.9)} & \textit{64.8 (54.6--73.9)} & \textit{68.1 (58.0--76.8)} & \textit{70.3 (60.3--78.7)} & \textit{68.1 (58.0--76.8)} \\
+\midrule
+\multicolumn{2}{l}{\textbf{Overall}} & \textbf{76.9 (69.0--83.3)} & \textbf{67.7 (59.2--75.1)} & \textbf{78.5 (70.6--84.7)} & \textbf{79.2 (71.5--85.3)} & \textbf{59.2 (50.6--67.3)} & \textbf{63.8 (55.3--71.6)} & \textbf{66.2 (57.7--73.7)} & \textbf{73.1 (64.9--80.0)} & \textbf{77.7 (69.8--84.0)} & \textbf{70.0 (61.6--77.2)} & \textbf{70.0 (61.6--77.2)} & \textbf{74.6 (66.5--81.3)} & \textbf{75.4 (67.3--82.0)} & \textbf{73.1 (64.9--80.0)} \\
+\bottomrule
+\end{tabular}
+\end{sidewaystable}
+
+
+
+%% %Omar Updated  
+% Supplementary Table 3: Full IQR for Clinical Judge task
+\begin{sidewaystable}[p]
+\centering
+\tiny
+\setlength{\tabcolsep}{2pt}
+\caption{\textbf{LLM-as-a-Clinical-Judge Task: Median error with interquartile ranges across five specialties.} Scores are presented as the median error (25\%--75\% IQR) relative to human expert scores. A value of 0 indicates perfect alignment; negative values indicate underestimation.}
+\label{tab:specialty_full_iqr}
+\begin{tabular}{ll *{14}{c}}
+\toprule
+& & \multicolumn{3}{c}{\textbf{Proprietary}} & \textbf{Open} & \multicolumn{3}{c}{\textbf{gpt-oss-20b}} & \multicolumn{3}{c}{\textbf{gpt-oss-120b}} & \multicolumn{3}{c}{\textbf{qwen3.5}} & \textbf{Gemma4} \\
+\cmidrule(lr){3-5} \cmidrule(lr){6-6} \cmidrule(lr){7-9} \cmidrule(lr){10-12} \cmidrule(lr){13-15} \cmidrule(lr){16-16}
+\textbf{Type} & \textbf{Topic} & \textbf{GPT-5.1} & \textbf{Gemini} & \textbf{5.1-mini} & \textbf{DS-R1} & \textbf{L} & \textbf{M} & \textbf{H} & \textbf{L} & \textbf{M} & \textbf{H} & \textbf{9B} & \textbf{27B} & \textbf{35B} & \textbf{31B} \\
+\midrule
+\multirow{6}{*}{\rotatebox{90}{\textbf{Treatment}}}
+& Gynecology & 0.25 (-0.33--0.50) & 0.50 (0.00--1.00) & 0.25 (0.00--0.69) & 0.38 (0.00--0.67) & 0.17 (-0.02--0.52) & 0.17 (-0.33--0.50) & 0.17 (-0.10--0.50) & 0.00 (-0.35--0.50) & 0.17 (-0.33--0.50) & 0.00 (-0.25--0.50) & 0.50 (0.00--1.00) & 0.50 (0.00--0.83) & 0.50 (0.00--1.00) & 0.25 (0.00--0.67) \\
+& Internal Medicine & 0.33 (0.00--0.50) & 0.50 (0.00--0.75) & 0.00 (0.00--0.50) & 0.17 (0.00--0.50) & 0.00 (-0.33--0.50) & 0.00 (-0.08--0.50) & 0.00 (-0.17--0.50) & 0.00 (-0.08--0.50) & 0.00 (-0.08--0.50) & 0.00 (-0.17--0.50) & 0.33 (0.00--0.75) & 0.42 (0.00--0.50) & 0.50 (0.00--0.67) & 0.42 (0.00--0.50) \\
+& Neurology & 0.50 (0.00--1.00) & 0.50 (0.00--1.00) & 0.33 (0.00--0.75) & 0.21 (0.00--0.83) & 0.00 (-0.17--0.67) & 0.17 (-0.17--0.50) & 0.00 (-0.33--0.50) & 0.17 (-0.17--0.50) & 0.17 (-0.17--0.67) & 0.17 (0.00--0.67) & 0.50 (0.00--1.00) & 0.50 (0.00--1.00) & 0.50 (0.00--1.00) & 0.50 (0.00--1.00) \\
+& Pediatrics & 0.25 (0.00--0.50) & 0.50 (0.00--0.75) & 0.21 (0.00--0.50) & 0.17 (0.00--0.50) & 0.00 (-0.33--0.50) & 0.00 (-0.33--0.50) & 0.00 (-0.33--0.50) & 0.17 (-0.17--0.50) & 0.00 (-0.19--0.50) & 0.04 (-0.17--0.50) & 0.33 (0.00--0.50) & 0.33 (0.00--0.50) & 0.50 (0.00--0.52) & 0.50 (0.00--0.50) \\
+& Surgery & 0.50 (0.00--1.00) & 0.50 (0.25--1.00) & 0.50 (0.00--1.00) & 0.50 (0.00--1.00) & 0.25 (-0.08--0.83) & 0.33 (0.00--1.00) & 0.50 (-0.08--1.00) & 0.33 (0.00--1.00) & 0.50 (0.00--1.00) & 0.50 (0.00--1.00) & 0.50 (0.00--1.00) & 0.50 (0.00--1.00) & 0.50 (0.08--1.00) & 0.50 (0.00--1.00) \\
+\cmidrule{2-16}
+& \textit{Overall} & \textit{0.33 (0.00--0.67)} & \textit{0.50 (0.00--1.00)} & \textit{0.25 (0.00--0.67)} & \textit{0.29 (0.00--0.67)} & \textit{0.08 (-0.17--0.50)} & \textit{0.17 (-0.17--0.50)} & \textit{0.17 (-0.29--0.50)} & \textit{0.17 (-0.17--0.50)} & \textit{0.17 (-0.17--0.58)} & \textit{0.17 (-0.17--0.50)} & \textit{0.50 (0.00--0.83)} & \textit{0.50 (0.00--0.83)} & \textit{0.50 (0.00--1.00)} & \textit{0.50 (0.00--0.75)} \\
+\midrule
+\multirow{6}{*}{\rotatebox{90}{\textbf{Diagnosis}}}
+& Gynecology & 0.00 (-0.50--0.00) & 0.00 (0.00--0.25) & -0.50 (-1.00--0.00) & -0.17 (-0.50--0.00) & -0.17 (-0.50--0.00) & -0.17 (-0.67--0.00) & -0.33 (-0.67--0.00) & 0.00 (-0.33--0.00) & 0.00 (-0.33--0.00) & 0.00 (-0.33--0.08) & 0.00 (0.00--0.33) & 0.00 (0.00--0.42) & 0.00 (0.00--0.25) & 0.00 (0.00--0.25) \\
+& Internal Medicine & 0.00 (-0.50--0.17) & 0.00 (0.00--0.50) & -0.50 (-1.02--0.00) & -0.33 (-0.75--0.00) & -0.33 (-1.00--0.00) & -0.33 (-0.69--0.00) & -0.33 (-0.94--0.00) & 0.00 (-0.50--0.25) & 0.00 (-0.50--0.33) & 0.00 (-0.54--0.33) & 0.00 (-0.17--0.50) & 0.00 (0.00--0.50) & 0.00 (-0.33--0.50) & 0.00 (0.00--0.50) \\
+& Neurology & -0.17 (-0.67--0.00) & 0.00 (-0.48--0.50) & -0.83 (-1.67--0.00) & -0.33 (-0.67--0.00) & -0.33 (-1.02--0.00) & -0.33 (-1.00--0.00) & -0.17 (-1.17--0.00) & -0.17 (-1.50--0.17) & -0.17 (-1.54--0.17) & -0.17 (-1.67--0.17) & 0.00 (-0.33--0.50) & 0.00 (0.00--0.50) & 0.00 (-0.33--0.50) & 0.00 (-0.10--0.50) \\
+& Pediatrics & 0.00 (-0.40--0.00) & 0.00 (0.00--0.50) & -0.67 (-1.00--0.00) & -0.33 (-0.67--0.00) & -0.33 (-0.83--0.00) & -0.33 (-0.79--0.00) & -0.33 (-0.67--0.00) & 0.00 (-0.50--0.23) & 0.00 (-0.50--0.17) & 0.00 (-0.33--0.25) & 0.00 (0.00--0.40) & 0.00 (0.00--0.50) & 0.00 (-0.06--0.25) & 0.00 (0.00--0.50) \\
+& Surgery & 0.00 (-0.33--0.42) & 0.00 (0.00--0.56) & -0.50 (-1.00--0.00) & -0.17 (-0.50--0.17) & 0.00 (-0.50--0.33) & 0.00 (-0.58--0.33) & 0.00 (-0.58--0.27) & 0.00 (-0.50--0.37) & 0.00 (-0.33--0.50) & 0.00 (-0.35--0.50) & 0.33 (0.00--0.75) & 0.25 (0.00--0.75) & 0.25 (0.00--0.75) & 0.25 (0.00--0.75) \\
+\cmidrule{2-16}
+& \textbf{Overall} & \textbf{0.00 (-0.50--0.08)} & \textbf{0.00 (0.00--0.50)} & \textbf{-0.50 (-1.13--0.00)} & \textbf{-0.33 (-0.67--0.00)} & \textbf{-0.33 (-0.67--0.00)} & \textbf{-0.25 (-0.67--0.00)} & \textbf{-0.25 (-0.67--0.00)} & \textbf{0.00 (-0.50--0.25)} & \textbf{0.00 (-0.50--0.25)} & \textbf{0.00 (-0.50--0.25)} & \textbf{0.00 (0.00--0.50)} & \textbf{0.00 (0.00--0.50)} & \textbf{0.00 (-0.08--0.50)} & \textbf{0.00 (0.00--0.50)} \\
+\bottomrule
+\end{tabular}
+\end{sidewaystable}
+%%
+
+
+
+% Alhusain's table (Frequency) -- mean consensus median aggregation
+%Updated Omar 
+
+% Alhusain's table (Frequency) -- mean consensus median aggregation
+\begin{sidewaystable}[p]
+\centering
+\tiny
+\setlength{\tabcolsep}{2pt}
+\caption{\textbf{LLM-as-a-Clinical-Judge Task: Impact of disease prevalence on clinical judgment accuracy.} Model alignment with human expert scoring is stratified by disease frequency (Rare, Less Frequent, Frequent). Scores are presented as the median error (25\%--75\% interquartile range, IQR) relative to human expert scores.}
+\label{tab:frequency_results_with_total}
+\begin{tabular}{ll ccc c ccc ccc ccc c}
+\toprule
+& & \multicolumn{3}{c}{\textbf{Proprietary}} & \textbf{Open} & \multicolumn{3}{c}{\textbf{gpt-oss-20b}} & \multicolumn{3}{c}{\textbf{gpt-oss-120b}} & \multicolumn{3}{c}{\textbf{qwen3.5}} & \textbf{Gemma4} \\
+\cmidrule(lr){3-5} \cmidrule(lr){6-6} \cmidrule(lr){7-9} \cmidrule(lr){10-12} \cmidrule(lr){13-15} \cmidrule(lr){16-16}
+\textbf{Type} & \textbf{Frequency} & \textbf{GPT-5.1} & \textbf{Gemini} & \textbf{5.1-mini} & \textbf{DS-R1} & \textbf{L} & \textbf{M} & \textbf{H} & \textbf{L} & \textbf{M} & \textbf{H} & \textbf{9B} & \textbf{27B} & \textbf{35B} & \textbf{31B} \\
+\midrule
+\multirow{4}{*}{\rotatebox{90}{\textbf{Treatment}}}
+& Rare & 0.33 (0.00--0.50) & 0.50 (0.00--1.00) & 0.25 (0.00--0.50) & 0.25 (0.00--0.67) & 0.00 (-0.17--0.50) & 0.08 (-0.17--0.50) & 0.00 (-0.33--0.50) & 0.17 (0.00--0.50) & 0.00 (-0.17--0.50) & 0.00 (-0.17--0.50) & 0.33 (0.00--0.75) & 0.50 (0.00--1.00) & 0.50 (0.00--0.83) & 0.50 (0.00--0.75) \\
+& Less Frequent & 0.50 (0.00--0.75) & 0.50 (0.00--1.00) & 0.50 (0.00--0.75) & 0.42 (0.00--0.50) & 0.17 (-0.17--0.50) & 0.17 (-0.17--0.50) & 0.17 (-0.31--0.50) & 0.17 (0.00--0.50) & 0.25 (0.00--0.63) & 0.25 (0.00--0.65) & 0.50 (0.00--0.81) & 0.50 (0.00--0.75) & 0.50 (0.00--0.83) & 0.50 (0.00--0.75) \\
+& Frequent & 0.25 (0.00--0.52) & 0.50 (0.00--1.00) & 0.25 (0.00--0.54) & 0.17 (0.00--0.71) & 0.00 (-0.27--0.50) & 0.00 (-0.17--0.67) & 0.17 (-0.17--0.50) & 0.17 (-0.17--0.50) & 0.17 (-0.17--0.58) & 0.17 (-0.17--0.50) & 0.50 (0.00--1.00) & 0.50 (0.00--0.83) & 0.50 (0.00--1.00) & 0.50 (0.00--0.77) \\
+\cmidrule{2-16}
+& \textit{Overall} & \textit{0.33 (0.00--0.67)} & \textit{0.50 (0.00--1.00)} & \textit{0.25 (0.00--0.67)} & \textit{0.29 (0.00--0.67)} & \textit{0.08 (-0.17--0.50)} & \textit{0.17 (-0.17--0.50)} & \textit{0.17 (-0.29--0.50)} & \textit{0.17 (-0.17--0.50)} & \textit{0.17 (-0.17--0.58)} & \textit{0.17 (-0.17--0.50)} & \textit{0.50 (0.00--0.83)} & \textit{0.50 (0.00--0.83)} & \textit{0.50 (0.00--1.00)} & \textit{0.50 (0.00--0.75)} \\
+\midrule
+\multirow{4}{*}{\rotatebox{90}{\textbf{Diagnosis}}}
+& Rare & 0.00 (-0.67--0.17) & 0.00 (-0.67--0.50) & -0.83 (-1.50--0.00) & -0.33 (-0.92--0.08) & -0.33 (-1.17--0.00) & -0.33 (-1.08--0.08) & -0.33 (-1.17--0.13) & 0.00 (-1.29--0.42) & 0.00 (-1.38--0.33) & 0.00 (-1.25--0.33) & 0.00 (-0.08--0.50) & 0.00 (0.00--0.50) & 0.00 (-0.33--0.50) & 0.00 (-0.58--0.50) \\
+& Less Frequent & 0.00 (-0.50--0.06) & 0.00 (0.00--0.50) & -0.50 (-1.06--0.00) & -0.29 (-0.67--0.00) & -0.33 (-0.83--0.00) & -0.33 (-0.67--0.00) & -0.33 (-0.67--0.00) & 0.00 (-0.67--0.17) & 0.00 (-0.67--0.23) & 0.00 (-0.67--0.25) & 0.00 (0.00--0.50) & 0.00 (0.00--0.50) & 0.00 (0.00--0.50) & 0.00 (0.00--0.50) \\
+& Frequent & 0.00 (-0.33--0.06) & 0.00 (0.00--0.50) & -0.50 (-1.00--0.00) & -0.25 (-0.50--0.00) & 0.00 (-0.33--0.00) & 0.00 (-0.50--0.00) & -0.04 (-0.50--0.00) & 0.00 (-0.33--0.17) & 0.00 (-0.23--0.25) & 0.00 (-0.33--0.25) & 0.00 (0.00--0.50) & 0.00 (0.00--0.50) & 0.00 (0.00--0.50) & 0.00 (0.00--0.50) \\
+\cmidrule{2-16}
+& \textbf{Overall} & \textbf{0.00 (-0.50--0.08)} & \textbf{0.00 (0.00--0.50)} & \textbf{-0.50 (-1.13--0.00)} & \textbf{-0.33 (-0.67--0.00)} & \textbf{-0.33 (-0.67--0.00)} & \textbf{-0.25 (-0.67--0.00)} & \textbf{-0.25 (-0.67--0.00)} & \textbf{0.00 (-0.50--0.25)} & \textbf{0.00 (-0.50--0.25)} & \textbf{0.00 (-0.50--0.25)} & \textbf{0.00 (0.00--0.50)} & \textbf{0.00 (0.00--0.50)} & \textbf{0.00 (-0.08--0.50)} & \textbf{0.00 (0.00--0.50)} \\
+\bottomrule
+\end{tabular}
+\end{sidewaystable}
+
+
+
+% Alif's Section (Eurorad)
+
+\begin{sidewaystable}[p]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\caption{\textbf{LLM-as-a-Generalist Task: Comparative diagnostic accuracy of fine-tuned gpt-oss-20b model.} 
+Diagnostic accuracy (95\% confidence interval, CI) is compared between the base gpt-oss-20b model and its fine-tuned counterpart, both evaluated at medium (M) reasoning effort. 
+}
+\label{tab:adaptation_comparison}
+\begin{tabular}{l *{5}{c}}
+\toprule
+\textbf{Category} &
+\textbf{GPT-5} &
+\textbf{o4-mini} &
+\textbf{DeepSeek-R1} &
+\textbf{gpt-oss-20b (M)} &
+\textbf{Fine-tuned gpt-oss-20b (M)} \\
+\midrule
+Musculoskeletal system        & 87.2 (74.8--94.0) & 85.1 (72.3--92.6) & 87.2 (74.8--94.0) & 85.1 (72.3--92.6) & 91.5 (80.1--96.6) \\
+Cardiovascular                & 83.3 (43.6--97.0) & 83.3 (43.6--97.0) & 66.7 (30.0--90.3) & 50.0 (18.8--81.2) & 83.3 (43.6--97.0) \\
+Abdominal imaging             & 94.4 (81.9--98.5) & 83.3 (43.6--97.0) & 75.0 (58.9--86.2) & 66.7 (50.3--79.8) & 86.1 (71.3--93.9) \\
+Uroradiology \& genital male
+                              & 100.0 (72.2--100.0) & 86.1 (71.3--93.9) & 100.0 (72.2--100.0) & 90.0 (59.6--98.2) & 100.0 (72.2--100.0) \\
+Neuroradiology                & 85.4 (71.6--93.1) & 82.9 (68.7--91.5) & 85.4 (71.6--93.1) & 82.9 (68.7--91.5) & 87.8 (74.5--94.7) \\
+Paediatric radiology          & 83.3 (66.4--92.7) & 76.7 (59.1--88.2) & 73.3 (55.6--85.8) & 76.7 (59.1--88.2) & 73.3 (55.6--85.8) \\
+Head \& neck imaging          & 100.0 (77.2--100.0) & 100.0 (77.2--100.0) & 84.6 (57.8--95.7) & 84.6 (57.8--95.7) & 92.3 (66.7--98.6) \\
+Breast imaging                & 100.0 (56.6--100.0) & 80.0 (37.6--96.4) & 80.0 (37.6--96.4) & 40.0 (11.8--76.9) & 80.0 (37.6--96.4) \\
+Chest imaging                 & 90.9 (62.3--98.4) & 81.8 (52.3--94.9) & 81.8 (52.3--94.9) & 81.8 (52.3--94.9) & 90.9 (62.3--98.4) \\
+Others                        & 75.0 (40.9--92.9) & 75.0 (40.9--92.9) & 75.0 (40.9--92.9) & 62.5 (30.6--86.3) & 75.0 (40.9--92.9) \\
+\midrule
+\textbf{Average}              & \textbf{88.9 (83.9--92.5)} &
+\textbf{84.1 (78.5--88.4)} &
+\textbf{81.6 (75.8--86.3)} &
+\textbf{77.3 (71.7--82.5)} &
+\textbf{86.5 (81.1--90.5)} \\
+\bottomrule
+\end{tabular}
+\end{sidewaystable}
+
+
+
+\clearpage          % Start a new page
+\vspace*{\fill}     % Spring 1: Pushes content down
+
+\begin{algorithm}[H] % [H] is required to prevent floating
+\caption{Inference protocol for robust diagnostic reasoning.
+The algorithm employs diverse group beam search to generate multiple independent reasoning paths ($B$ beams, $G$ groups), followed by majority-vote aggregation to mitigate hallucination and select the most consensus-driven diagnosis.}
+\label{alg:inference_workflow}
+\begin{algorithmic}[1]
+\Require 
+    \State $\mathcal{C}$: Patient Case (History and Imaging Findings)
+    \State $\mathcal{L}$: List of Differential Diagnoses $\{l_1, l_2, ..., l_n\}$
+    \State $\mathcal{M}$: Fine-tuned On-device Model
+    \State Parameters: Number of beams $B$, Number of groups $G$, Diversity penalty $\lambda$
+\Ensure 
+    \State $\hat{y}$: Final Selected Diagnosis
+    \State $R$: Generated Reasoning Trace associated with $\hat{y}$
+
+\Statex
+\State \textbf{Prompt Construction}
+\State $P \leftarrow$ \Call{FormatPrompt}{$\mathcal{C}, \mathcal{L}$} \Comment{Inject case and constraints into template}
+\State $T_{in} \leftarrow$ \Call{Tokenize}{$P$}
+
+\Statex
+\State \textbf{Diverse Generation (Exploration)}
+\State {Generate $B$ distinct reasoning paths using Group Beam Search}
+\State $\mathcal{S} \leftarrow$ \Call{Generate}{$T_{in}, \mathcal{M}, \text{beams}=B, \text{groups}=G, \text{penalty}=\lambda$}
+\State \Comment{Return sequences $\{s_1, s_2, .., s_B\}$ sorted by beam index}
+
+\Statex
+\State \textbf{Answer Extraction and Normalization}
+\State $\mathcal{D}_{raw} \leftarrow \emptyset$ \Comment{List to store extracted answers}
+\For{$i \leftarrow 1$ to $B$}
+    \State $r_i, d_i \leftarrow$ \Call{ParseOutput}{$s_i$} \Comment{Split reasoning ($r$) and diagnosis ($d$) via delimiter}
+    \State $d_i^{norm} \leftarrow$ \Call{NormalizeText}{$d_i$} \Comment{Lowercase, strip punctuation/whitespace}
+    \State $\mathcal{D}_{raw} \leftarrow \mathcal{D}_{raw} \cup \{d_i^{norm}\}$
+\EndFor
+
+\Statex
+\State \textbf{Majority Vote Aggregation}
+\State $V \leftarrow$ \Call{CountFrequencies}{$\mathcal{D}_{raw}$} \Comment{Map unique diagnoses to vote counts}
+\State $v_{max} \leftarrow \max(V)$
+\State $\mathcal{T} \leftarrow \{d \mid V[d] = v_{max}\}$ \Comment{Set of diagnoses with the highest vote count}
+
+\Statex
+\State \textbf{Tie-Breaking and Final Selection}
+\If{$|\mathcal{T}| = 1$}
+    \State $\hat{y} \leftarrow \text{element in } \mathcal{T}$
+\Else
+    \State \Comment{Tie-breaker: Select the diagnosis appearing in the earliest beam index}
+    \State $\hat{y} \leftarrow$ first $d_i^{norm} \in \mathcal{D}_{raw}$ such that $d_i^{norm} \in \mathcal{T}$
+\EndIf
+
+\State $idx \leftarrow$ index of first occurrence of $\hat{y}$ in $\mathcal{D}_{raw}$
+\State \Return $\hat{y}, s_{idx}$
+
+\end{algorithmic}
+\end{algorithm}
+
+\vspace*{\fill}     % Spring 2: Pushes content up
+\clearpage          % End the page
+
+
+
+% ALIF: FIGURES %
+
+% --- Figure 1: DeepSeek (Green vs Gray) ---
+\clearpage
+\begin{figure}[p]
+    \centering
+    \vspace*{\fill}
+    \includegraphics[width=\textwidth]{supp-imgs/manuscript_forest_plot_deepseek.png}
+    \caption{\textbf{Parameter efficiency: Fine-tuned gpt-oss-20b model outperforms the 671B DeepSeek-R1.} 
+    Comparative diagnostic accuracy of the fine-tuned gpt-oss-20b model (green) versus the open-source frontier DeepSeek-R1 (gray). Despite being significantly smaller, the fine-tuned on-device model achieves a higher overall micro-average accuracy (86.5\% vs 81.6\%) and demonstrates superior performance in 7 out of 10 anatomical subgroups. Error bars represent 95\% Wilson score intervals.}
+    \vspace*{\fill}
+\end{figure}
+
+% --- Figure 2: o4-mini (Red vs Gray) ---
+\clearpage
+\begin{figure}[p]
+    \centering
+    \vspace*{\fill}
+    \includegraphics[width=\textwidth]{supp-imgs/manuscript_forest_plot_o4mini.png}
+    \caption{\textbf{On-device versus cloud-based efficiency: Fine-tuned model surpasses o4-mini.} 
+    Performance comparison between the fine-tuned gpt-oss-20b (red) and OpenAI's efficient proprietary model, o4-mini (gray). The on-device model demonstrates robust generalization, exceeding the cloud-based baseline in overall accuracy (86.5\% vs 84.1\%) and achieving competitive results across diverse radiological specialties. Vertical dashed lines indicate the overall micro-average accuracy for each model.}
+    \vspace*{\fill}
+\end{figure}
+
+% --- Figure 3: GPT-5 (Blue vs Gray) ---
+\clearpage
+\begin{figure}[p]
+    \centering
+    \vspace*{\fill}
+    \includegraphics[width=\textwidth]{supp-imgs/manuscript_forest_plot_gpt5.png}
+    \caption{\textbf{Approaching the frontier: On-device model demonstrates competitive performance with GPT-5.} 
+    The forest plot illustrates the diagnostic accuracy of the fine-tuned gpt-oss-20b (blue) relative to the state-of-the-art GPT-5 (gray). While GPT-5 maintains a slight lead in overall accuracy (88.9\% vs 86.5\%), the confidence intervals overlap significantly across the majority of subgroups (e.g., Musculoskeletal, Abdominal, Neuroradiology), indicating statistical parity in these domains.}
+    \vspace*{\fill}
+\end{figure}
+\clearpage
+
+
+
+
+% Omar Case Studies
+\section*{Case Studies}
+The following case studies illustrate the chain-of-thought reasoning capabilities of two fine-tuned models---gpt-oss-20b and Qwen3.5-35B---each fine-tuned on the Eurorad radiology dataset. For each model, we present paired before-and-after comparisons across two clinically diverse cases. Each case demonstrates the model's systematic approach to differential diagnosis: (1) identifying core clinical-radiologic patterns, (2) mapping each differential to observed features, (3) systematically eliminating unlikely diagnoses, and (4) converging on a final answer with supporting rationale.
+
+\vspace{1em}
+
+% -------------------------------------------------------
+% gpt-oss-20b Cases
+% -------------------------------------------------------
+The following cases demonstrate the reasoning behaviour of gpt-oss-20b before and after fine-tuning. The base model responses reflect common failure modes including superficial elimination, circular reasoning, and incorrect final answers.
+
+\vspace{1em}
+
+% --- Case 1: Primary Cardiac Lymphoma (gpt-oss-20b) ---
+\begin{casebox}
+    \textbf{Case Study 1: Primary Cardiac Lymphoma (gpt-oss-20b)}
+
+    \vspace{1em}
+    \textbf{Case Presentation}
+    
+    \textbf{Clinical History:} An 81-year-old male with paroxysmal atrial fibrillation presents with one-week onset of orthopnoea and exertional dyspnoea. Elevated troponins, third-degree AV block on ECG, and right ventricular thickening with pericardial effusion on echocardiogram.
+    
+    \vspace{0.5em}
+    \textbf{Imaging Findings:} PET-CT reveals a large hypermetabolic mass through the right chambers sparing the left ventricle, and a hypermetabolic left lung base nodule. Chest CT confirms an infiltrative hypodense myocardial mass involving the right atrium, right ventricle, interatrial septum, and AV groove, with a cuff around the right coronary artery, moderate pericardial effusion, and a solid left lower lobe nodule biopsied under CT guidance.
+    
+    \vspace{0.5em}
+    \textbf{Differentials:} Angiosarcoma, IgG4-related disease, Primary cardiac lymphoma, Erdheim-Chester disease, Undifferentiated pleomorphic sarcoma \quad \textbf{Ground Truth:} Primary cardiac lymphoma
+    
+    \vspace{1em}
+    \hrule
+    \vspace{1em}
+
+    \textbf{Base Model Response (Before Fine-Tuning)}
+
+    \vspace{0.5em}
+    Angiosarcoma: Most common primary cardiac sarcoma. Usually involves right atrium, pericardial effusion, conduction block. Age typically younger (median 40--50). But can occur in older. Lung metastasis possible. So fits. \textit{[Issue: Makes excuses instead of using age as exclusion criterion; prematurely accepts this diagnosis]}
+
+    \vspace{0.5em}
+    IgG4-related disease: Can involve heart. Rarely presents as large infiltrative myocardial mass. Not typical. \textit{[Issue: Rambling, uncertain reasoning]}
+
+    \vspace{0.5em}
+    Primary cardiac lymphoma: Rare, involves right atrium, can cause conduction block, pericardial effusion. Could present with AV block. So possible. \textit{[Issue: Doesn't recognise AV block as KEY feature for lymphoma]}
+
+    \vspace{0.5em}
+    Erdheim-Chester disease: Osteosclerosis of long bones not mentioned. Less likely. \textit{[Issue: Superficial elimination]}
+
+    \vspace{0.5em}
+    Angiosarcoma is classic for right atrium, pericardial effusion, conduction block, metastasis to lung. Left ventricle is spared. That fits. The lung nodule suggests metastasis. So angiosarcoma is likely. \textit{[Issue: Wrong conclusion---prioritised lung nodule over AV block and hypodense CT pattern]}
+
+    \vspace{1em}
+    \noindent\textbf{Base Model Final Answer:} \colorbox{red!30}{Angiosarcoma} -- \textbf{INCORRECT}
+
+    \vspace{1em}
+    \hrule
+    \vspace{1em}
+
+    \textbf{Fine-Tuned Model Response}
+
+    \vspace{0.5em}
+    \noindent\textbf{Step 1 -- Clinical-imaging correlation}
+
+    \colorbox{yellow!30}{The third-degree AV block signals conduction system infiltration}, pointing to right-sided myocardial involvement. The PET-CT shows a large FDG-avid mass surrounding the right atrium, right ventricle, interatrial septum, and AV groove while sparing the left ventricle---with a second hypermetabolic lung nodule consistent with metastasis.
+
+    \vspace{0.5em}
+    \noindent\textbf{Step 2 -- Differential mapping}
+
+    \renewcommand{\arraystretch}{1.4}
+    \setlength{\tabcolsep}{6pt}
+    {\footnotesize
+    \begin{tabular}{|>{\raggedright\arraybackslash}p{2.5cm}|>{\raggedright\arraybackslash}p{4.0cm}|>{\raggedright\arraybackslash}p{3.0cm}|>{\raggedright\arraybackslash}p{2.5cm}|}
+    \hline
+    \textbf{Differential} & \textbf{Typical features} & \textbf{Concordance} & \textbf{Discordance} \\
+    \hline
+    \textbf{PCL} & \textbf{Right-sided chambers, AV node encasement $\to$ AV block, hypodense on CT, FDG-avid, LV spared.} & \textbf{All hallmarks present.} & \textbf{None.} \\
+    \hline
+    Angiosarcoma & Haemorrhagic, hyperdense mass; right atrium; younger patients. & Right-sided location fits. & Hypodense (not hyperdense); age 81 exceeds typical range; no haemorrhage. \\
+    \hline
+    IgG4-related & Systemic features (pancreatitis, retro-orbital); diffuse thickening. & None present. & No systemic IgG4 manifestations. \\
+    \hline
+    ECD & Osteosclerosis of long bones; retroperitoneal fibrosis. & None present. & No bone/kidney findings. \\
+    \hline
+    UPS & Left ventricle predominance; heterogeneous, necrotic. & Right-sided location atypical. & Unlikely. \\
+    \hline
+    \end{tabular}
+    }
+
+    \vspace{0.5em}
+    \noindent\textbf{Step 3 -- Systematic elimination}
+    \begin{itemize}[leftmargin=*, noitemsep, topsep=2pt]
+        \item Angiosarcoma excluded: \colorbox{yellow!30}{hypodense (not haemorrhagic) mass, age 81 above typical 30--50 yr range}.
+        \item IgG4 and ECD excluded by absence of systemic manifestations.
+        \item UPS improbable given right-sided predominance without necrosis.
+    \end{itemize}
+
+    \vspace{0.5em}
+    \noindent\textbf{Step 4 -- Final diagnosis}
+
+    The combination of \colorbox{yellow!30}{right-sided cardiac infiltration with AV node encasement causing complete heart block}, hypodense CT appearance, intense FDG uptake, and lung metastasis confirmed as non-Hodgkin lymphoma on biopsy is diagnostic of primary cardiac lymphoma.
+
+    \vspace{1em}
+    \noindent\textbf{Fine-Tuned Model Final Answer:} \colorbox{green!30}{\textbf{Primary cardiac lymphoma}} -- \textbf{CORRECT}
+
+    \vspace{1em}
+    \hrule
+    \vspace{1em}
+
+    \textbf{Key Improvements from Fine-Tuning:}
+    \begin{itemize}[leftmargin=*, noitemsep, topsep=2pt]
+        \item \textbf{Error correction:} Base model chose Angiosarcoma (INCORRECT); fine-tuned model correctly identified PCL
+        \item \textbf{Recognised pathognomonic feature:} AV node encasement causing complete heart block identified as KEY discriminator
+        \item \textbf{Imaging precision:} Hypodense (lymphoma) vs.\ hyperdense haemorrhagic (angiosarcoma) distinction applied correctly
+        \item \textbf{Age weighting:} Patient age (81 yr) used to exclude angiosarcoma (typical 30--50 yr) rather than dismissed
+        \item \textbf{Histologic integration:} Lung biopsy confirming non-Hodgkin lymphoma used to clinch diagnosis
+    \end{itemize}
+\end{casebox}
+
+\vspace{1em}
+
+% --- Case 2: NICE Lesions (gpt-oss-20b) ---
+\begin{casebox}
+    \textbf{Case Study 2: Non-Ischemic Cerebral Enhancing (NICE) Lesions (gpt-oss-20b)}
+
+    \vspace{1em}
+    \textbf{Case Presentation}
+
+    \textbf{Clinical History:} Five days after uncomplicated embolisation of a right MCA aneurysm, a 56-year-old woman presents with headache, seizure, fluctuant left upper extremity weakness, and left campimetric defects. Todd's paralysis suspected.
+
+    \vspace{0.5em}
+    \textbf{Imaging Findings:} Brain CT: no abnormalities apart from embolisation material. MRI: multiple round right-hemisphere lesions, T1 hypointense, T2 hyperintense, central T2 hypointensity in largest lesions, homogeneous post-gadolinium enhancement, no DWI restriction, no SWI artefacts. Six-month follow-up: enhancement resolves, T2 hyperintensity persists, central punctate susceptibility artefacts (microhaemorrhages) appear.
+
+    \vspace{0.5em}
+    \textbf{Differentials:} NICE lesions, Subacute cerebral infarcts, Cerebral microabscesses, Brain metastases \quad \textbf{Ground Truth:} NICE lesions
+
+    \vspace{1em}
+    \hrule
+    \vspace{1em}
+
+    \textbf{Base Model Response (Before Fine-Tuning)}
+
+    \vspace{0.5em}
+    Subacute infarcts would show diffusion restriction early. But here no diffusion restriction. But maybe small lesions might not show diffusion restriction? \textit{[Issue: Makes excuses for contradictory evidence instead of using it to exclude]}
+
+    \vspace{0.5em}
+    Microabscesses would show diffusion restriction (pus). No diffusion restriction here. So unlikely.
+
+    \vspace{0.5em}
+    Brain metastases would not spontaneously resolve after 6 months. No known primary cancer. Less likely.
+
+    \vspace{0.5em}
+    NICE lesions: This is a broad category. \textit{[Issue: Dismisses correct answer as ``too broad'']} Could be post-embolisation changes. The resolution of enhancement over 6 months fits. But the microhemorrhages appear later due to microinfarcts with haemorrhagic transformation. \textit{[Issue: Talks around NICE but doesn't recognise it as specific diagnosis]}
+
+    \vspace{0.5em}
+    Thus the most likely is Subacute cerebral infarcts. \textit{[Issue: Wrong conclusion---failed to use absence of DWI restriction as definitive exclusion criterion]}
+
+    \vspace{1em}
+    \noindent\textbf{Base Model Final Answer:} \colorbox{red!30}{Subacute cerebral infarcts} -- \textbf{INCORRECT}
+
+    \vspace{1em}
+    \hrule
+    \vspace{1em}
+
+    \textbf{Fine-Tuned Model Response}
+
+    \vspace{0.5em}
+    \noindent\textbf{Step 1 -- Clinical-imaging correlation}
+
+    \colorbox{yellow!30}{The temporal relationship to endovascular intervention is the key clue}. Five days post-embolisation, the presentation with focal deficits suggests a procedural complication. The transient weakness is consistent with Todd's paralysis.
+
+    \vspace{0.5em}
+    \noindent\textbf{Step 2 -- MRI pattern and differential mapping}
+
+    \renewcommand{\arraystretch}{1.4}
+    \setlength{\tabcolsep}{6pt}
+    {\footnotesize
+    \begin{tabular}{|>{\raggedright\arraybackslash}p{2.5cm}|>{\raggedright\arraybackslash}p{4.2cm}|>{\raggedright\arraybackslash}p{5.0cm}|}
+    \hline
+    \textbf{Differential} & \textbf{Expected features} & \textbf{Concordance/discordance} \\
+    \hline
+    \textbf{NICE} & \textbf{Multiple round ipsilateral lesions, no DWI restriction, homogeneous enhancement, evolution to T2 hyperintensity with microbleeds.} & \textbf{All criteria met.} \\
+    \hline
+    Subacute infarcts & Wedge-shaped, vascular territory, DWI restriction present. & Round non-territorial lesions; \colorbox{yellow!30}{no DWI restriction excludes infarct}. \\
+    \hline
+    Microabscesses & Ring enhancement, central DWI restriction, oedema. & No DWI restriction, no oedema, uniform enhancement. \\
+    \hline
+    Metastases & Bilateral, perilesional oedema, no spontaneous resolution. & Unilateral; resolve at 6 months; no known primary. \\
+    \hline
+    \end{tabular}
+    }
+
+    \vspace{0.5em}
+    \noindent\textbf{Steps 3--4 -- Elimination and final diagnosis}
+
+    \colorbox{yellow!30}{Absence of DWI restriction definitively excludes infarcts and abscesses}. Metastases excluded by spontaneous resolution and unilateral distribution. The post-embolisation context, homogeneous enhancement without DWI restriction, and \colorbox{yellow!30}{characteristic evolution (enhancement resolution $\to$ persistent T2 $\to$ microhaemorrhages)} is pathognomonic for NICE lesions.
+
+    \vspace{1em}
+    \noindent\textbf{Fine-Tuned Model Final Answer:} \colorbox{green!30}{\textbf{NICE lesions}} -- \textbf{CORRECT}
+
+    \vspace{1em}
+    \hrule
+    \vspace{1em}
+
+    \textbf{Key Improvements from Fine-Tuning:}
+    \begin{itemize}[leftmargin=*, noitemsep, topsep=2pt]
+        \item \textbf{Error correction:} Base model chose Subacute infarcts (INCORRECT); fine-tuned model correctly identified NICE lesions
+        \item \textbf{Decisive use of DWI:} Absence of diffusion restriction applied as definitive exclusion criterion rather than explained away
+        \item \textbf{Temporal reasoning:} Post-procedural timing (5 days) immediately identified as key diagnostic context
+        \item \textbf{Evolution pattern:} 6-month follow-up used as pathognomonic confirmation (enhancement $\to$ T2 persistence $\to$ microbleeds)
+        \item \textbf{Eliminated circular reasoning:} ``But maybe...'' hedging replaced with clear exclusion logic
+    \end{itemize}
+\end{casebox}
+
+\vspace{1em}
+
+% -------------------------------------------------------
+% Qwen3.5-35B Cases
+% -------------------------------------------------------
+The following cases demonstrate the reasoning behaviour of Qwen3.5-35B before and after fine-tuning. The base model produces correct answers across both cases but relies on verbose, unfocused reasoning. Fine-tuning consistently transforms this into concise, structured diagnostic reasoning grounded in the presented findings.
+
+\vspace{1em}
+
+% --- Case 3: Primary Cardiac Lymphoma (Qwen3.5-35B) ---
+\begin{casebox}
+    \textbf{Case Study 3: Primary Cardiac Lymphoma (Qwen3.5-35B)}
+
+    \vspace{1em}
+    \textbf{Case Presentation}
+
+    \textit{Same case as Case Study 1 above.}
+
+    \vspace{1em}
+    \hrule
+    \vspace{1em}
+
+    \textbf{Base Model Response (Before Fine-Tuning)}
+
+    \vspace{0.5em}
+    \textbf{Patient:} 81-year-old male. \textbf{History:} Paroxysmal atrial fibrillation. \textbf{Labs/ECG/Echo:} Elevated troponins, 3rd-degree AV block, RV thickening, pericardial effusion. \textbf{PET-CT:} Large hypermetabolic mass, right chambers, sparing LV, lung nodule. \textbf{Chest CT:} Infiltrative hypodense mass, RA/RV/septum/AV groove, cuff around right coronary artery, pericardial effusion, lung nodule. \textit{[Issue: Exhaustive re-listing of case data without clinical synthesis]}
+
+    \vspace{0.5em}
+    \textbf{Angiosarcoma:} Most common primary cardiac malignancy. Right atrium location fits. Angiosarcomas are usually hyperdense on CT due to haemorrhage, whereas this describes a hypodense mass. But can occur in elderly. So fits. \textit{[Issue: Makes excuses for contradictory imaging feature instead of using it as exclusion criterion]}
+
+    \vspace{0.5em}
+    \textbf{PCL:} The description ``infiltrative hypodense mass\ldots interatrial septum\ldots AV groove\ldots sparing the left ventricle'' is classic for PCL. PET hypermetabolic. Lung nodule could be metastasis. \textit{[Issue: Correct features identified but AV block not recognised as KEY discriminator; conclusion deferred]}
+
+    \vspace{0.5em}
+    \textbf{ECD:} Osteosclerosis of long bones---not mentioned. Less likely. \textbf{UPS:} Less specific anatomical pattern. \textit{[Issue: One-line dismissals]}
+
+    \vspace{0.5em}
+    The hypodense description supports lymphoma over angiosarcoma. PCL fits best. \textit{[Issue: Correct answer reached by textbook pattern-matching rather than systematic reasoning; AV block never used as discriminator]}
+
+    \vspace{1em}
+    \noindent\textbf{Base Model Final Answer:} \colorbox{green!30}{Primary cardiac lymphoma} -- \textbf{CORRECT but with verbose, unfocused reasoning}
+
+    \vspace{1em}
+    \hrule
+    \vspace{1em}
+
+    \textbf{Fine-Tuned Model Response}
+
+    \vspace{0.5em}
+    The patient presents with heart failure and \colorbox{yellow!30}{third-degree AV block}, which immediately signals conduction system infiltration. The imaging shows a hypermetabolic mass involving the right atrium, right ventricle, and interatrial septum while \colorbox{yellow!30}{sparing the left ventricle}---highly characteristic of PCL.
+
+    \vspace{0.5em}
+    \colorbox{yellow!30}{Angiosarcoma} is excluded because it typically presents as a haemorrhagic, hyperdense mass in younger patients (median 40--50 yr); this mass is hypodense and the patient is 81. \colorbox{yellow!30}{ECD} requires osteosclerosis and perinephric fibrosis---neither present. \colorbox{yellow!30}{IgG4} is fibrotic and not hypermetabolic. \colorbox{yellow!30}{UPS} lacks this specific right-sided anatomical predilection.
+
+    \vspace{0.5em}
+    \colorbox{yellow!30}{The CT-guided lung biopsy confirmed non-Hodgkin lymphoma}, clinching the diagnosis. The convergence of right-sided cardiac dominance, AV block, hypodense CT appearance, and histologic confirmation points definitively to \colorbox{green!30}{\textbf{Primary Cardiac Lymphoma}}.
+
+    \vspace{1em}
+    \noindent\textbf{Fine-Tuned Model Final Answer:} \colorbox{green!30}{\textbf{Primary Cardiac Lymphoma}} -- \textbf{CORRECT with focused clinical reasoning}
+
+    \vspace{1em}
+    \hrule
+    \vspace{1em}
+
+    \textbf{Key Improvements from Fine-Tuning:}
+    \begin{itemize}[leftmargin=*, noitemsep, topsep=2pt]
+        \item \textbf{Reasoning quality:} Base model correct but via pattern-matching; fine-tuned model reasons systematically from presented findings
+        \item \textbf{AV block as discriminator:} \colorbox{yellow!30}{Immediately identified as pathognomonic} for conduction system infiltration by PCL
+        \item \textbf{Imaging precision:} Hypodense appearance used decisively to exclude haemorrhagic angiosarcoma
+        \item \textbf{Histologic integration:} Biopsy result incorporated as confirmatory evidence
+        \item \textbf{Concise synthesis:} 200 words of focused reasoning vs.\ verbose pattern-recitation
+    \end{itemize}
+\end{casebox}
+
+\vspace{1em}
+
+% --- Case 4: NICE Lesions (Qwen3.5-35B) ---
+\begin{casebox}
+    \textbf{Case Study 4: Non-Ischemic Cerebral Enhancing (NICE) Lesions (Qwen3.5-35B)}
+
+    \vspace{1em}
+    \textbf{Case Presentation}
+
+    \textit{Same case as Case Study 2 above.}
+
+    \vspace{1em}
+    \hrule
+    \vspace{1em}
+
+    \textbf{Base Model Response (Before Fine-Tuning)}
+
+    \vspace{0.5em}
+    Patient: 56-year-old woman, 5 days after embolization of right MCA aneurysm. MRI: multiple round right-hemisphere lesions, T1 hypointense, T2 hyperintense, central T2 hypointensity, all enhance, no DWI restriction, no SWI artefacts. Follow-up 6 months: enhancement resolves, T2 persists, microhaemorrhages appear. \textit{[Issue: Exhaustive listing without clinical synthesis]}
+
+    \vspace{0.5em}
+    Subacute infarcts: DWI should be positive at 5 days if infarct. No restricted diffusion here. Rules out ischemic stroke. \textit{[Issue: Correct reasoning but scattered, not applied systematically]}
+
+    \vspace{0.5em}
+    Microabscesses: Would show DWI restriction (pus). No restriction here. Unlikely.
+
+    \vspace{0.5em}
+    Metastases: Don't resolve over 6 months without treatment. Timing relative to embolisation makes iatrogenic complication more likely.
+
+    \vspace{0.5em}
+    NICE lesions: Specific to post-embolisation. DWI negative (unlike infarcts). Enhancement resolves on follow-up. Fits best. \textit{[Issue: Correct conclusion but buried in verbose meta-commentary about output formatting, literature searches, and acronym definitions]}
+
+    \vspace{1em}
+    \noindent\textbf{Base Model Final Answer:} \colorbox{green!30}{NICE lesions} -- \textbf{CORRECT but with unfocused, verbose reasoning}
+
+    \vspace{1em}
+    \hrule
+    \vspace{1em}
+
+    \textbf{Fine-Tuned Model Response}
+
+    \vspace{0.5em}
+    The patient presents with neurological deficits following aneurysm embolisation, initially suggesting ischaemia. However, the MRI findings contradict this.
+
+    \vspace{0.5em}
+    \colorbox{yellow!30}{No restricted diffusion on DWI} definitively rules out subacute infarcts (2--5 days post-event would show restriction). Microabscesses are excluded for the same reason, plus absent ring enhancement and oedema. Metastases are unlikely given unilateral distribution, no perilesional oedema, and \colorbox{yellow!30}{spontaneous resolution at 6 months}.
+
+    \vspace{0.5em}
+    \colorbox{yellow!30}{The post-embolisation context is the key risk factor}. The imaging signature---multiple enhancing T2-hyperintense lesions without DWI restriction---is classic for NICE lesions. \colorbox{yellow!30}{The follow-up evolution confirms the diagnosis: enhancement resolved while microhaemorrhages persisted}, consistent with the inflammatory microvascular injury pattern of NICE lesions.
+
+    \vspace{1em}
+    \noindent\textbf{Fine-Tuned Model Final Answer:} \colorbox{green!30}{\textbf{NICE lesions}} -- \textbf{CORRECT with focused clinical reasoning}
+
+    \vspace{1em}
+    \hrule
+    \vspace{1em}
+
+    \textbf{Key Improvements from Fine-Tuning:}
+    \begin{itemize}[leftmargin=*, noitemsep, topsep=2pt]
+        \item \textbf{Reasoning quality:} Base model correct but verbose and unfocused; fine-tuned model concise and systematic
+        \item \textbf{Decisive DWI use:} \colorbox{yellow!30}{Absence of restriction applied immediately} as definitive exclusion, not hedged
+        \item \textbf{Temporal reasoning:} Post-procedural context identified as primary diagnostic anchor
+        \item \textbf{Evolution pattern:} 6-month follow-up synthesised as pathognomonic confirmation
+        \item \textbf{Eliminated meta-commentary:} Verbose processing replaced with 150 words of focused clinical reasoning
+    \end{itemize}
+\end{casebox}
+
+\vspace{1em}
+\end{document}
+
+
