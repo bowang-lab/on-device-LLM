@@ -313,7 +313,7 @@ The relationship between model size and diagnostic accuracy is summarized in Fig
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=\textwidth]{main-imgs/fig3.png}
+\includegraphics[width=0.85\textwidth]{main-imgs/fig3.png}
 \caption{\textbf{Parameter efficiency of open-weight models on the Eurorad general diagnosis task (N=207).}
 Solid markers indicate base models; hollow markers connected by upward arrows indicate fine-tuned variants of the adjacent base model (gpt-oss-20b and Qwen3.5-35B-A3B). Diagnostic accuracy is plotted against memory footprint at 4-bit quantization (computed as parameter count $\times$ 0.5 bytes $\times$ 1.15 framework overhead factor; KV cache beyond framework defaults is not included). Parameter counts (total/active for mixture-of-experts architectures) are listed in Methods. Proprietary models (Gemini 3.1 Pro, GPT-5.1, GPT-5-mini) are shown as horizontal dashed reference lines at their observed accuracy; parameter counts and serving configurations have not been publicly disclosed and are omitted from the X axis. All accuracy values are $k=3$ majority consensus, identical to Table~\ref{tab:generalist_results}. DeepSeek-R1 is shown for reference; its memory footprint exceeds the single-GPU deployment scenario targeted by the other on-device models.}
 \label{fig:3}
