@@ -168,27 +168,27 @@ To ensure rigorous zero-shot evaluation and prevent data leakage, all three benc
 \caption{\textbf{LLM-as-a-Generalist Task: Comparative diagnostic accuracy (\%) across radiological anatomical subgroups.}
 Performance is evaluated using self-consistency majority voting. The best result per row is \textbf{bolded}. Full 95\% CIs are provided in Supplementary Table~1.}
 \label{tab:generalist_results}
-\begin{tabular}{l ccc @{\hskip 6pt} c @{\hskip 6pt} cc @{\hskip 6pt} cccc @{\hskip 6pt} c}
+\begin{tabular}{l ccc @{\hskip 6pt} c @{\hskip 6pt} ccc @{\hskip 6pt} cccc @{\hskip 6pt} c}
 \toprule
-& \multicolumn{3}{c}{\textbf{Proprietary}} & \textbf{Open} & \multicolumn{2}{c}{\textbf{gpt-oss}} & \multicolumn{4}{c}{\textbf{Qwen3.5}} & \textbf{Gemma 4} \\
-\cmidrule(lr){2-4} \cmidrule(lr){5-5} \cmidrule(lr){6-7} \cmidrule(lr){8-11} \cmidrule(lr){12-12}
+& \multicolumn{3}{c}{\textbf{Proprietary}} & \textbf{Open} & \multicolumn{3}{c}{\textbf{gpt-oss}} & \multicolumn{4}{c}{\textbf{Qwen3.5}} & \textbf{Gemma 4} \\
+\cmidrule(lr){2-4} \cmidrule(lr){5-5} \cmidrule(lr){6-8} \cmidrule(lr){9-12} \cmidrule(lr){13-13}
 \textbf{Category} &
 \textbf{GPT-5.1} & \textbf{GPT-5-mini} & \textbf{Gemini-3.1} & \textbf{DS-R1} &
-\textbf{20b} & \textbf{120b} &
+\textbf{20b} & \textbf{20b-FT} & \textbf{120b} &
 \textbf{9B} & \textbf{27B} & \textbf{35B} & \textbf{35B-FT} & \textbf{31B} \\
 \midrule
-Musculoskeletal   & \acc{87.2} & \acc{83.0} & \acc{87.2} & \acc{87.2} & \acc{87.2} & \acc{85.1} & \acc{89.4} & \acc{87.2} & \acc{89.4} & \best{\acc{95.7}} & \acc{89.4} \\
-Cardiovascular    & \best{\acc{83.3}} & \acc{66.7} & \acc{66.7} & \acc{66.7} & \acc{50.0} & \acc{66.7} & \acc{50.0} & \acc{50.0} & \acc{66.7} & \best{\acc{83.3}} & \best{\acc{83.3}} \\
-Abdominal         & \acc{88.9} & \acc{88.9} & \best{\acc{97.2}} & \acc{75.0} & \acc{80.6} & \acc{83.3} & \acc{72.2} & \acc{83.3} & \acc{83.3} & \acc{88.9} & \acc{83.3} \\
-Uroradiology      & \best{\acc{100.0}} & \acc{90.0} & \best{\acc{100.0}} & \best{\acc{100.0}} & \best{\acc{100.0}} & \acc{90.0} & \best{\acc{100.0}} & \acc{90.0} & \best{\acc{100.0}} & \acc{90.0} & \best{\acc{100.0}} \\
-Neuroradiology    & \best{\acc{87.8}} & \acc{82.9} & \best{\acc{87.8}} & \acc{85.4} & \acc{85.4} & \acc{85.4} & \acc{70.7} & \acc{78.0} & \acc{82.9} & \acc{85.4} & \best{\acc{87.8}} \\
-Paediatric        & \acc{86.7} & \acc{80.0} & \best{\acc{93.3}} & \acc{73.3} & \acc{70.0} & \acc{83.3} & \acc{63.3} & \acc{70.0} & \acc{80.0} & \acc{86.7} & \acc{83.3} \\
-Head \& neck      & \best{\acc{100.0}} & \best{\acc{100.0}} & \best{\acc{100.0}} & \acc{84.6} & \acc{92.3} & \acc{92.3} & \acc{84.6} & \acc{92.3} & \acc{92.3} & \acc{84.6} & \acc{84.6} \\
-Breast            & \best{\acc{100.0}} & \acc{80.0} & \best{\acc{100.0}} & \acc{80.0} & \acc{40.0} & \acc{60.0} & \acc{80.0} & \best{\acc{100.0}} & \best{\acc{100.0}} & \best{\acc{100.0}} & \best{\acc{100.0}} \\
-Chest             & \acc{90.9} & \acc{81.8} & \best{\acc{100.0}} & \acc{81.8} & \acc{81.8} & \acc{81.8} & \acc{63.6} & \acc{63.6} & \acc{72.7} & \acc{90.9} & \acc{81.8} \\
-Others            & \best{\acc{75.0}} & \best{\acc{75.0}} & \best{\acc{75.0}} & \best{\acc{75.0}} & \acc{62.5} & \acc{62.5} & \best{\acc{75.0}} & \best{\acc{75.0}} & \best{\acc{75.0}} & \acc{62.5} & \best{\acc{75.0}} \\
+Musculoskeletal   & \acc{87.2} & \acc{83.0} & \acc{87.2} & \acc{87.2} & \acc{87.2} & \acc{91.5} & \acc{85.1} & \acc{89.4} & \acc{87.2} & \acc{89.4} & \best{\acc{95.7}} & \acc{89.4} \\
+Cardiovascular    & \best{\acc{83.3}} & \acc{66.7} & \acc{66.7} & \acc{66.7} & \acc{50.0} & \acc{66.7} & \acc{66.7} & \acc{50.0} & \acc{50.0} & \acc{66.7} & \best{\acc{83.3}} & \best{\acc{83.3}} \\
+Abdominal         & \acc{88.9} & \acc{88.9} & \best{\acc{97.2}} & \acc{75.0} & \acc{80.6} & \acc{86.1} & \acc{83.3} & \acc{72.2} & \acc{83.3} & \acc{83.3} & \acc{88.9} & \acc{83.3} \\
+Uroradiology      & \best{\acc{100.0}} & \acc{90.0} & \best{\acc{100.0}} & \best{\acc{100.0}} & \best{\acc{100.0}} & \best{\acc{100.0}} & \acc{90.0} & \best{\acc{100.0}} & \acc{90.0} & \best{\acc{100.0}} & \acc{90.0} & \best{\acc{100.0}} \\
+Neuroradiology    & \acc{87.8} & \acc{82.9} & \acc{87.8} & \acc{85.4} & \acc{85.4} & \best{\acc{90.2}} & \acc{85.4} & \acc{70.7} & \acc{78.0} & \acc{82.9} & \acc{85.4} & \acc{87.8} \\
+Paediatric        & \acc{86.7} & \acc{80.0} & \best{\acc{93.3}} & \acc{73.3} & \acc{70.0} & \acc{73.3} & \acc{83.3} & \acc{63.3} & \acc{70.0} & \acc{80.0} & \acc{86.7} & \acc{83.3} \\
+Head \& neck      & \best{\acc{100.0}} & \best{\acc{100.0}} & \best{\acc{100.0}} & \acc{84.6} & \acc{92.3} & \acc{92.3} & \acc{92.3} & \acc{84.6} & \acc{92.3} & \acc{92.3} & \acc{84.6} & \acc{84.6} \\
+Breast            & \best{\acc{100.0}} & \acc{80.0} & \best{\acc{100.0}} & \acc{80.0} & \acc{40.0} & \acc{80.0} & \acc{60.0} & \acc{80.0} & \best{\acc{100.0}} & \best{\acc{100.0}} & \best{\acc{100.0}} & \best{\acc{100.0}} \\
+Chest             & \acc{90.9} & \acc{81.8} & \best{\acc{100.0}} & \acc{81.8} & \acc{81.8} & \acc{90.9} & \acc{81.8} & \acc{63.6} & \acc{63.6} & \acc{72.7} & \acc{90.9} & \acc{81.8} \\
+Others            & \best{\acc{75.0}} & \best{\acc{75.0}} & \best{\acc{75.0}} & \best{\acc{75.0}} & \acc{62.5} & \best{\acc{75.0}} & \acc{62.5} & \best{\acc{75.0}} & \best{\acc{75.0}} & \best{\acc{75.0}} & \acc{62.5} & \best{\acc{75.0}} \\
 \midrule
-\textbf{Average}  & \acc{88.9} & \acc{84.1} & \best{\acc{91.3}} & \acc{81.6} & \acc{80.7} & \acc{83.1} & \acc{75.8} & \acc{80.2} & \acc{84.5} & \acc{88.4} & \acc{86.5} \\
+\textbf{Average}  & \acc{88.9} & \acc{84.1} & \best{\acc{91.3}} & \acc{81.6} & \acc{80.7} & \acc{86.5} & \acc{83.1} & \acc{75.8} & \acc{80.2} & \acc{84.5} & \acc{88.4} & \acc{86.5} \\
 \bottomrule
 \end{tabular}
 \end{table}
