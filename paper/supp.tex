@@ -495,9 +495,10 @@ Others                 & 75.0 (40.9--92.9) & 62.5 (30.6--86.3) & 62.5 (30.6--86.
 \centering
 \scriptsize
 \setlength{\tabcolsep}{3pt}
-\caption{\textbf{Effect of reasoning effort on gpt-oss ophthalmology accuracy (\%).}
+\caption{\textbf{Effect of reasoning effort on gpt-oss ophthalmology accuracy (\%, 95\% Wilson CI).}
 Performance at Low (L), Medium (M), and High (H) reasoning effort levels on the ophthalmology diagnosis and management tasks (N=130). GPT-5.1 is included as a proprietary reference.}
 \label{tab:ophthalmology_reasoning_effort}
+\resizebox{\textwidth}{!}{%
 \begin{tabular}{ll c @{\hskip 6pt} ccc @{\hskip 6pt} ccc}
 \toprule
 & & \textbf{Proprietary} & \multicolumn{3}{c}{\textbf{gpt-oss-20b}} & \multicolumn{3}{c}{\textbf{gpt-oss-120b}} \\
@@ -508,28 +509,29 @@ Performance at Low (L), Medium (M), and High (H) reasoning effort levels on the 
 \textbf{L} & \textbf{M} & \textbf{H} \\
 \midrule
 \multirow{6}{*}{\rotatebox{90}{\textbf{Diag}}}
-& Glaucoma           & 100.0 & 71.4 & 85.7 & 85.7 & 85.7 & 85.7 & 85.7 \\
-& Ext.\ Eye/Orbital  & 90.0 & 70.0 & 70.0 & 80.0 & 70.0 & 80.0 & 80.0 \\
-& Retinal            & 100.0 & 66.7 & 66.7 & 66.7 & 100.0 & 66.7 & 66.7 \\
-& Anterior Segment   & 50.0 & 62.5 & 62.5 & 62.5 & 75.0 & 75.0 & 75.0 \\
-& Ocular Trauma      & 100.0 & 83.3 & 66.7 & 83.3 & 83.3 & 100.0 & 83.3 \\
-& Refract./Strabismus & 100.0 & 100.0 & 100.0 & 100.0 & 100.0 & 100.0 & 100.0 \\
+& Glaucoma           & 100.0 (64.6--100.0) & 71.4 (35.9--91.8) & 85.7 (48.7--97.4) & 85.7 (48.7--97.4) & 85.7 (48.7--97.4) & 85.7 (48.7--97.4) & 85.7 (48.7--97.4) \\
+& Ext.\ Eye/Orbital  & 90.0 (59.6--98.2) & 70.0 (39.7--89.2) & 70.0 (39.7--89.2) & 80.0 (49.0--94.3) & 70.0 (39.7--89.2) & 80.0 (49.0--94.3) & 80.0 (49.0--94.3) \\
+& Retinal            & 100.0 (43.8--100.0) & 66.7 (20.8--93.9) & 66.7 (20.8--93.9) & 66.7 (20.8--93.9) & 100.0 (43.8--100.0) & 66.7 (20.8--93.9) & 66.7 (20.8--93.9) \\
+& Anterior Segment   & 50.0 (21.5--78.5) & 62.5 (30.6--86.3) & 62.5 (30.6--86.3) & 62.5 (30.6--86.3) & 75.0 (40.9--92.9) & 75.0 (40.9--92.9) & 75.0 (40.9--92.9) \\
+& Ocular Trauma      & 100.0 (61.0--100.0) & 83.3 (43.6--97.0) & 66.7 (30.0--90.3) & 83.3 (43.6--97.0) & 83.3 (43.6--97.0) & 100.0 (61.0--100.0) & 83.3 (43.6--97.0) \\
+& Refract./Strab & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) & 100.0 (56.6--100.0) \\
 \cmidrule{2-9}
-& \textit{Average}   & \textit{87.2} & \textit{74.4} & \textit{74.4} & \textit{79.5} & \textit{82.1} & \textit{84.6} & \textit{82.1} \\
+& \textit{Avg}   & \textit{87.2 (73.3--94.4)} & \textit{74.4 (58.9--85.4)} & \textit{74.4 (58.9--85.4)} & \textit{79.5 (64.5--89.2)} & \textit{82.1 (67.3--91.0)} & \textit{84.6 (70.3--92.8)} & \textit{82.1 (67.3--91.0)} \\
 \midrule
 \multirow{6}{*}{\rotatebox{90}{\textbf{Mgmt}}}
-& Glaucoma           & 85.7 & 50.0 & 64.3 & 50.0 & 71.4 & 78.6 & 64.3 \\
-& Ext.\ Eye/Orbital  & 71.4 & 57.1 & 71.4 & 64.3 & 71.4 & 71.4 & 71.4 \\
-& Retinal            & 37.5 & 12.5 & 25.0 & 37.5 & 50.0 & 37.5 & 37.5 \\
-& Anterior Segment   & 82.4 & 76.5 & 64.7 & 76.5 & 70.6 & 76.5 & 70.6 \\
-& Ocular Trauma      & 65.4 & 42.3 & 57.7 & 50.0 & 65.4 & 76.9 & 57.7 \\
-& Refract./Strabismus & 83.3 & 66.7 & 58.3 & 83.3 & 83.3 & 91.7 & 83.3 \\
+& Glaucoma           & 85.7 (60.1--96.0) & 50.0 (26.8--73.2) & 64.3 (38.8--83.7) & 50.0 (26.8--73.2) & 71.4 (45.4--88.3) & 78.6 (52.4--92.4) & 64.3 (38.8--83.7) \\
+& Ext.\ Eye/Orbital  & 71.4 (45.4--88.3) & 57.1 (32.6--78.6) & 71.4 (45.4--88.3) & 64.3 (38.8--83.7) & 71.4 (45.4--88.3) & 71.4 (45.4--88.3) & 71.4 (45.4--88.3) \\
+& Retinal            & 37.5 (13.7--69.4) & 12.5 (2.2--47.1) & 25.0 (7.1--59.1) & 37.5 (13.7--69.4) & 50.0 (21.5--78.5) & 37.5 (13.7--69.4) & 37.5 (13.7--69.4) \\
+& Anterior Segment   & 82.4 (59.0--93.8) & 76.5 (52.7--90.4) & 64.7 (41.3--82.7) & 76.5 (52.7--90.4) & 70.6 (46.9--86.7) & 76.5 (52.7--90.4) & 70.6 (46.9--86.7) \\
+& Ocular Trauma      & 65.4 (46.2--80.6) & 42.3 (25.5--61.1) & 57.7 (38.9--74.5) & 50.0 (32.1--67.9) & 65.4 (46.2--80.6) & 76.9 (57.9--89.0) & 57.7 (38.9--74.5) \\
+& Refract./Strab & 83.3 (55.2--95.3) & 66.7 (39.1--86.2) & 58.3 (32.0--80.7) & 83.3 (55.2--95.3) & 83.3 (55.2--95.3) & 91.7 (64.6--98.5) & 83.3 (55.2--95.3) \\
 \cmidrule{2-9}
-& \textit{Average}   & \textit{72.5} & \textit{52.7} & \textit{59.3} & \textit{60.4} & \textit{69.2} & \textit{74.7} & \textit{64.8} \\
+& \textit{Avg}   & \textit{72.5 (62.6--80.6)} & \textit{52.7 (42.6--62.7)} & \textit{59.3 (49.1--68.9)} & \textit{60.4 (50.2--69.9)} & \textit{69.2 (59.1--77.8)} & \textit{74.7 (64.9--82.5)} & \textit{64.8 (54.6--73.9)} \\
 \midrule
-\multicolumn{2}{l}{\textbf{Overall}} & \textbf{76.9} & \textbf{59.2} & \textbf{63.8} & \textbf{66.2} & \textbf{73.1} & \textbf{77.7} & \textbf{70.0} \\
+\multicolumn{2}{l}{\textbf{Overall}} & \textbf{76.9 (69.0--83.3)} & \textbf{59.2 (50.6--67.3)} & \textbf{63.8 (55.3--71.6)} & \textbf{66.2 (57.7--73.7)} & \textbf{73.1 (64.9--80.0)} & \textbf{77.7 (69.8--84.0)} & \textbf{70.0 (61.6--77.2)} \\
 \bottomrule
-\end{tabular}
+\end{tabular}%
+}
 \end{table}
 
 
@@ -538,9 +540,10 @@ Performance at Low (L), Medium (M), and High (H) reasoning effort levels on the 
 \centering
 \scriptsize
 \setlength{\tabcolsep}{3pt}
-\caption{\textbf{Effect of reasoning effort on gpt-oss clinical judgment accuracy (median error).}
-Performance at Low (L), Medium (M), and High (H) reasoning effort levels on the NMED clinical judgment task (N=1315). GPT-5.1 is included as a proprietary reference. A value of 0.00 indicates perfect alignment with human expert scores.}
+\caption{\textbf{Effect of reasoning effort on gpt-oss clinical judgment accuracy (median error, IQR).}
+Performance at Low (L), Medium (M), and High (H) reasoning effort levels on the NMED clinical judgment task (N=1315). GPT-5.1 is included as a proprietary reference. Scores are presented as median error (25\%--75\% IQR) relative to human expert scores. A value of 0.00 indicates perfect alignment.}
 \label{tab:nmed_reasoning_effort}
+\resizebox{\textwidth}{!}{%
 \begin{tabular}{ll c @{\hskip 6pt} ccc @{\hskip 6pt} ccc}
 \toprule
 & & \textbf{Proprietary} & \multicolumn{3}{c}{\textbf{gpt-oss-20b}} & \multicolumn{3}{c}{\textbf{gpt-oss-120b}} \\
@@ -551,24 +554,25 @@ Performance at Low (L), Medium (M), and High (H) reasoning effort levels on the 
 \textbf{L} & \textbf{M} & \textbf{H} \\
 \midrule
 \multirow{6}{*}{\rotatebox{90}{\textbf{Treatment}}}
-& Gynecology & 0.25 & 0.17 & 0.17 & 0.17 & 0.00 & 0.17 & 0.00 \\
-& Internal Med. & 0.33 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\
-& Neurology & 0.50 & 0.00 & 0.17 & 0.00 & 0.17 & 0.17 & 0.17 \\
-& Pediatrics & 0.25 & 0.00 & 0.00 & 0.00 & 0.17 & 0.00 & 0.04 \\
-& Surgery & 0.50 & 0.25 & 0.33 & 0.50 & 0.33 & 0.50 & 0.50 \\
+& Gynecology & 0.25 (-0.33--0.50) & 0.17 (-0.02--0.52) & 0.17 (-0.33--0.50) & 0.17 (-0.10--0.50) & 0.00 (-0.35--0.50) & 0.17 (-0.33--0.50) & 0.00 (-0.25--0.50) \\
+& Internal Med. & 0.33 (0.00--0.50) & 0.00 (-0.33--0.50) & 0.00 (-0.08--0.50) & 0.00 (-0.17--0.50) & 0.00 (-0.08--0.50) & 0.00 (-0.08--0.50) & 0.00 (-0.17--0.50) \\
+& Neurology & 0.50 (0.00--1.00) & 0.00 (-0.17--0.67) & 0.17 (-0.17--0.50) & 0.00 (-0.33--0.50) & 0.17 (-0.17--0.50) & 0.17 (-0.17--0.67) & 0.17 (0.00--0.67) \\
+& Pediatrics & 0.25 (0.00--0.50) & 0.00 (-0.33--0.50) & 0.00 (-0.33--0.50) & 0.00 (-0.33--0.50) & 0.17 (-0.17--0.50) & 0.00 (-0.19--0.50) & 0.04 (-0.17--0.50) \\
+& Surgery & 0.50 (0.00--1.00) & 0.25 (-0.08--0.83) & 0.33 (0.00--1.00) & 0.50 (-0.08--1.00) & 0.33 (0.00--1.00) & 0.50 (0.00--1.00) & 0.50 (0.00--1.00) \\
 \cmidrule{2-9}
-& \textit{Overall} & \textit{0.33} & \textit{0.08} & \textit{0.17} & \textit{0.17} & \textit{0.17} & \textit{0.17} & \textit{0.17} \\
+& \textit{Overall} & \textit{0.33 (0.00--0.67)} & \textit{0.08 (-0.17--0.50)} & \textit{0.17 (-0.17--0.50)} & \textit{0.17 (-0.29--0.50)} & \textit{0.17 (-0.17--0.50)} & \textit{0.17 (-0.17--0.58)} & \textit{0.17 (-0.17--0.50)} \\
 \midrule
 \multirow{6}{*}{\rotatebox{90}{\textbf{Diagnosis}}}
-& Gynecology & 0.00 & -0.17 & -0.17 & -0.33 & 0.00 & 0.00 & 0.00 \\
-& Internal Med. & 0.00 & -0.33 & -0.33 & -0.33 & 0.00 & 0.00 & 0.00 \\
-& Neurology & -0.17 & -0.33 & -0.33 & -0.17 & -0.17 & -0.17 & -0.17 \\
-& Pediatrics & 0.00 & -0.33 & -0.33 & -0.33 & 0.00 & 0.00 & 0.00 \\
-& Surgery & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\
+& Gynecology & 0.00 (-0.50--0.00) & -0.17 (-0.50--0.00) & -0.17 (-0.62--0.00) & -0.33 (-0.67--0.00) & 0.00 (-0.33--0.00) & 0.00 (-0.33--0.00) & 0.00 (-0.29--0.08) \\
+& Internal Med. & 0.00 (-0.50--0.17) & -0.33 (-1.00--0.00) & -0.33 (-0.69--0.00) & -0.33 (-0.94--0.00) & 0.00 (-0.50--0.25) & 0.00 (-0.50--0.33) & 0.00 (-0.54--0.33) \\
+& Neurology & -0.17 (-0.67--0.00) & -0.33 (-1.02--0.00) & -0.33 (-1.00--0.00) & -0.17 (-1.17--0.00) & -0.17 (-1.50--0.17) & -0.17 (-1.54--0.17) & -0.17 (-1.67--0.17) \\
+& Pediatrics & 0.00 (-0.40--0.00) & -0.33 (-0.83--0.00) & -0.33 (-0.79--0.00) & -0.33 (-0.67--0.00) & 0.00 (-0.50--0.23) & 0.00 (-0.50--0.17) & 0.00 (-0.33--0.25) \\
+& Surgery & 0.00 (-0.33--0.42) & 0.00 (-0.50--0.33) & 0.00 (-0.58--0.33) & 0.00 (-0.58--0.27) & 0.00 (-0.50--0.37) & 0.00 (-0.33--0.50) & 0.00 (-0.35--0.50) \\
 \cmidrule{2-9}
-& \textbf{Overall} & \textbf{0.00} & \textbf{-0.33} & \textbf{-0.25} & \textbf{-0.25} & \textbf{0.00} & \textbf{0.00} & \textbf{0.00} \\
+& \textbf{Overall} & \textbf{0.00 (-0.50--0.10)} & \textbf{-0.33 (-0.67--0.00)} & \textbf{-0.25 (-0.67--0.00)} & \textbf{-0.25 (-0.67--0.00)} & \textbf{0.00 (-0.50--0.25)} & \textbf{0.00 (-0.50--0.25)} & \textbf{0.00 (-0.50--0.27)} \\
 \bottomrule
-\end{tabular}
+\end{tabular}%
+}
 \end{table}
 
 
