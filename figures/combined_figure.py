@@ -54,7 +54,8 @@ def panel_accuracy(ax):
     results = compute_accuracy(headers, data)
 
     positions, colors, labels = [], [], []
-    gap = 1.2
+    step = 1.25
+    gap = 1.5
     x = 0
     group_spans = {}
 
@@ -65,8 +66,8 @@ def panel_accuracy(ax):
                 positions.append(x)
                 colors.append(MODEL_COLORS[m])
                 labels.append(m)
-                x += 1
-        group_spans[group_name] = (start, x - 1)
+                x += step
+        group_spans[group_name] = (start, x - step)
         x += gap
 
     accs = [results[m][0] * 100 for m in labels]
