@@ -86,16 +86,15 @@ def panel_accuracy(ax):
                 bbox=dict(facecolor="white", edgecolor="none", pad=1.2, alpha=0.85))
 
     trans = ax.get_xaxis_transform()
+    line_y = -0.08
+    text_y = -0.12
     for group_name, (start, end) in group_spans.items():
         mid = (start + end) / 2
-        if start == end:
-            ax.text(mid, -0.18, group_name, ha="center", va="top",
-                    fontsize=8, color="#666666", transform=trans)
-        else:
-            ax.plot([start - 0.35, end + 0.35], [-0.18, -0.18],
-                    color="#999999", lw=0.8, transform=trans, clip_on=False)
-            ax.text(mid, -0.22, group_name, ha="center", va="top",
-                    fontsize=8, color="#666666", transform=trans)
+        # Always draw a bracket line (even for single-bar groups like Gemma 4)
+        ax.plot([start - 0.35, end + 0.35], [line_y, line_y],
+                color="#999999", lw=0.8, transform=trans, clip_on=False)
+        ax.text(mid, text_y, group_name, ha="center", va="top",
+                fontsize=8, color="#666666", transform=trans)
 
     ax.set_xticks(positions)
     ax.set_xticklabels([ACC_SHORT[m] for m in labels], fontsize=8)
