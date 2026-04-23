@@ -94,7 +94,8 @@ def panel_accuracy(ax):
         ax.plot([start - 0.35, end + 0.35], [line_y, line_y],
                 color="#999999", lw=0.8, transform=trans, clip_on=False)
         ax.text(mid, text_y, group_name, ha="center", va="top",
-                fontsize=8, color="#666666", transform=trans)
+                fontsize=11, fontweight="bold", color="#444444",
+                transform=trans)
 
     ax.set_xticks(positions)
     ax.set_xticklabels([ACC_SHORT[m] for m in labels], fontsize=8)
@@ -259,13 +260,16 @@ def panel_finetune(ax):
 
     trans = ax.get_xaxis_transform()
     groups = [("Proprietary", 0, 3), ("Qwen 3.5", 4, 5)]
+    line_y = -0.08
+    text_y = -0.12
     for group_name, i_start, i_end in groups:
         mid = (positions[i_start] + positions[i_end]) / 2
         ax.plot([positions[i_start] - 0.35, positions[i_end] + 0.35],
-                [-0.20, -0.20], color="#999999", lw=0.8,
+                [line_y, line_y], color="#999999", lw=0.8,
                 transform=trans, clip_on=False)
-        ax.text(mid, -0.24, group_name, ha="center", va="top",
-                fontsize=8, color="#666666", transform=trans)
+        ax.text(mid, text_y, group_name, ha="center", va="top",
+                fontsize=11, fontweight="bold", color="#444444",
+                transform=trans)
 
     ax.set_xticks(positions)
     ax.set_xticklabels(labels, fontsize=7)
@@ -351,29 +355,21 @@ def main():
     ax_a = fig.add_subplot(gs[0, :])
     ax_a.set_facecolor("white")
     panel_accuracy(ax_a)
-    ax_a.text(-0.02, 1.05, "a", transform=ax_a.transAxes,
-              fontsize=16, fontweight="bold", va="bottom")
 
     # Panel b — full width
     ax_b = fig.add_subplot(gs[1, :])
     ax_b.set_facecolor("white")
     panel_violin(ax_b)
-    ax_b.text(-0.02, 1.05, "b", transform=ax_b.transAxes,
-              fontsize=16, fontweight="bold", va="bottom")
 
     # Panel c — bottom left
     ax_c = fig.add_subplot(gs[2, 0])
     ax_c.set_facecolor("white")
     panel_finetune(ax_c)
-    ax_c.text(-0.05, 1.05, "c", transform=ax_c.transAxes,
-              fontsize=16, fontweight="bold", va="bottom")
 
     # Panel d — bottom right (polar)
     ax_d = fig.add_subplot(gs[2, 1], polar=True)
     ax_d.set_facecolor("white")
     panel_radar(ax_d)
-    ax_d.text(-0.15, 1.15, "d", transform=ax_d.transAxes,
-              fontsize=16, fontweight="bold", va="bottom")
 
     if args.output:
         fig.savefig(args.output, dpi=300, bbox_inches="tight", facecolor="white")
