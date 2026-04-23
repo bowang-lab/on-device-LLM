@@ -54,8 +54,8 @@ def panel_accuracy(ax):
     results = compute_accuracy(headers, data)
 
     positions, colors, labels = [], [], []
-    step = 1.25
-    gap = 1.5
+    step = 1.6
+    gap = 1.8
     x = 0
     group_spans = {}
 
