@@ -26,7 +26,6 @@ from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mtick
-from adjustText import adjust_text
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from palette import MODEL_COLORS
@@ -241,16 +240,20 @@ def plot(accuracies, output=None):
     ax.set_ylim(73, 95)
 
     # ── Manual label offsets (dx in log-space multiplier, dy in pp) ───────
-    # dx > 0: label at mem * dx (right of marker); dx < 0: label at mem / |dx| (left)
-    # All labels placed to the right for consistency, except where crowded
+    # Format: (dx_mult, dy) or (dx_mult, dy, ha_override).
+    # dx_mult > 0: label at mem * dx_mult (right of marker; default ha="left")
+    # dx_mult < 0: label at mem / |dx_mult| (left of marker; default ha="right")
+    # Positions chosen so the thin leader lines do not cross the colored
+    # fine-tuning arrows (vertical at x≈12 and x≈20) or the dashed
+    # proprietary reference lines.
     LABEL_OFFSETS = {
-        "gpt-oss-20b (H)":  (-1.6, -0.5),
-        "gpt-oss-120b (H)": (1.30, -0.8),
-        "Qwen3.5 9B":       (1.35, -0.3),
-        "Qwen3.5 27B":      (1.35,  0.0),
-        "Qwen3.5 35B":      (-1.9, -0.3),
-        "Gemma 4 31B":      (1.35,  0.7),
-        "DeepSeek-R1":      (1.20, -0.3),
+        "gpt-oss-20b (H)":  (-1.55, -0.3),              # left of marker
+        "gpt-oss-120b (H)": ( 1.28, -0.8),              # right of marker
+        "Qwen3.5 9B":       ( 1.00, -1.9, "center"),    # directly below
+        "Qwen3.5 27B":      ( 1.00, -1.9, "center"),    # directly below
+        "Qwen3.5 35B":      ( 1.00, -1.9, "center"),    # directly below (FT arrow points up)
+        "Gemma 4 31B":      (-1.30,  1.8, "right"),     # top-left
+        "DeepSeek-R1":      ( 1.20, -0.3),              # right of marker
     }
 
     # ── Scatter: base models only (FT points plotted separately) ──────────
@@ -274,14 +277,17 @@ def plot(accuracies, output=None):
         ax.scatter(mem, acc, c=color, marker=marker, s=80, zorder=5,
                    edgecolors="white", linewidths=0.8, label=label)
 
-        # Manual label placement
-        display = (model.replace("gpt-oss-", "")
-                        .replace("Qwen3.5 ", "")
-                        .replace(" (H)", ""))
-        dx_mult, dy = LABEL_OFFSETS.get(model, (1.25, 0))
+        # Manual label placement — use full model names for clarity
+        display = model.replace(" (H)", "")
+        offset = LABEL_OFFSETS.get(model, (1.25, 0))
+        dx_mult, dy = offset[0], offset[1]
+        ha_override = offset[2] if len(offset) >= 3 else None
         lx = mem * dx_mult if dx_mult > 0 else mem / abs(dx_mult)
         ly = acc + dy
-        ha = "left" if dx_mult > 0 else "right"
+        if ha_override is not None:
+            ha = ha_override
+        else:
+            ha = "left" if dx_mult > 0 else "right"
         ax.annotate(
             display, xy=(mem, acc), xytext=(lx, ly),
             fontsize=7.5, color="#333333", ha=ha, va="center", zorder=6,
