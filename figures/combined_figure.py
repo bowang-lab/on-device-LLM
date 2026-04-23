@@ -224,12 +224,13 @@ def panel_finetune(ax):
 
     positions = []
     x = 0
+    step = 1.25
     gaps_after = {3}
     for idx in range(len(bars)):
         positions.append(x)
-        x += 1
+        x += step
         if idx in gaps_after:
-            x += 0.8
+            x += 0.9
 
     accs, los, his, colors, labels = [], [], [], [], []
     for label, color in bars:
@@ -343,7 +344,7 @@ def main():
     # GridSpec: 3 rows — full-width a, full-width b, split c+d
     gs = gridspec.GridSpec(3, 2, figure=fig,
                            height_ratios=[1, 1, 1.4],
-                           width_ratios=[0.9, 1.2],
+                           width_ratios=[1.1, 1.1],
                            hspace=0.35, wspace=0.35)
 
     # Panel a — full width
