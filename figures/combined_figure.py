@@ -227,7 +227,7 @@ def panel_finetune(ax):
     all_results = {**euro_results, **ft_results}
 
     positions = []
-    x = 0
+    x = 1.0
     step = 2.0
     gaps_after = {3}
     for idx in range(len(bars)):
