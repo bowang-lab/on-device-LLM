@@ -27,6 +27,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mtick
 
+plt.rcParams["font.family"] = "serif"
+plt.rcParams["mathtext.fontset"] = "dejavuserif"
+
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from palette import MODEL_COLORS
 

@@ -20,6 +20,9 @@ import matplotlib.ticker as mtick
 import matplotlib.patches as mpatches
 import matplotlib.gridspec as gridspec
 
+plt.rcParams["font.family"] = "serif"
+plt.rcParams["mathtext.fontset"] = "dejavuserif"
+
 # Allow imports from figures/
 sys.path.insert(0, os.path.dirname(__file__))
 from palette import MODEL_COLORS
