@@ -227,7 +227,7 @@ def panel_finetune(ax):
     all_results = {**euro_results, **ft_results}
 
     positions = []
-    x = 1.0
+    x = 1.6
     step = 2.0
     gaps_after = {3}
     for idx in range(len(bars)):
@@ -352,7 +352,7 @@ def main():
     # GridSpec: 3 rows — full-width a, full-width b, split c+d
     gs = gridspec.GridSpec(3, 2, figure=fig,
                            height_ratios=[1, 1, 1.4],
-                           width_ratios=[1.1, 1.1],
+                           width_ratios=[1.35, 1.0],
                            hspace=0.35, wspace=0.35)
 
     # Panel a — full width
