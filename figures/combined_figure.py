@@ -354,7 +354,7 @@ def main():
     gs = gridspec.GridSpec(3, 2, figure=fig,
                            height_ratios=[1, 1, 1.4],
                            width_ratios=[1.35, 1.0],
-                           hspace=0.35, wspace=0.35)
+                           hspace=0.35, wspace=0.22)
 
     # Panel a — full width
     ax_a = fig.add_subplot(gs[0, :])
