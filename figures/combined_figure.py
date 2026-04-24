@@ -97,12 +97,12 @@ def panel_accuracy(ax):
         ax.plot([start - 0.35, end + 0.35], [line_y, line_y],
                 color="#999999", lw=0.8, transform=trans, clip_on=False)
         ax.text(mid, text_y, group_name, ha="center", va="top",
-                fontsize=11, fontweight="bold", color="#444444",
+                fontsize=12, fontweight="bold", color="#444444",
                 transform=trans)
 
     ax.set_xticks(positions)
-    ax.set_xticklabels([ACC_SHORT[m] for m in labels], fontsize=8)
-    ax.set_ylabel("Diagnostic Accuracy (%)", fontsize=10)
+    ax.set_xticklabels([ACC_SHORT[m] for m in labels], fontsize=9)
+    ax.set_ylabel("Diagnostic Accuracy (%)", fontsize=12)
     ax.set_ylim(60, 95)
     ax.yaxis.set_major_locator(mtick.MultipleLocator(5))
     ax.grid(axis="y", alpha=0.3, color="#cccccc", linewidth=0.5)
@@ -195,8 +195,8 @@ def panel_violin(ax):
 
     ax.axhline(y=0, color="black", linewidth=0.8, zorder=1)
     ax.set_xticks(positions)
-    ax.set_xticklabels([NMED_SHORT[m] for m in model_names], fontsize=8)
-    ax.set_ylabel("Error", fontsize=10)
+    ax.set_xticklabels([NMED_SHORT[m] for m in model_names], fontsize=9)
+    ax.set_ylabel("Error", fontsize=12)
     ax.set_ylim(-4.0, 4.0)
     ax.set_yticks([-4, -3, -2, -1, 0, 1, 2, 3, 4])
     ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f"{x:.2f}"))
@@ -271,12 +271,12 @@ def panel_finetune(ax):
                 [line_y, line_y], color="#999999", lw=0.8,
                 transform=trans, clip_on=False)
         ax.text(mid, text_y, group_name, ha="center", va="top",
-                fontsize=13, fontweight="bold", color="#444444",
+                fontsize=12, fontweight="bold", color="#444444",
                 transform=trans)
 
     ax.set_xticks(positions)
     ax.set_xticklabels(labels, fontsize=9)
-    ax.set_ylabel("Diagnostic Accuracy (%)", fontsize=11)
+    ax.set_ylabel("Diagnostic Accuracy (%)", fontsize=12)
     ax.set_ylim(60, 100)
     ax.yaxis.set_major_locator(mtick.MultipleLocator(5))
     ax.grid(axis="y", alpha=0.3, color="#cccccc", linewidth=0.5)
