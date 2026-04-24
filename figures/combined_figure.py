@@ -101,7 +101,7 @@ def panel_accuracy(ax):
                 transform=trans)
 
     ax.set_xticks(positions)
-    ax.set_xticklabels([ACC_SHORT[m] for m in labels], fontsize=9)
+    ax.set_xticklabels([ACC_SHORT[m] for m in labels], fontsize=8)
     ax.set_ylabel("Diagnostic Accuracy (%)", fontsize=12)
     ax.set_ylim(60, 95)
     ax.yaxis.set_major_locator(mtick.MultipleLocator(5))
@@ -195,7 +195,7 @@ def panel_violin(ax):
 
     ax.axhline(y=0, color="black", linewidth=0.8, zorder=1)
     ax.set_xticks(positions)
-    ax.set_xticklabels([NMED_SHORT[m] for m in model_names], fontsize=9)
+    ax.set_xticklabels([NMED_SHORT[m] for m in model_names], fontsize=8)
     ax.set_ylabel("Error", fontsize=12)
     ax.set_ylim(-4.0, 4.0)
     ax.set_yticks([-4, -3, -2, -1, 0, 1, 2, 3, 4])
@@ -275,7 +275,8 @@ def panel_finetune(ax):
                 transform=trans)
 
     ax.set_xticks(positions)
-    ax.set_xticklabels(labels, fontsize=9)
+    display_labels = ["DeepSeek-R1" if l == "DeepSeek" else l for l in labels]
+    ax.set_xticklabels(display_labels, fontsize=8)
     ax.set_ylabel("Diagnostic Accuracy (%)", fontsize=12)
     ax.set_ylim(60, 100)
     ax.yaxis.set_major_locator(mtick.MultipleLocator(5))
