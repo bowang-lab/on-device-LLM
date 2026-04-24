@@ -227,7 +227,7 @@ def panel_finetune(ax):
     all_results = {**euro_results, **ft_results}
 
     positions = []
-    x = 1.6
+    x = 0
     step = 2.0
     gaps_after = {3}
     for idx in range(len(bars)):
@@ -278,6 +278,7 @@ def panel_finetune(ax):
     display_labels = ["DeepSeek-R1" if l == "DeepSeek" else l for l in labels]
     ax.set_xticklabels(display_labels, fontsize=8)
     ax.set_ylabel("Diagnostic Accuracy (%)", fontsize=12)
+    ax.set_xlim(positions[0] - 2.0, positions[-1] + 0.8)
     ax.set_ylim(60, 100)
     ax.yaxis.set_major_locator(mtick.MultipleLocator(5))
     ax.grid(axis="y", alpha=0.3, color="#cccccc", linewidth=0.5)
