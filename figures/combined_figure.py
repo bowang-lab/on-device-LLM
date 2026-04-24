@@ -57,7 +57,7 @@ def panel_accuracy(ax):
     results = compute_accuracy(headers, data)
 
     positions, colors, labels = [], [], []
-    step = 1.6
+    step = 2.1
     gap = 1.8
     x = 0
     group_spans = {}
@@ -228,7 +228,7 @@ def panel_finetune(ax):
 
     positions = []
     x = 0
-    step = 1.55
+    step = 2.0
     gaps_after = {3}
     for idx in range(len(bars)):
         positions.append(x)
