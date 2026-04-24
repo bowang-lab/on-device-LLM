@@ -228,13 +228,13 @@ def panel_finetune(ax):
 
     positions = []
     x = 0
-    step = 1.25
+    step = 1.55
     gaps_after = {3}
     for idx in range(len(bars)):
         positions.append(x)
         x += step
         if idx in gaps_after:
-            x += 0.9
+            x += 0.4
 
     accs, los, his, colors, labels = [], [], [], [], []
     for label, color in bars:
@@ -271,12 +271,12 @@ def panel_finetune(ax):
                 [line_y, line_y], color="#999999", lw=0.8,
                 transform=trans, clip_on=False)
         ax.text(mid, text_y, group_name, ha="center", va="top",
-                fontsize=11, fontweight="bold", color="#444444",
+                fontsize=13, fontweight="bold", color="#444444",
                 transform=trans)
 
     ax.set_xticks(positions)
-    ax.set_xticklabels(labels, fontsize=7)
-    ax.set_ylabel("Diagnostic Accuracy (%)", fontsize=10)
+    ax.set_xticklabels(labels, fontsize=9)
+    ax.set_ylabel("Diagnostic Accuracy (%)", fontsize=11)
     ax.set_ylim(60, 100)
     ax.yaxis.set_major_locator(mtick.MultipleLocator(5))
     ax.grid(axis="y", alpha=0.3, color="#cccccc", linewidth=0.5)
